@@ -1,5 +1,5 @@
 # using vue with preprocessor
-
+You can find pug and sass code in ./about_us/src/components/PersonalPage.vue
 ## build with vue-cli-service
 - Source files are in ./about_us
 

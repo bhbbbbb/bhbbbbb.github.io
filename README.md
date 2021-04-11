@@ -3,6 +3,8 @@
 
 ## how to build
 ```sh
+cd about_us
+
 # project setup
 npm install
 

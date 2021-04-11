@@ -1,4 +1,4 @@
-# using vue as preprocessor
+# using vue with preprocessor
 
 ## build with vue-cli-service
 - Source files are in ./about_us

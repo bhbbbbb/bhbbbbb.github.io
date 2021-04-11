@@ -1,5 +1,5 @@
 <template lang="pug">
-base-card.transparent(@click.native="$emit('back')")
+v-card.transparent(@click.native="$emit('back')")
   v-container.ma-0.pa-0()
     v-row.ma-0(justify="center" align="end")
       v-img(:src="bg" width="1533" height="779" contain)

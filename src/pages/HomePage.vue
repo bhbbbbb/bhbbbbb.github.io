@@ -98,38 +98,16 @@ import SimpleRow from '@/components/rows/SimpleRow.vue'
 </template>
 
 <style scoped>
-:global(html) {
-  scroll-behavior: smooth;
-}
-
-:global(body) {
-  margin: 0;
-  background: #f5f7fb;
-  color: #1f2937;
-  font-family:
-    Inter,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    sans-serif;
-}
-
-:global(*) {
-  box-sizing: border-box;
-}
-
 .home {
-  width: min(980px, calc(100% - 32px));
+  width: min(var(--container-width), calc(100% - var(--container-padding)));
   margin: 0 auto;
-  padding: 40px 0 72px;
+  padding: var(--space-14) 0 var(--space-20);
 }
 
 @media (max-width: 640px) {
   .home {
-    width: min(100% - 24px, 980px);
-    padding-top: 24px;
+    width: min(100% - var(--container-padding-mobile), var(--container-width));
+    padding-top: var(--space-10);
     padding-bottom: 48px;
   }
 }

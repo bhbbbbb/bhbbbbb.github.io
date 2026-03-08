@@ -49,91 +49,92 @@ defineProps<{
 .feature-card {
   display: grid;
   grid-template-columns: 220px 1fr;
-  gap: 22px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+  gap: var(--space-9);
+  padding: var(--space-8);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
 }
 
 .feature-image {
   min-height: 150px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(14, 165, 233, 0.08)), #eef2ff;
+  border-radius: var(--radius-sm);
+  background:
+    linear-gradient(135deg, var(--color-image-grad-a), var(--color-image-grad-b)),
+    var(--color-image-bg);
   border: 1px solid rgba(99, 102, 241, 0.08);
 }
 
 .feature-content {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-4);
 }
 
 .feature-topline {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--space-4);
 }
 
 .meta-pill {
   display: inline-flex;
   align-items: center;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: #eef2ff;
-  color: #4338ca;
-  font-size: 0.82rem;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-pill-bg);
+  color: var(--color-pill-text);
+  font-size: var(--text-xs);
   font-weight: 700;
 }
 
 .feature-year {
   white-space: nowrap;
-  font-size: 0.94rem;
+  font-size: var(--text-sm);
   font-weight: 600;
-  color: #64748b;
+  color: var(--color-text-soft);
 }
 
 .feature-content h3 {
   margin: 0;
-  line-height: 1.3;
-  color: #0f172a;
+  line-height: var(--line-tight);
+  color: var(--color-text-strong);
 }
 
 .feature-desc {
   margin: 0;
-  line-height: 1.72;
-  color: #475569;
+  line-height: var(--line-base);
+  color: var(--color-text-muted);
 }
 
 .tag-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .tag {
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: #f1f5f9;
-  color: #334155;
-  font-size: 0.82rem;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-tag-bg);
+  color: var(--color-tag-text);
+  font-size: var(--text-xs);
   font-weight: 600;
 }
 
 .link-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: var(--space-5);
   padding-top: 2px;
 }
 
 .link-row a {
-  color: #4f46e5;
+  color: var(--color-primary);
   font-weight: 600;
-  text-decoration: none;
-  transition: 0.18s ease;
+  transition: var(--transition-fast);
 }
 
 .link-row a:hover {
@@ -152,7 +153,7 @@ defineProps<{
 
 @media (max-width: 640px) {
   .feature-card {
-    border-radius: 16px;
+    border-radius: var(--radius-md);
   }
 }
 </style>

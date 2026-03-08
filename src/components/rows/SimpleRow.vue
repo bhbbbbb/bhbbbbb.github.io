@@ -22,31 +22,31 @@ defineProps<{
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 20px;
-  padding: 20px 24px;
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-10);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
 }
 
 .other-main h3 {
   margin: 0;
-  line-height: 1.3;
-  color: #0f172a;
+  line-height: var(--line-tight);
+  color: var(--color-text-strong);
 }
 
 .other-main p {
-  margin: 8px 0 0;
-  line-height: 1.72;
-  color: #475569;
+  margin: var(--space-2) 0 0;
+  line-height: var(--line-base);
+  color: var(--color-text-muted);
 }
 
 .other-year {
   white-space: nowrap;
-  font-size: 0.94rem;
+  font-size: var(--text-sm);
   font-weight: 600;
-  color: #64748b;
+  color: var(--color-text-soft);
 }
 
 @media (max-width: 860px) {
@@ -57,7 +57,7 @@ defineProps<{
 
 @media (max-width: 640px) {
   .other-item {
-    border-radius: 16px;
+    border-radius: var(--radius-md);
   }
 }
 </style>

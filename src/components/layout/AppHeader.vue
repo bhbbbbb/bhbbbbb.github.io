@@ -20,55 +20,55 @@
   top: 0;
   z-index: 20;
   backdrop-filter: blur(12px);
-  background: rgba(245, 247, 251, 0.78);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
 
 .inner {
-  width: min(980px, calc(100% - 32px));
+  width: min(var(--container-width), calc(100% - var(--container-padding)));
   margin: 0 auto;
-  min-height: 64px;
+  min-height: var(--header-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: var(--space-8);
 }
 
 .brand {
   font-weight: 700;
-  color: #0f172a;
+  color: var(--color-text-strong);
   letter-spacing: -0.02em;
-  text-decoration: none;
 }
 
 .nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
+  gap: var(--space-7);
 }
 
 .nav a {
-  text-decoration: none;
-  color: #475569;
+  color: var(--color-text-muted);
   font-weight: 600;
   font-size: 0.95rem;
-  transition: 0.18s ease;
+  transition: var(--transition-fast);
 }
 
 .nav a:hover {
-  color: #111827;
+  color: var(--color-text-strong);
 }
 
 @media (max-width: 720px) {
   .inner {
+    width: min(100% - var(--container-padding-mobile), var(--container-width));
     min-height: auto;
-    padding: 14px 0;
+    padding: var(--space-5) 0;
     flex-direction: column;
     align-items: flex-start;
   }
 
   .nav {
-    gap: 14px;
+    gap: var(--space-5);
   }
 }
 </style>

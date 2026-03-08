@@ -34,67 +34,63 @@
 .hero {
   display: grid;
   grid-template-columns: 1.5fr 0.9fr;
-  gap: 24px;
+  gap: var(--space-10);
   align-items: stretch;
-  margin-bottom: 56px;
+  margin-bottom: var(--space-18);
 }
 
 .hero-text,
 .hero-card {
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
 }
 
 .hero-text {
-  padding: 32px;
+  padding: var(--space-12);
 }
 
-/* .eyebrow {
-  color: var(--color-accent-text);
-} */
 .eyebrow {
-  margin: 0 0 10px;
-  font-size: 0.82rem;
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-xs);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #4f46e5;
+  color: var(--color-primary);
 }
 
 .hero h1 {
   margin: 0;
-  font-size: clamp(2.3rem, 4vw, 3.6rem);
+  font-size: var(--text-hero);
   line-height: 1.05;
   letter-spacing: -0.03em;
-  color: #0f172a;
+  color: var(--color-text-strong);
 }
 
 .hero-intro {
   max-width: 60ch;
-  margin: 18px 0 0;
-  font-size: 1.02rem;
-  line-height: 1.75;
-  color: #475569;
+  margin: var(--space-7) 0 0;
+  font-size: var(--text-md);
+  line-height: var(--line-relaxed);
+  color: var(--color-text-muted);
 }
 
 .hero-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 24px;
+  gap: var(--space-4);
+  margin-top: var(--space-10);
 }
 
 .hero-links a {
-  padding: 10px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(79, 70, 229, 0.16);
-  background: rgba(79, 70, 229, 0.06);
-  color: #3730a3;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-primary-border);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-strong);
   font-weight: 600;
-  text-decoration: none;
-  transition: 0.18s ease;
+  transition: var(--transition-fast);
 }
 
 .hero-links a:hover {
@@ -103,20 +99,20 @@
 
 .hero-card {
   height: 100%;
-  padding: 24px;
+  padding: var(--space-10);
 }
 
 .hero-card-label {
-  margin: 0 0 14px;
+  margin: 0 0 var(--space-5);
   font-size: 0.9rem;
   font-weight: 700;
-  color: #475569;
+  color: var(--color-text-muted);
 }
 
 .hero-card ul {
   margin: 0;
   padding-left: 18px;
-  color: #334155;
+  color: var(--color-tag-text);
   line-height: 1.9;
 }
 
@@ -129,12 +125,8 @@
 @media (max-width: 640px) {
   .hero-text,
   .hero-card {
-    border-radius: 16px;
-  }
-
-  .hero-text,
-  .hero-card {
-    padding: 22px;
+    border-radius: var(--radius-md);
+    padding: var(--space-9);
   }
 }
 </style>

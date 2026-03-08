@@ -19,24 +19,24 @@ defineProps<{
 
 <style scoped>
 .section {
-  margin-bottom: 52px;
-  scroll-margin-top: 88px;
+  margin-bottom: var(--space-16);
+  scroll-margin-top: var(--section-scroll-offset);
 }
 
 .section-head {
-  margin-bottom: 18px;
+  margin-bottom: var(--space-7);
 }
 
 .section-head h2 {
   margin: 0;
-  font-size: 1.45rem;
+  font-size: var(--text-lg);
   letter-spacing: -0.02em;
-  color: #0f172a;
+  color: var(--color-text-strong);
 }
 
 .section-body {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-6);
 }
 </style>

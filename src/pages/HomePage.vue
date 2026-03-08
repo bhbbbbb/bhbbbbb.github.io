@@ -3,9 +3,10 @@ import AppHeader from '@/components/layout/AppHeader.vue'
 import HomeHero from '@/components/sections/HomeHero.vue'
 import HomeSection from '@/components/sections/HomeSection.vue'
 import TimelineRow from '@/components/rows/TimelineRow.vue'
-import FeatureRow from '@/components/rows/FeatureRow.vue'
+import ProjectRow from '@/components/rows/ProjectRow.vue'
 import SimpleRow from '@/components/rows/SimpleRow.vue'
 import { homeContent } from '@/data/home'
+import PublicationRow from '@/components/rows/PublicationRow.vue'
 </script>
 
 <template>
@@ -34,24 +35,29 @@ import { homeContent } from '@/data/home'
       />
     </HomeSection>
 
-    <HomeSection id="publications" title="Selected Publications">
-      <FeatureRow
-        v-for="item in homeContent.publications"
+    <HomeSection id="projects" title="Projects">
+      <ProjectRow
+        v-for="item in homeContent.projects"
+        :id="item.id"
         :key="`${item.title}-${item.year}`"
-        :type="item.type"
+        :meta="item.meta"
         :year="item.year"
         :title="item.title"
         :description="item.description"
         :tags="item.tags"
         :links="item.links"
+        :image="item.image"
       />
     </HomeSection>
 
-    <HomeSection id="projects" title="Projects">
-      <FeatureRow
-        v-for="item in homeContent.projects"
+    <HomeSection id="publications" title="Selected Publications">
+      <PublicationRow
+        v-for="item in homeContent.publications"
+        :id="item.id"
+        :authors="item.authors"
+        :venue="item.venue"
         :key="`${item.title}-${item.year}`"
-        :type="item.type"
+        :meta="item.meta"
         :year="item.year"
         :title="item.title"
         :description="item.description"

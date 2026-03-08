@@ -26,13 +26,35 @@ export interface TimelineItem {
   badge?: string
 }
 
-export interface FeatureItem {
-  type: string
+export interface ProjectItem {
+  id: string
+  meta: string[]
   year: string | number
   title: string
   description: string
+  image?: string
   tags?: string[]
   links?: NavLink[]
+}
+
+export interface PublicationAuthor {
+  name: string
+  highlight?: boolean
+}
+
+export interface PublicationItem {
+  id: string
+  title: string
+  authors: PublicationAuthor[]
+  venue: string
+  year?: string | number
+  meta?: string[]
+  tags?: string[]
+  links?: {
+    label: string
+    href: string
+  }[]
+  description?: string
 }
 
 export interface SimpleItem {
@@ -44,7 +66,7 @@ export interface SimpleItem {
 export interface HomeContent {
   hero: HeroContent
   education: TimelineItem[]
-  publications: FeatureItem[]
-  projects: FeatureItem[]
+  publications: PublicationItem[]
+  projects: ProjectItem[]
   others: SimpleItem[]
 }

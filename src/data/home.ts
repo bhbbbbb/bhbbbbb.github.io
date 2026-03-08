@@ -6,10 +6,10 @@ export const siteContent: SiteContent = {
 
   nav: [
     { label: 'About', href: '#about' },
-    { label: 'Education', href: '#education' },
-    { label: 'Publications', href: '#publications' },
+    // { label: 'Education', href: '#education' },
     { label: 'Projects', href: '#projects' },
-    { label: 'Others', href: '#others' },
+    { label: 'Publications', href: '#publications' },
+    // { label: 'Others', href: '#others' },
   ],
 }
 
@@ -54,51 +54,39 @@ export const homeContent: HomeContent = {
     },
   ],
 
-  publications: [
-    {
-      type: 'ICLR 2026',
-      year: '2026',
-      title: 'Paper Title Example for a Research Publication',
-      description:
-        'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',
-      tags: ['LLM', 'Retrieval', 'Knowledge Graph'],
-      links: [
-        { label: 'Paper', href: '#' },
-        { label: 'Code', href: '#' },
-        { label: 'Project', href: '#' },
-      ],
-    },
-    {
-      type: 'Journal',
-      year: '2024',
-      title: 'Paper Title Example for a Research Publication',
-      description:
-        'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',
-      tags: ['Representation Learning', 'Graph ML', 'Evaluation'],
-      links: [
-        { label: 'Paper', href: '#' },
-        { label: 'Code', href: '#' },
-        { label: 'Project', href: '#' },
-      ],
-    },
-  ],
-
   projects: [
     {
-      type: 'Project',
-      year: '2025',
-      title: 'Project Example: AI Assistant for Portfolio Website',
+      id: 'atomhin',
+      meta: ['ICLR 2026', 'M.S. Thesis'],
+      year: '2026',
+      title: 'AtomHIN',
       description:
-        'An interactive assistant that answers grounded questions about my background, projects, and research using retrieved evidence from structured and unstructured sources.',
-      tags: ['FastAPI', 'Vue', 'RAG', 'LLM'],
+        'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',
+      tags: ['Graph', 'Graph Neural Networks', 'DGL'],
       links: [
-        { label: 'Code', href: '#' },
-        { label: 'Demo', href: '#' },
-        { label: 'Docs', href: '#' },
+        // { label: 'Paper', href: '#' },
+        { label: 'Code', href: 'https://github.com/ntuidssplab/AtomHIN' },
+        { label: "ICLR'26", href: '#iclr2026-atomic-hins' },
       ],
+      // image: '/src/assets/betag.png',
     },
     {
-      type: 'Project',
+      id: 'betag',
+      meta: ['WWW 2025'],
+      year: '2025',
+      title: 'BETag',
+      description:
+        'An interactive assistant that answers grounded questions about my background, projects, and research using retrieved evidence from structured and unstructured sources.',
+      tags: ['LLMs', 'LoRA', 'Recommendation Systems'],
+      links: [
+        { label: 'Code', href: 'https://github.com/idssplab/BETag' },
+        { label: "WWW'25", href: '#www25-betag' },
+      ],
+      image: '/src/assets/betag.png',
+    },
+    {
+      id: 'new-project',
+      meta: ['Project'],
       year: '2024',
       title: 'Project Example: Developer Tooling / VSCode Extension',
       description:
@@ -110,6 +98,66 @@ export const homeContent: HomeContent = {
         { label: 'Docs', href: '#' },
       ],
     },
+  ],
+
+  publications: [
+    {
+      id: 'iclr2026-atomic-hins',
+      meta: ['ICLR 2026', 'M.S. Thesis'],
+      year: '2026',
+      title: 'Atomic HINs: Entity-Attribute Duality for Heterogeneous Graph Modeling',
+      venue: 'International Conference on Learning Representations (ICLR)',
+      tags: ['Graph', 'Graph Neural Networks', 'Relational Database'],
+      links: [
+        { label: 'Paper', href: 'https://openreview.net/pdf?id=AG7fjg5azU' },
+        { label: 'Code', href: 'https://github.com/ntuidssplab/AtomHIN' },
+        { label: 'Project', href: '#atomhin' },
+      ],
+      authors: [
+        { name: 'Shao-En Lin', highlight: true },
+        { name: 'Ming-Yi Hong' },
+        { name: 'Miao-Chen Chiang' },
+        { name: 'Chih-Yu Wang' },
+        { name: 'Che Lin' },
+      ],
+    },
+    {
+      id: 'www2025-betag',
+      meta: ['WWW 2025'],
+      year: '2025',
+      title: 'BETag: Behavior-enhanced Item Tagging with Finetuned Large Language Models',
+      // description: 'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',
+      // description: 'In Proceedings of the ACM on Web Conference (WWW), 2025',
+      venue: 'In Proceedings of the ACM on Web Conference (WWW)',
+      tags: ['LLMs', 'LoRA', 'Recommendation Systems'],
+      links: [
+        { label: 'Paper', href: 'https://dl.acm.org/doi/10.1145/3696410.3714769' },
+        { label: 'Code', href: 'https://github.com/idssplab/BETag?tab=readme-ov-file' },
+        { label: 'Project', href: '#betag' },
+      ],
+      authors: [
+        { name: 'Shao-En Lin', highlight: true },
+        { name: 'Brian Liu' },
+        { name: 'Miao-Chen Chiang' },
+        { name: 'Ming-Yi Hong' },
+        { name: 'Yu-Shiang Huang' },
+        { name: 'Chuan-Ju Wang' },
+        { name: 'Che Lin' },
+      ],
+    },
+    // {
+    //   meta: ['Journal'],
+    //   year: '2024',
+    //   title: 'Paper Title Example for a Research Publication',
+    //   description:
+    //     'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',
+    //   tags: ['Representation Learning', 'Graph ML', 'Evaluation'],
+    //   links: [
+    //     { label: 'Paper', href: '#' },
+    //     { label: 'Code', href: '#' },
+    //     { label: 'Project', href: '#' },
+    //   ],
+    // },
   ],
 
   others: [

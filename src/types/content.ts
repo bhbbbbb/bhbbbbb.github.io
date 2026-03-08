@@ -20,8 +20,10 @@ export interface HeroContent {
 export interface TimelineItem {
   title: string
   organization: string
-  description: string
+  description?: string
   period: string
+  tags?: string[]
+  badge?: string
 }
 
 export interface FeatureItem {

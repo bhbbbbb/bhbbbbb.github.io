@@ -1,30 +1,49 @@
 <script setup lang="ts">
+import TagRow from '@/components/common/TagRow.vue'
+
 defineProps<{
   title: string
   organization: string
-  description: string
   period: string
+  description?: string
+  tags?: string[]
+  badge?: string
 }>()
 </script>
 
 <template>
-  <article class="timeline-item">
-    <div class="timeline-main">
-      <h3>{{ title }}</h3>
-      <p class="timeline-org">{{ organization }}</p>
-      <p class="timeline-desc">{{ description }}</p>
+  <article class="timeline-item" :class="{ 'no-badge': !badge }">
+    <div v-if="badge" class="timeline-left">
+      <div class="timeline-badge">
+        <img :src="badge" :alt="`${organization} badge`" />
+      </div>
     </div>
 
-    <div class="timeline-meta">{{ period }}</div>
+    <div class="timeline-main">
+      <div class="timeline-head">
+        <div class="timeline-title-group">
+          <h3>{{ title }}</h3>
+          <p class="timeline-org">{{ organization }}</p>
+        </div>
+
+        <div class="timeline-meta">{{ period }}</div>
+      </div>
+
+      <p v-if="description" class="timeline-desc">
+        {{ description }}
+      </p>
+
+      <TagRow v-if="tags?.length" class="timeline-tags" :tags="tags" />
+    </div>
   </article>
 </template>
 
 <style scoped>
 .timeline-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-8);
   align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-10);
   padding: var(--space-9) var(--space-10);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -32,7 +51,48 @@ defineProps<{
   box-shadow: var(--shadow-card);
 }
 
-.timeline-main h3 {
+.timeline-left {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 56px;
+}
+
+/* collapse badge column when unused */
+.timeline-item.no-badge {
+  grid-template-columns: 1fr;
+}
+
+.timeline-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  overflow: hidden;
+  /* border: 1px solid var(--color-border); */
+  background: var(--color-surface-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.timeline-main {
+  min-width: 0;
+}
+
+.timeline-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+
+.timeline-title-group h3 {
   margin: 0;
   line-height: var(--line-tight);
   color: var(--color-text-strong);
@@ -44,12 +104,6 @@ defineProps<{
   color: var(--color-primary);
 }
 
-.timeline-desc {
-  margin: var(--space-3) 0 0;
-  line-height: 1.7;
-  color: var(--color-text-muted);
-}
-
 .timeline-meta {
   white-space: nowrap;
   font-size: var(--text-sm);
@@ -57,15 +111,35 @@ defineProps<{
   color: var(--color-text-soft);
 }
 
+.timeline-desc {
+  margin: var(--space-3) 0 0;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.timeline-tags {
+  margin-top: var(--space-4);
+}
+
 @media (max-width: 860px) {
-  .timeline-item {
+  .timeline-head {
     flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .timeline-meta {
+    white-space: normal;
   }
 }
 
 @media (max-width: 640px) {
   .timeline-item {
+    grid-template-columns: 1fr;
     border-radius: var(--radius-md);
+  }
+
+  .timeline-left {
+    min-width: 0;
   }
 }
 </style>

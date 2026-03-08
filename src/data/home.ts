@@ -22,34 +22,42 @@ export const homeContent: HomeContent = {
     focusTitle: 'Currently focused on',
     focuses: ['LLM systems', 'Retrieval / RAG', 'Knowledge graphs', 'ML engineering'],
     links: [
-      { label: 'GitHub', href: '#' },
-      { label: 'Scholar', href: '#' },
-      { label: 'LinkedIn', href: '#' },
+      { label: 'GitHub', href: 'https://github.com' },
+      // { label: 'Scholar', href: '#' },
+      { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shaoenlin' },
       { label: 'CV', href: '#' },
     ],
   },
 
   education: [
     {
-      title: 'M.S. in Electrical Engineering',
-      organization: 'University Name',
-      description:
-        'Focus on machine learning, representation learning, retrieval systems, and practical AI applications.',
-      period: '2023 — Present',
+      title: 'M.S. in Data Science',
+      organization: 'National Taiwan University',
+      // description: 'Focus on machine learning, representation learning, retrieval systems, and practical AI applications.',
+      tags: [
+        // 'Heterogeneous Graphs',
+        'Graph Neural Networks',
+        'LLMs',
+        'Recommendation Systems',
+        'Machine Learning',
+      ],
+      period: '2023 — 2026',
+      // badge: '/src/assets/ntu.svg',
     },
     {
-      title: 'B.S. in Computer Science',
-      organization: 'University Name',
-      description:
-        'Coursework in algorithms, distributed systems, software engineering, and machine learning.',
+      title: 'B.S. in Electrical Engineering',
+      organization: 'National Cheng Kung University',
+      // description: 'Coursework in algorithms, distributed systems, software engineering, and machine learning.',
       period: '2019 — 2023',
+      // tags: ['abc', 'def'],
+      // badge: '/src/assets/ncku.png',
     },
   ],
 
   publications: [
     {
-      type: 'Conference',
-      year: '2024',
+      type: 'ICLR 2026',
+      year: '2026',
       title: 'Paper Title Example for a Research Publication',
       description:
         'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',

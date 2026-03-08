@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import TagRow from '@/components/common/TagRow.vue'
 interface FeatureLink {
   label: string
   href: string
@@ -30,11 +31,7 @@ defineProps<{
         {{ description }}
       </p>
 
-      <div v-if="tags?.length" class="tag-row">
-        <span v-for="tag in tags" :key="tag" class="tag">
-          {{ tag }}
-        </span>
-      </div>
+      <TagRow :tags="tags" />
 
       <div v-if="links?.length" class="link-row">
         <a v-for="link in links" :key="`${title}-${link.label}`" :href="link.href">
@@ -107,21 +104,6 @@ defineProps<{
   margin: 0;
   line-height: var(--line-base);
   color: var(--color-text-muted);
-}
-
-.tag-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.tag {
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-pill);
-  background: var(--color-tag-bg);
-  color: var(--color-tag-text);
-  font-size: var(--text-xs);
-  font-weight: 600;
 }
 
 .link-row {

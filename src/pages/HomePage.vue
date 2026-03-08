@@ -28,7 +28,9 @@ import { homeContent } from '@/data/home'
         :title="item.title"
         :organization="item.organization"
         :description="item.description"
+        :tags="item.tags"
         :period="item.period"
+        :badge="item.badge"
       />
     </HomeSection>
 

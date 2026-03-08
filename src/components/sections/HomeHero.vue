@@ -24,7 +24,13 @@ defineProps<{
       </p>
 
       <div class="hero-links">
-        <a v-for="link in links" :key="link.label" :href="link.href">
+        <a
+          v-for="link in links"
+          :key="link.label"
+          :href="link.href"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {{ link.label }}
         </a>
       </div>

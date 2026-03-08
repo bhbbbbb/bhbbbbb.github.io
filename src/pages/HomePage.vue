@@ -1,141 +1,136 @@
 <script setup lang="ts">
-const name = 'Your Name'
-
-const highlights = [
-  {
-    title: 'LLM & Retrieval Systems',
-    description:
-      'Building practical systems using LLMs, retrieval pipelines, and structured knowledge.',
-  },
-  {
-    title: 'Machine Learning Engineering',
-    description:
-      'Production-oriented ML systems with emphasis on reliability, evaluation, and infrastructure.',
-  },
-  {
-    title: 'Graph-based Knowledge',
-    description: 'Exploring graph representations and structured reasoning for AI systems.',
-  },
-]
-
-const links = [
-  { name: 'Projects', href: '/projects' },
-  { name: 'Experience', href: '/experience' },
-  { name: 'Writing', href: '/writing' },
-  { name: 'Resume', href: '/resume' },
-  { name: 'GitHub', href: 'https://github.com' },
-]
+import AppHeader from '@/components/layout/AppHeader.vue'
+import HomeHero from '@/components/sections/HomeHero.vue'
+import HomeSection from '@/components/sections/HomeSection.vue'
+import TimelineRow from '@/components/rows/TimelineRow.vue'
+import FeatureRow from '@/components/rows/FeatureRow.vue'
+import SimpleRow from '@/components/rows/SimpleRow.vue'
 </script>
 
 <template>
-  <main class="container">
-    <!-- Hero -->
-    <section class="hero">
-      <h1>{{ name }}</h1>
-      <p class="tagline">
-        ML/AI engineer focused on building practical systems with LLMs, retrieval, and structured
-        knowledge.
-      </p>
+  <AppHeader />
 
-      <div class="links">
-        <a v-for="link in links" :key="link.name" :href="link.href" class="link">
-          {{ link.name }}
-        </a>
-      </div>
-    </section>
+  <main class="home">
+    <HomeHero />
 
-    <!-- Summary -->
-    <section class="section">
-      <h2>About</h2>
-      <p>
-        I work on applied machine learning systems, with a focus on large language models, retrieval
-        pipelines, and knowledge representation. My interests include building reliable AI
-        infrastructure, improving model grounding, and designing systems that combine structured and
-        unstructured data.
-      </p>
-    </section>
+    <HomeSection id="education" title="Education">
+      <TimelineRow
+        title="M.S. in Computer Science"
+        organization="University Name"
+        description="Focus on machine learning, representation learning, retrieval systems, and practical AI applications."
+        period="2023 — Present"
+      />
+      <TimelineRow
+        title="B.S. in Computer Science"
+        organization="University Name"
+        description="Coursework in algorithms, distributed systems, software engineering, and machine learning."
+        period="2019 — 2023"
+      />
+    </HomeSection>
 
-    <!-- Highlights -->
-    <section class="section">
-      <h2>Focus Areas</h2>
+    <HomeSection id="publications" title="Selected Publications">
+      <FeatureRow
+        type="Conference"
+        year="2024"
+        title="Paper Title Example for a Research Publication"
+        description="A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly."
+        :tags="['LLM', 'Retrieval', 'Knowledge Graph']"
+        :links="[
+          { label: 'Paper', href: '#' },
+          { label: 'Code', href: '#' },
+          { label: 'Project', href: '#' },
+        ]"
+      />
+      <FeatureRow
+        type="Journal"
+        year="2024"
+        title="Paper Title Example for a Research Publication"
+        description="A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly."
+        :tags="['Representation Learning', 'Graph ML', 'Evaluation']"
+        :links="[
+          { label: 'Paper', href: '#' },
+          { label: 'Code', href: '#' },
+          { label: 'Project', href: '#' },
+        ]"
+      />
+    </HomeSection>
 
-      <div class="grid">
-        <div v-for="item in highlights" :key="item.title" class="card">
-          <h3>{{ item.title }}</h3>
-          <p>{{ item.description }}</p>
-        </div>
-      </div>
-    </section>
+    <HomeSection id="projects" title="Projects">
+      <FeatureRow
+        type="Project"
+        year="2025"
+        title="Project Example: AI Assistant for Portfolio Website"
+        description="An interactive assistant that answers grounded questions about my background, projects, and research using retrieved evidence from structured and unstructured sources."
+        :tags="['FastAPI', 'Vue', 'RAG', 'LLM']"
+        :links="[
+          { label: 'Code', href: '#' },
+          { label: 'Demo', href: '#' },
+          { label: 'Docs', href: '#' },
+        ]"
+      />
+      <FeatureRow
+        type="Project"
+        year="2024"
+        title="Project Example: Developer Tooling / VSCode Extension"
+        description="A developer-focused tool that improves workflow efficiency. This row layout gives enough space to explain the problem, implementation, and practical value."
+        :tags="['TypeScript', 'VSCode', 'DX']"
+        :links="[
+          { label: 'Code', href: '#' },
+          { label: 'Marketplace', href: '#' },
+          { label: 'Docs', href: '#' },
+        ]"
+      />
+    </HomeSection>
 
-    <!-- Future assistant teaser -->
-    <section class="section">
-      <h2>Portfolio Assistant</h2>
-      <p>
-        This site will include an AI assistant that can answer questions about my projects,
-        experience, and research using grounded retrieval over my work.
-      </p>
-    </section>
+    <HomeSection id="others" title="Others">
+      <SimpleRow
+        title="Scholarship / Honor / Certificate"
+        description="Short description of the recognition or achievement."
+        year="2024"
+      />
+      <SimpleRow
+        title="Scholarship / Honor / Certificate"
+        description="Short description of the recognition or achievement."
+        year="2023"
+      />
+    </HomeSection>
   </main>
 </template>
 
 <style scoped>
-.container {
-  max-width: 800px;
+:global(html) {
+  scroll-behavior: smooth;
+}
+
+:global(body) {
+  margin: 0;
+  background: #f5f7fb;
+  color: #1f2937;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+}
+
+:global(*) {
+  box-sizing: border-box;
+}
+
+.home {
+  width: min(980px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 48px 20px;
-  line-height: 1.6;
+  padding: 40px 0 72px;
 }
 
-.hero {
-  margin-bottom: 48px;
-}
-
-h1 {
-  font-size: 36px;
-  margin-bottom: 12px;
-}
-
-.tagline {
-  font-size: 18px;
-  color: #555;
-  margin-bottom: 20px;
-}
-
-.links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-
-.link {
-  text-decoration: none;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 2px;
-}
-
-.section {
-  margin-top: 40px;
-}
-
-.section h2 {
-  margin-bottom: 12px;
-  font-size: 22px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-
-.card {
-  padding: 16px;
-  border: 1px solid #e5e5e5;
-  border-radius: 6px;
-}
-
-.card h3 {
-  margin-bottom: 6px;
-  font-size: 18px;
+@media (max-width: 640px) {
+  .home {
+    width: min(100% - 24px, 980px);
+    padding-top: 24px;
+    padding-bottom: 48px;
+  }
 }
 </style>

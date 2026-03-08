@@ -1,14 +1,18 @@
+<script setup lang="ts">
+import { siteContent } from '@/data/home'
+</script>
+
 <template>
   <header class="header">
     <div class="inner">
-      <a class="brand" href="#about">Your Name</a>
+      <a class="brand" href="#about">
+        {{ siteContent.brand }}
+      </a>
 
       <nav class="nav">
-        <a href="#about">About</a>
-        <a href="#education">Education</a>
-        <a href="#publications">Publications</a>
-        <a href="#projects">Projects</a>
-        <a href="#others">Others</a>
+        <a v-for="item in siteContent.nav" :key="item.href" :href="item.href">
+          {{ item.label }}
+        </a>
       </nav>
     </div>
   </header>

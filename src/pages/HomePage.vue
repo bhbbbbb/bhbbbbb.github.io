@@ -5,93 +5,66 @@ import HomeSection from '@/components/sections/HomeSection.vue'
 import TimelineRow from '@/components/rows/TimelineRow.vue'
 import FeatureRow from '@/components/rows/FeatureRow.vue'
 import SimpleRow from '@/components/rows/SimpleRow.vue'
+import { homeContent } from '@/data/home'
 </script>
 
 <template>
   <AppHeader />
 
   <main class="home">
-    <HomeHero />
+    <HomeHero
+      :eyebrow="homeContent.hero.eyebrow"
+      :name="homeContent.hero.name"
+      :intro="homeContent.hero.intro"
+      :focus-title="homeContent.hero.focusTitle"
+      :focuses="homeContent.hero.focuses"
+      :links="homeContent.hero.links"
+    />
 
     <HomeSection id="education" title="Education">
       <TimelineRow
-        title="M.S. in Computer Science"
-        organization="University Name"
-        description="Focus on machine learning, representation learning, retrieval systems, and practical AI applications."
-        period="2023 — Present"
-      />
-      <TimelineRow
-        title="B.S. in Computer Science"
-        organization="University Name"
-        description="Coursework in algorithms, distributed systems, software engineering, and machine learning."
-        period="2019 — 2023"
+        v-for="item in homeContent.education"
+        :key="`${item.title}-${item.period}`"
+        :title="item.title"
+        :organization="item.organization"
+        :description="item.description"
+        :period="item.period"
       />
     </HomeSection>
 
     <HomeSection id="publications" title="Selected Publications">
       <FeatureRow
-        type="Conference"
-        year="2024"
-        title="Paper Title Example for a Research Publication"
-        description="A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly."
-        :tags="['LLM', 'Retrieval', 'Knowledge Graph']"
-        :links="[
-          { label: 'Paper', href: '#' },
-          { label: 'Code', href: '#' },
-          { label: 'Project', href: '#' },
-        ]"
-      />
-      <FeatureRow
-        type="Journal"
-        year="2024"
-        title="Paper Title Example for a Research Publication"
-        description="A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly."
-        :tags="['Representation Learning', 'Graph ML', 'Evaluation']"
-        :links="[
-          { label: 'Paper', href: '#' },
-          { label: 'Code', href: '#' },
-          { label: 'Project', href: '#' },
-        ]"
+        v-for="item in homeContent.publications"
+        :key="`${item.title}-${item.year}`"
+        :type="item.type"
+        :year="item.year"
+        :title="item.title"
+        :description="item.description"
+        :tags="item.tags"
+        :links="item.links"
       />
     </HomeSection>
 
     <HomeSection id="projects" title="Projects">
       <FeatureRow
-        type="Project"
-        year="2025"
-        title="Project Example: AI Assistant for Portfolio Website"
-        description="An interactive assistant that answers grounded questions about my background, projects, and research using retrieved evidence from structured and unstructured sources."
-        :tags="['FastAPI', 'Vue', 'RAG', 'LLM']"
-        :links="[
-          { label: 'Code', href: '#' },
-          { label: 'Demo', href: '#' },
-          { label: 'Docs', href: '#' },
-        ]"
-      />
-      <FeatureRow
-        type="Project"
-        year="2024"
-        title="Project Example: Developer Tooling / VSCode Extension"
-        description="A developer-focused tool that improves workflow efficiency. This row layout gives enough space to explain the problem, implementation, and practical value."
-        :tags="['TypeScript', 'VSCode', 'DX']"
-        :links="[
-          { label: 'Code', href: '#' },
-          { label: 'Marketplace', href: '#' },
-          { label: 'Docs', href: '#' },
-        ]"
+        v-for="item in homeContent.projects"
+        :key="`${item.title}-${item.year}`"
+        :type="item.type"
+        :year="item.year"
+        :title="item.title"
+        :description="item.description"
+        :tags="item.tags"
+        :links="item.links"
       />
     </HomeSection>
 
     <HomeSection id="others" title="Others">
       <SimpleRow
-        title="Scholarship / Honor / Certificate"
-        description="Short description of the recognition or achievement."
-        year="2024"
-      />
-      <SimpleRow
-        title="Scholarship / Honor / Certificate"
-        description="Short description of the recognition or achievement."
-        year="2023"
+        v-for="item in homeContent.others"
+        :key="`${item.title}-${item.year}`"
+        :title="item.title"
+        :description="item.description"
+        :year="item.year"
       />
     </HomeSection>
   </main>

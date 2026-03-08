@@ -1,29 +1,42 @@
+<script setup lang="ts">
+interface HeroLink {
+  label: string
+  href: string
+}
+
+defineProps<{
+  eyebrow: string
+  name: string
+  intro: string
+  focusTitle: string
+  focuses: string[]
+  links: HeroLink[]
+}>()
+</script>
+
 <template>
   <section id="about" class="hero">
     <div class="hero-text">
-      <p class="eyebrow">ML / AI Engineer</p>
-      <h1>Your Name</h1>
+      <p class="eyebrow">{{ eyebrow }}</p>
+      <h1>{{ name }}</h1>
       <p class="hero-intro">
-        I build machine learning systems and practical AI applications, with interests in LLMs,
-        retrieval, knowledge systems, and developer-facing tools.
+        {{ intro }}
       </p>
 
       <div class="hero-links">
-        <a href="#">GitHub</a>
-        <a href="#">Scholar</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">CV</a>
+        <a v-for="link in links" :key="link.label" :href="link.href">
+          {{ link.label }}
+        </a>
       </div>
     </div>
 
     <div class="hero-side">
       <div class="hero-card">
-        <p class="hero-card-label">Currently focused on</p>
+        <p class="hero-card-label">{{ focusTitle }}</p>
         <ul>
-          <li>LLM systems</li>
-          <li>Retrieval / RAG</li>
-          <li>Knowledge graphs</li>
-          <li>ML engineering</li>
+          <li v-for="focus in focuses" :key="focus">
+            {{ focus }}
+          </li>
         </ul>
       </div>
     </div>

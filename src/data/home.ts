@@ -45,7 +45,7 @@ export const homeContent: HomeContent = {
         'Machine Learning',
       ],
       period: '2023 — 2026',
-      // badge: '/src/assets/ntu.svg',
+      // badge: '/ntu.svg',
     },
     {
       title: 'B.S. in Electrical Engineering',
@@ -53,7 +53,7 @@ export const homeContent: HomeContent = {
       // description: 'Coursework in algorithms, distributed systems, software engineering, and machine learning.',
       period: '2019 — 2023',
       // tags: ['abc', 'def'],
-      // badge: '/src/assets/ncku.png',
+      // badge: '/ncku.png',
     },
   ],
 
@@ -71,7 +71,7 @@ export const homeContent: HomeContent = {
         { label: 'Code', href: 'https://github.com/ntuidssplab/AtomHIN' },
         { label: "ICLR'26", href: '#iclr2026-atomic-hins' },
       ],
-      image: '/src/assets/atomhin-2.png',
+      image: '/atomhin-2.png',
     },
     {
       id: 'betag',
@@ -85,7 +85,7 @@ export const homeContent: HomeContent = {
         { label: 'Code', href: 'https://github.com/idssplab/BETag' },
         { label: "WWW'25", href: '#www25-betag' },
       ],
-      image: '/src/assets/betag.png',
+      image: '/betag.png',
     },
     {
       id: 'synhing',
@@ -96,7 +96,7 @@ export const homeContent: HomeContent = {
         'Framework for generating explainable synthetic heterogeneous information networks (HINs). I optimized the core merge algorithm from O(n²) to O(n), enabling million-scale graph generation in under 10 minutes.',
       tags: ['Graph', 'XAI'],
       links: [{ label: 'Arxiv', href: '#arxiv-synhing' }],
-      image: '/src/assets/synhing.png',
+      image: '/synhing.png',
     },
     {
       id: 'ahk-doc',
@@ -113,7 +113,7 @@ export const homeContent: HomeContent = {
           href: 'https://marketplace.visualstudio.com/items?itemName=bhbbbbb.vscode-autohotkey-ahkdoc',
         },
       ],
-      image: '/src/assets/ahkdoc.jpg',
+      image: '/ahkdoc.jpg',
     },
   ],
 

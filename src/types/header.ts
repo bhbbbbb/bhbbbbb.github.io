@@ -5,5 +5,6 @@ export interface SiteNavItem {
 
 export interface SiteContent {
   brand: string
+  description: string
   nav: SiteNavItem[]
 }

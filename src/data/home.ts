@@ -3,6 +3,7 @@ import type { SiteContent } from '@/types/header'
 
 export const siteContent: SiteContent = {
   brand: 'Shao-En Lin',
+  description: 'Portfolio of Your Shao-En Lin',
 
   nav: [
     { label: 'About', href: '#about' },

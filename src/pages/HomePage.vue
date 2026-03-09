@@ -7,6 +7,7 @@ import ProjectRow from '@/components/rows/ProjectRow.vue'
 import SimpleRow from '@/components/rows/SimpleRow.vue'
 import { homeContent } from '@/data/home'
 import PublicationRow from '@/components/rows/PublicationRow.vue'
+import AppFooter from '@/components/layout/AppFooter.vue'
 </script>
 
 <template>
@@ -76,6 +77,7 @@ import PublicationRow from '@/components/rows/PublicationRow.vue'
       />
     </HomeSection>
   </main>
+  <AppFooter />
 </template>
 
 <style scoped>

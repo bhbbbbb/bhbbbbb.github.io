@@ -2,13 +2,14 @@
 import { toRef } from 'vue'
 import TagContainer from '@/components/common/TagContainer.vue'
 import { useRowTagState } from '@/composables/useRowTagState'
+import type { RowTag } from '@/types/tag'
 
 const props = withDefaults(
   defineProps<{
     title: string
     description: string
     year: string | number
-    tags?: string[]
+    tags?: RowTag[]
     activeTags?: string[]
     hoveredTag?: string | null
   }>(),

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
+    id: string
     label: string
     active?: boolean
     dimmed?: boolean
@@ -12,17 +13,17 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  click: [label: string]
-  enter: [label: string]
+  click: [id: string]
+  enter: [id: string]
   leave: []
 }>()
 
 function handleClick() {
-  emit('click', props.label)
+  emit('click', props.id)
 }
 
 function handleMouseEnter() {
-  emit('enter', props.label)
+  emit('enter', props.id)
 }
 
 function handleMouseLeave() {

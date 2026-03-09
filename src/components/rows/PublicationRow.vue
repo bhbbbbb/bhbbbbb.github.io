@@ -2,6 +2,7 @@
 import { toRef } from 'vue'
 // import TagContainer from '@/components/common/TagContainer.vue'
 import { useRowTagState } from '@/composables/useRowTagState'
+import type { RowTag } from '@/types/tag'
 
 interface PublicationAuthor {
   name: string
@@ -21,7 +22,7 @@ const props = withDefaults(
     venue?: string
     year?: string | number
     meta?: string[]
-    tags?: string[]
+    tags?: RowTag[]
     links?: PublicationLink[]
     activeTags?: string[]
     hoveredTag?: string | null

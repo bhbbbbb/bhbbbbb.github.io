@@ -2,6 +2,7 @@
 import { toRef } from 'vue'
 import TagContainer from '@/components/common/TagContainer.vue'
 import { useRowTagState } from '@/composables/useRowTagState'
+import type { RowTag } from '@/types/tag'
 
 const props = withDefaults(
   defineProps<{
@@ -9,7 +10,7 @@ const props = withDefaults(
     organization: string
     period: string
     description?: string
-    tags?: string[]
+    tags?: RowTag[]
     badge?: string
     activeTags?: string[]
     hoveredTag?: string | null

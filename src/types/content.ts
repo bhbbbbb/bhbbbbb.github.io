@@ -1,3 +1,4 @@
+import type { RowTag } from './tag'
 export interface NavLink {
   label: string
   href: string
@@ -22,7 +23,7 @@ export interface TimelineItem {
   organization: string
   description?: string
   period: string
-  tags?: string[]
+  tags?: RowTag[]
   badge?: string
 }
 
@@ -33,7 +34,7 @@ export interface ProjectItem {
   title: string
   description: string
   image?: string
-  tags?: string[]
+  tags?: RowTag[]
   links?: NavLink[]
 }
 
@@ -49,7 +50,7 @@ export interface PublicationItem {
   venue: string
   year?: string | number
   meta?: string[]
-  tags?: string[]
+  tags?: RowTag[]
   links?: {
     label: string
     href: string
@@ -61,7 +62,7 @@ export interface SimpleItem {
   title: string
   description: string
   year: string | number
-  tags?: string[]
+  tags?: RowTag[]
 }
 
 export interface HomeContent {

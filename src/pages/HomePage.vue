@@ -10,9 +10,12 @@ import PublicationRow from '@/components/rows/PublicationRow.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import TagPill from '@/components/common/TagPill.vue'
 import { homeContent } from '@/data/home'
+import { getAllTags } from '@/utils/tag'
 
 const activeTags = ref<string[]>([])
 const hoveredTag = ref<string | null>(null)
+// const skillTags = computed(() => getAllTags().filter((tag) => tag.featured !== false))
+const skillTags = computed(() => getAllTags())
 
 watch(activeTags, (tags) => {
   if (tags.length === 0) {
@@ -41,10 +44,10 @@ function clearTags() {
   activeTags.value = []
 }
 
-function matchesActiveTags(tags?: string[]) {
+function matchesActiveTags(tags?: { id: string }[]) {
   if (!activeTags.value.length) return true
   if (!tags?.length) return false
-  return activeTags.value.some((tag) => tags.includes(tag))
+  return activeTags.value.some((tag) => tags.some((rowTag) => rowTag.id === tag))
 }
 
 const filteredEducation = computed(() =>
@@ -82,9 +85,10 @@ const filteredOthers = computed(() =>
 
       <div class="active-filters__pills">
         <TagPill
-          v-for="tag in activeTags"
-          :key="tag"
-          :label="tag"
+          v-for="tag in skillTags.filter((item) => activeTags.includes(item.id))"
+          :key="tag.id"
+          :id="tag.id"
+          :label="tag.defaultLabel"
           active
           @click="toggleTag"
           @enter="setHoveredTag"

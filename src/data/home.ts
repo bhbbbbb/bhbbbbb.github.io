@@ -1,5 +1,6 @@
 import type { HomeContent } from '@/types/content'
 import type { SiteContent } from '@/types/header'
+import { resolveRowTags } from '@/utils/tag'
 
 export const siteContent: SiteContent = {
   brand: 'Shao-En Lin',
@@ -37,13 +38,7 @@ export const homeContent: HomeContent = {
       title: 'M.S. in Data Science',
       organization: 'National Taiwan University',
       // description: 'Focus on machine learning, representation learning, retrieval systems, and practical AI applications.',
-      tags: [
-        // 'Heterogeneous Graphs',
-        'Graph Neural Networks',
-        'LLMs',
-        'Recommendation Systems',
-        'Machine Learning',
-      ],
+      tags: resolveRowTags(['gnn', 'llm', 'recsys', 'ml', '[](ms)']),
       period: '2023 — 2026',
       // badge: '/ntu.svg',
     },
@@ -52,7 +47,7 @@ export const homeContent: HomeContent = {
       organization: 'National Cheng Kung University',
       // description: 'Coursework in algorithms, distributed systems, software engineering, and machine learning.',
       period: '2019 — 2023',
-      // tags: ['abc', 'def'],
+      tags: resolveRowTags(['[](ml)', '[](bs)']),
       // badge: '/ncku.png',
     },
   ],
@@ -65,7 +60,7 @@ export const homeContent: HomeContent = {
       title: 'AtomHIN',
       description:
         'Introduces a schema optimization framework for heterogeneous information networks (HINs), enabling systematic design of task-specific graph schemas. The project also releases optimized schemas as reusable datasets via a Python package and simple API.',
-      tags: ['Graph', 'Graph Neural Networks', 'DGL'],
+      tags: resolveRowTags(['graph', 'gnn', 'rdb', '[](ml)', '[](dgl)', '[](atomhin)', '[](ms)']),
       links: [
         // { label: 'Paper', href: '#' },
         { label: 'Code', href: 'https://github.com/ntuidssplab/AtomHIN' },
@@ -80,7 +75,7 @@ export const homeContent: HomeContent = {
       title: 'BETag',
       description:
         'Behavior-enhanced automatic tagging system that finetunes LLMs using user interaction histories for retrieval and recommendation tasks. BETags are generated offline with zero runtime latency, improving tagging quality by 18% over manual annotations.',
-      tags: ['LLMs', 'LoRA', 'Information Retrieval', 'Recommendation Systems'],
+      tags: resolveRowTags(['llm', 'lora', 'recsys', 'ir', '[](ml)', '[](betag)', '[](ms)']),
       links: [
         { label: 'Code', href: 'https://github.com/idssplab/BETag' },
         { label: "WWW'25", href: '#www25-betag' },
@@ -94,7 +89,7 @@ export const homeContent: HomeContent = {
       title: 'SynHING',
       description:
         'Framework for generating explainable synthetic heterogeneous information networks (HINs). I optimized the core merge algorithm from O(n²) to O(n), enabling million-scale graph generation in under 10 minutes.',
-      tags: ['Graph', 'XAI'],
+      tags: resolveRowTags(['graph', 'xai', 'gnn', '[](dgl)', '[](ml)', '[](synhing)', '[](ms)']),
       links: [{ label: 'Arxiv', href: '#arxiv-synhing' }],
       image: '/synhing.png',
     },
@@ -105,7 +100,7 @@ export const homeContent: HomeContent = {
       title: 'AHKDoc',
       description:
         'VSCode extension that adds JSDoc-style documentation utilities to the AutoHotkey language service. The extension has been downloaded over 1.8k times from the VSCode Marketplace.',
-      tags: ['TypeScript', 'VSCode Extension', 'AutoHotkey'],
+      tags: resolveRowTags(['ts', 'vscode-ext', 'ahk', '[](bs)']),
       links: [
         { label: 'Code', href: 'https://github.com/bhbbbbb/vscode-autohotkey-ahkdoc' },
         {
@@ -124,7 +119,7 @@ export const homeContent: HomeContent = {
       year: '2026',
       title: 'Atomic HINs: Entity-Attribute Duality for Heterogeneous Graph Modeling',
       venue: 'International Conference on Learning Representations (ICLR)',
-      tags: ['Graph', 'Graph Neural Networks', 'Relational Database'],
+      tags: resolveRowTags(['graph', 'gnn', 'rdb', '[](ml)', '[](dgl)', '[](atomhin)', '[](ms)']),
       links: [
         { label: 'Paper', href: 'https://openreview.net/pdf?id=AG7fjg5azU' },
         { label: 'Code', href: 'https://github.com/ntuidssplab/AtomHIN' },
@@ -146,7 +141,7 @@ export const homeContent: HomeContent = {
       // description: 'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',
       // description: 'In Proceedings of the ACM on Web Conference (WWW), 2025',
       venue: 'In Proceedings of the ACM on Web Conference (WWW)',
-      tags: ['LLMs', 'LoRA', 'Recommendation Systems'],
+      tags: resolveRowTags(['llm', 'lora', 'recsys', 'ir', '[](ml)', '[](betag)', '[](ms)']),
       links: [
         { label: 'Paper', href: 'https://dl.acm.org/doi/10.1145/3696410.3714769' },
         { label: 'Code', href: 'https://github.com/idssplab/BETag?tab=readme-ov-file' },
@@ -171,7 +166,7 @@ export const homeContent: HomeContent = {
       // description: 'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',
       // description: 'In Proceedings of the ACM on Web Conference (WWW), 2025',
       venue: 'Arxiv',
-      tags: ['Graph', 'XAI'],
+      tags: resolveRowTags(['graph', 'xai', 'gnn', '[](dgl)', '[](ml)', '[](synhing)', '[](ms)']),
       links: [
         { label: 'Paper', href: 'https://arxiv.org/abs/2401.04133' },
         // { label: 'Code', href: 'https://github.com/idssplab/BETag?tab=readme-ov-file' },

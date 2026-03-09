@@ -3,6 +3,7 @@ import { ref, toRef } from 'vue'
 import { useRowTagState } from '@/composables/useRowTagState'
 
 import TagContainer from '@/components/common/TagContainer.vue'
+import type { RowTag } from '@/types/tag'
 
 interface FeatureLink {
   label: string
@@ -16,7 +17,7 @@ const props = withDefaults(
     description: string
     year?: string | number
     meta?: string[]
-    tags?: string[]
+    tags?: RowTag[]
     links?: FeatureLink[]
     image?: string
     activeTags?: string[]
@@ -52,6 +53,7 @@ const rowTags = toRef(props, 'tags')
 const activeTags = toRef(props, 'activeTags')
 const hoveredTag = toRef(props, 'hoveredTag')
 const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
+  // rowTagIds,
   rowTags,
   activeTags,
   hoveredTag,

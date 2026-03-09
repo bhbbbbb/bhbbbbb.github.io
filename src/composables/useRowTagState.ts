@@ -1,18 +1,21 @@
+import type { RowTag } from '@/types/tag'
 import { computed, type Ref } from 'vue'
 
 export function useRowTagState(
-  rowTags: Ref<string[]>,
+  rowTags: Ref<RowTag[]>,
   activeTags: Ref<string[]>,
   hoveredTag: Ref<string | null>,
 ) {
+  const rowTagIds = computed(() => rowTags.value.map((tag) => tag.id))
+
   const matchesActiveFilters = computed(() => {
     if (!activeTags.value.length) return true
-    return activeTags.value.some((tag) => rowTags.value.includes(tag))
+    return activeTags.value.some((tag) => rowTagIds.value.includes(tag))
   })
 
   const matchesHoveredTag = computed(() => {
     if (!hoveredTag.value) return true
-    return rowTags.value.includes(hoveredTag.value)
+    return rowTagIds.value.includes(hoveredTag.value)
   })
 
   const isDimmed = computed(() => {
@@ -22,6 +25,7 @@ export function useRowTagState(
   })
 
   return {
+    rowTagIds,
     matchesActiveFilters,
     matchesHoveredTag,
     isDimmed,

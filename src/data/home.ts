@@ -6,7 +6,7 @@ export const siteContent: SiteContent = {
   description: 'Portfolio of Your Shao-En Lin',
 
   nav: [
-    { label: 'About', href: '#about' },
+    { label: 'Home', href: '#' },
     // { label: 'Education', href: '#education' },
     { label: 'Projects', href: '#projects' },
     { label: 'Publications', href: '#publications' },
@@ -24,7 +24,7 @@ export const homeContent: HomeContent = {
     focusTitle: 'At a Glance',
     focuses: ['ICLR / WWW publications', 'Seeking ML / SWE roles', 'Taipei, Taiwan'],
     links: [
-      { label: 'GitHub', href: 'https://github.com' },
+      { label: 'GitHub', href: 'https://github.com/bhbbbbb' },
       // { label: 'Scholar', href: '#' },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shaoenlin' },
       { label: 'CV', href: '/shaoen-cv.pdf' },

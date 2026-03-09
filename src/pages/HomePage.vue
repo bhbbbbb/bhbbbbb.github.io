@@ -14,8 +14,9 @@ import { getAllTags } from '@/utils/tag'
 
 const activeTags = ref<string[]>([])
 const hoveredTag = ref<string | null>(null)
-// const skillTags = computed(() => getAllTags().filter((tag) => tag.featured !== false))
-const skillTags = computed(() => getAllTags())
+const allTags = computed(() => getAllTags())
+const skillTags = computed(() => getAllTags().filter((tag) => tag.featured !== false))
+// const skillTags = computed(() => getAllTags())
 
 watch(activeTags, (tags) => {
   if (tags.length === 0) {
@@ -85,7 +86,7 @@ const filteredOthers = computed(() =>
 
       <div class="active-filters__pills">
         <TagPill
-          v-for="tag in skillTags.filter((item) => activeTags.includes(item.id))"
+          v-for="tag in allTags.filter((item) => activeTags.includes(item.id))"
           :key="tag.id"
           :id="tag.id"
           :label="tag.defaultLabel"
@@ -172,6 +173,22 @@ const filteredOthers = computed(() =>
         @tag-enter="setHoveredTag"
         @tag-leave="clearHoveredTag"
       />
+    </HomeSection>
+    <HomeSection id="skills" title="Skills">
+      <div class="skills-grid">
+        <TagPill
+          v-for="tag in skillTags"
+          :key="tag.id"
+          :id="tag.id"
+          :label="tag.defaultLabel"
+          :active="activeTags.includes(tag.id)"
+          :dimmed="!!hoveredTag && hoveredTag !== tag.id"
+          :variant="'skill'"
+          @click="toggleTag"
+          @enter="setHoveredTag"
+          @leave="clearHoveredTag"
+        />
+      </div>
     </HomeSection>
   </main>
 

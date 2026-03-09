@@ -1,18 +1,55 @@
 <script setup lang="ts">
-import TagRow from '@/components/common/TagRow.vue'
+import { toRef } from 'vue'
+import TagContainer from '@/components/common/TagContainer.vue'
+import { useRowTagState } from '@/composables/useRowTagState'
 
-defineProps<{
-  title: string
-  organization: string
-  period: string
-  description?: string
-  tags?: string[]
-  badge?: string
+const props = withDefaults(
+  defineProps<{
+    title: string
+    organization: string
+    period: string
+    description?: string
+    tags?: string[]
+    badge?: string
+    activeTags?: string[]
+    hoveredTag?: string | null
+  }>(),
+  {
+    description: undefined,
+    tags: () => [],
+    badge: undefined,
+    activeTags: () => [],
+    hoveredTag: null,
+  },
+)
+
+const emit = defineEmits<{
+  tagClick: [tag: string]
+  tagEnter: [tag: string]
+  tagLeave: []
 }>()
+
+const rowTags = toRef(props, 'tags')
+const activeTags = toRef(props, 'activeTags')
+const hoveredTag = toRef(props, 'hoveredTag')
+
+const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
+  rowTags,
+  activeTags,
+  hoveredTag,
+)
 </script>
 
 <template>
-  <article class="timeline-item" :class="{ 'no-badge': !badge }">
+  <article
+    v-if="matchesActiveFilters"
+    class="timeline-item"
+    :class="{
+      'no-badge': !badge,
+      'timeline-item--dimmed': isDimmed,
+      'timeline-item--highlighted': hoveredTag && matchesHoveredTag,
+    }"
+  >
     <div v-if="badge" class="timeline-left">
       <div class="timeline-badge">
         <img :src="badge" :alt="`${organization} badge`" />
@@ -33,7 +70,16 @@ defineProps<{
         {{ description }}
       </p>
 
-      <TagRow v-if="tags?.length" class="timeline-tags" :tags="tags" />
+      <TagContainer
+        v-if="tags.length"
+        class="timeline-tags"
+        :tags="tags"
+        :active-tags="activeTags"
+        :hovered-tag="hoveredTag"
+        @tag-click="emit('tagClick', $event)"
+        @tag-enter="emit('tagEnter', $event)"
+        @tag-leave="emit('tagLeave')"
+      />
     </div>
   </article>
 </template>
@@ -49,6 +95,20 @@ defineProps<{
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
+  transition:
+    opacity var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.timeline-item--dimmed {
+  opacity: 0.45;
+}
+
+.timeline-item--highlighted {
+  border-color: var(--color-primary-border);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
 }
 
 .timeline-left {
@@ -58,7 +118,6 @@ defineProps<{
   min-width: 56px;
 }
 
-/* collapse badge column when unused */
 .timeline-item.no-badge {
   grid-template-columns: 1fr;
 }
@@ -68,7 +127,6 @@ defineProps<{
   height: 48px;
   border-radius: 12px;
   overflow: hidden;
-  /* border: 1px solid var(--color-border); */
   background: var(--color-surface-strong);
   display: flex;
   align-items: center;

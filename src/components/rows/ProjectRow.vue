@@ -1,21 +1,40 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import TagRow from '@/components/common/TagRow.vue'
+import { ref, toRef } from 'vue'
+import { useRowTagState } from '@/composables/useRowTagState'
+
+import TagContainer from '@/components/common/TagContainer.vue'
 
 interface FeatureLink {
   label: string
   href: string
 }
 
-const props = defineProps<{
-  id: string
-  title: string
-  description: string
-  year?: string | number
-  meta?: string[]
-  tags?: string[]
-  links?: FeatureLink[]
-  image?: string
+const props = withDefaults(
+  defineProps<{
+    id: string
+    title: string
+    description: string
+    year?: string | number
+    meta?: string[]
+    tags?: string[]
+    links?: FeatureLink[]
+    image?: string
+    activeTags?: string[]
+    hoveredTag?: string | null
+  }>(),
+  {
+    tags: () => [],
+    links: () => [],
+    meta: () => [],
+    activeTags: () => [],
+    hoveredTag: null,
+  },
+)
+
+const emit = defineEmits<{
+  tagClick: [tag: string]
+  tagEnter: [tag: string]
+  tagLeave: []
 }>()
 
 const isPreviewOpen = ref(false)
@@ -28,10 +47,27 @@ function openPreview() {
 function closePreview() {
   isPreviewOpen.value = false
 }
+
+const rowTags = toRef(props, 'tags')
+const activeTags = toRef(props, 'activeTags')
+const hoveredTag = toRef(props, 'hoveredTag')
+const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
+  rowTags,
+  activeTags,
+  hoveredTag,
+)
 </script>
 
 <template>
-  <article :id="id" class="feature-card">
+  <article
+    v-if="matchesActiveFilters"
+    :id="id"
+    class="feature-card"
+    :class="{
+      'feature-card--dimmed': isDimmed,
+      'feature-card--highlighted': hoveredTag && matchesHoveredTag,
+    }"
+  >
     <button
       v-if="image"
       class="feature-image-button"
@@ -63,7 +99,14 @@ function closePreview() {
         {{ description }}
       </p>
 
-      <TagRow :tags="tags" />
+      <TagContainer
+        :tags="tags"
+        :active-tags="activeTags"
+        :hovered-tag="hoveredTag"
+        @tag-click="emit('tagClick', $event)"
+        @tag-enter="emit('tagEnter', $event)"
+        @tag-leave="emit('tagLeave')"
+      />
 
       <div v-if="links?.length" class="link-row">
         <a
@@ -105,6 +148,20 @@ function closePreview() {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
+  transition:
+    opacity var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.feature-card--dimmed {
+  opacity: 0.45;
+}
+
+.feature-card--highlighted {
+  border-color: var(--color-primary-border);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
 }
 
 .feature-image-button {

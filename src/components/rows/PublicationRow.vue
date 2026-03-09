@@ -1,5 +1,7 @@
 <script setup lang="ts">
-// import TagRow from '@/components/common/TagRow.vue'
+import { toRef } from 'vue'
+// import TagContainer from '@/components/common/TagContainer.vue'
+import { useRowTagState } from '@/composables/useRowTagState'
 
 interface PublicationAuthor {
   name: string
@@ -11,31 +13,56 @@ interface PublicationLink {
   href: string
 }
 
-defineProps<{
-  id: string
-  title: string
-  authors: PublicationAuthor[]
-  venue?: string
-  year?: string | number
-  meta?: string[]
-  tags?: string[]
-  links?: PublicationLink[]
-}>()
+const props = withDefaults(
+  defineProps<{
+    id: string
+    title: string
+    authors: PublicationAuthor[]
+    venue?: string
+    year?: string | number
+    meta?: string[]
+    tags?: string[]
+    links?: PublicationLink[]
+    activeTags?: string[]
+    hoveredTag?: string | null
+  }>(),
+  {
+    meta: () => [],
+    tags: () => [],
+    links: () => [],
+    activeTags: () => [],
+    hoveredTag: null,
+  },
+)
+
+// const emit = defineEmits<{
+//   tagClick: [tag: string]
+//   tagEnter: [tag: string]
+//   tagLeave: []
+// }>()
+
+const rowTags = toRef(props, 'tags')
+const activeTags = toRef(props, 'activeTags')
+const hoveredTag = toRef(props, 'hoveredTag')
+
+const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
+  rowTags,
+  activeTags,
+  hoveredTag,
+)
 </script>
 
 <template>
-  <article :id="id" class="publication-row">
+  <article
+    v-if="matchesActiveFilters"
+    :id="id"
+    class="publication-row"
+    :class="{
+      'publication-row--dimmed': isDimmed,
+      'publication-row--highlighted': hoveredTag && matchesHoveredTag,
+    }"
+  >
     <div class="publication-main">
-      <!-- <div v-if="(meta && meta.length) || year" class="publication-topline">
-        <div v-if="meta?.length" class="meta-row">
-          <span v-for="item in meta" :key="item" class="meta-pill">
-            {{ item }}
-          </span>
-        </div>
-
-        <span v-if="year" class="publication-year">{{ year }}</span>
-      </div> -->
-
       <h3 class="publication-title">
         {{ title }}
       </h3>
@@ -59,9 +86,18 @@ defineProps<{
         </template>
       </p>
 
-      <!-- <TagRow v-if="tags?.length" class="publication-tags" :tags="tags" /> -->
+      <!-- <TagContainer
+        v-if="tags.length"
+        class="publication-tags"
+        :tags="tags"
+        :active-tags="activeTags"
+        :hovered-tag="hoveredTag"
+        @tag-click="emit('tagClick', $event)"
+        @tag-enter="emit('tagEnter', $event)"
+        @tag-leave="emit('tagLeave')"
+      /> -->
 
-      <div v-if="links?.length" class="link-row">
+      <div v-if="links.length" class="link-row">
         <a
           v-for="link in links"
           :key="`${title}-${link.label}`"
@@ -84,42 +120,24 @@ defineProps<{
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
   scroll-margin-top: var(--section-scroll-offset);
+  transition:
+    opacity var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.publication-row--dimmed {
+  opacity: 0.45;
+}
+
+.publication-row--highlighted {
+  border-color: var(--color-primary-border);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
 }
 
 .publication-main {
   min-width: 0;
-}
-
-.publication-topline {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-4);
-  margin-bottom: var(--space-4);
-}
-
-.meta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.meta-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-pill);
-  background: var(--color-pill-bg);
-  color: var(--color-pill-text);
-  font-size: var(--text-xs);
-  font-weight: 700;
-}
-
-.publication-year {
-  white-space: nowrap;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-text-soft);
 }
 
 .publication-title {
@@ -172,17 +190,6 @@ defineProps<{
   margin: var(--space-2) 0 0;
   font-size: var(--text-sm);
   color: var(--color-text-soft);
-}
-
-@media (max-width: 860px) {
-  .publication-topline {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .publication-year {
-    white-space: normal;
-  }
 }
 
 @media (max-width: 640px) {

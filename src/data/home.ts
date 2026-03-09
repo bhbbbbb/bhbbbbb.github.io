@@ -202,15 +202,15 @@ export const homeContent: HomeContent = {
   ],
 
   others: [
-    //   // {
-    //   //   title: 'Scholarship / Honor / Certificate',
-    //   //   description: 'Short description of the recognition or achievement.',
-    //   //   year: '2024',
-    //   // },
-    //   // {
-    //   //   title: 'Scholarship / Honor / Certificate',
-    //   //   description: 'Short description of the recognition or achievement.',
-    //   //   year: '2023',
-    //   // },
+    // {
+    //   title: 'Scholarship / Honor / Certificate',
+    //   description: 'Short description of the recognition or achievement.',
+    //   year: '2024',
+    // },
+    // {
+    //   title: 'Scholarship / Honor / Certificate',
+    //   description: 'Short description of the recognition or achievement.',
+    //   year: '2023',
+    // },
   ],
 }

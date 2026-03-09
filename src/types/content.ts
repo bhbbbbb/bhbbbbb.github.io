@@ -61,6 +61,7 @@ export interface SimpleItem {
   title: string
   description: string
   year: string | number
+  tags?: string[]
 }
 
 export interface HomeContent {

@@ -15,17 +15,19 @@ export const siteContent: SiteContent = {
 
 export const homeContent: HomeContent = {
   hero: {
-    eyebrow: 'ML / AI Engineer',
+    eyebrow: 'M.S. @ National Taiwan University',
     name: 'Shao-En Lin',
     intro:
-      'I build machine learning systems and practical AI applications, with interests in LLMs, retrieval, knowledge systems, and developer-facing tools.',
-    focusTitle: 'Currently focused on',
-    focuses: ['LLM systems', 'Retrieval / RAG', 'Knowledge graphs', 'ML engineering'],
+      // 'I build machine learning systems and practical AI applications, with interests in LLMs, retrieval, knowledge systems, and developer-facing tools.',
+      'I build practical systems across machine learning and developer tooling. My work ranges from research prototypes to tools and infrastructure.',
+    focusTitle: 'At a Glance',
+    focuses: ['ICLR / WWW publications', 'Seeking ML / SWE roles', 'Taipei, Taiwan'],
     links: [
       { label: 'GitHub', href: 'https://github.com' },
       // { label: 'Scholar', href: '#' },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shaoenlin' },
-      { label: 'CV', href: '#' },
+      { label: 'CV', href: '/shaoen-cv.pdf' },
+      // { label: 'Email', href: 'mailto:shaoenlin.tw@gmail.com' },
     ],
   },
 
@@ -61,14 +63,14 @@ export const homeContent: HomeContent = {
       year: '2026',
       title: 'AtomHIN',
       description:
-        'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',
+        'Introduces a schema optimization framework for heterogeneous information networks (HINs), enabling systematic design of task-specific graph schemas. The project also releases optimized schemas as reusable datasets via a Python package and simple API.',
       tags: ['Graph', 'Graph Neural Networks', 'DGL'],
       links: [
         // { label: 'Paper', href: '#' },
         { label: 'Code', href: 'https://github.com/ntuidssplab/AtomHIN' },
         { label: "ICLR'26", href: '#iclr2026-atomic-hins' },
       ],
-      // image: '/src/assets/betag.png',
+      image: '/src/assets/atomhin-2.png',
     },
     {
       id: 'betag',
@@ -76,8 +78,8 @@ export const homeContent: HomeContent = {
       year: '2025',
       title: 'BETag',
       description:
-        'An interactive assistant that answers grounded questions about my background, projects, and research using retrieved evidence from structured and unstructured sources.',
-      tags: ['LLMs', 'LoRA', 'Recommendation Systems'],
+        'Behavior-enhanced automatic tagging system that finetunes LLMs using user interaction histories for retrieval and recommendation tasks. BETags are generated offline with zero runtime latency, improving tagging quality by 18% over manual annotations.',
+      tags: ['LLMs', 'LoRA', 'Information Retrieval', 'Recommendation Systems'],
       links: [
         { label: 'Code', href: 'https://github.com/idssplab/BETag' },
         { label: "WWW'25", href: '#www25-betag' },
@@ -85,18 +87,32 @@ export const homeContent: HomeContent = {
       image: '/src/assets/betag.png',
     },
     {
-      id: 'new-project',
+      id: 'synhing',
+      meta: ['Arxiv'],
+      year: '2024',
+      title: 'SynHING',
+      description:
+        'Framework for generating explainable synthetic heterogeneous information networks (HINs). I optimized the core merge algorithm from O(n²) to O(n), enabling million-scale graph generation in under 10 minutes.',
+      tags: ['Graph', 'XAI'],
+      links: [{ label: 'Arxiv', href: '#arxiv-synhing' }],
+      image: '/src/assets/synhing.png',
+    },
+    {
+      id: 'ahk-doc',
       meta: ['Project'],
       year: '2024',
-      title: 'Project Example: Developer Tooling / VSCode Extension',
+      title: 'AHKDoc',
       description:
-        'A developer-focused tool that improves workflow efficiency. This row layout gives enough space to explain the problem, implementation, and practical value.',
-      tags: ['TypeScript', 'VSCode', 'DX'],
+        'VSCode extension that adds JSDoc-style documentation utilities to the AutoHotkey language service. The extension has been downloaded over 1.8k times from the VSCode Marketplace.',
+      tags: ['TypeScript', 'VSCode Extension', 'AutoHotkey'],
       links: [
-        { label: 'Code', href: '#' },
-        { label: 'Marketplace', href: '#' },
-        { label: 'Docs', href: '#' },
+        { label: 'Code', href: 'https://github.com/bhbbbbb/vscode-autohotkey-ahkdoc' },
+        {
+          label: 'Marketplace',
+          href: 'https://marketplace.visualstudio.com/items?itemName=bhbbbbb.vscode-autohotkey-ahkdoc',
+        },
       ],
+      image: '/src/assets/ahkdoc.jpg',
     },
   ],
 
@@ -145,6 +161,30 @@ export const homeContent: HomeContent = {
         { name: 'Che Lin' },
       ],
     },
+    {
+      id: 'arxiv-synhing',
+      meta: ['Arxiv'],
+      year: '2024',
+      title:
+        'SynHING: Synthetic Heterogeneous Information Network Generation for Graph Learning and Explanation',
+      // description: 'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',
+      // description: 'In Proceedings of the ACM on Web Conference (WWW), 2025',
+      venue: 'Arxiv',
+      tags: ['Graph', 'XAI'],
+      links: [
+        { label: 'Paper', href: 'https://arxiv.org/abs/2401.04133' },
+        // { label: 'Code', href: 'https://github.com/idssplab/BETag?tab=readme-ov-file' },
+        { label: 'Project', href: '#synhing' },
+      ],
+      authors: [
+        { name: 'Ming-Yi Hong' },
+        { name: 'Yi-Hsiang Huang' },
+        { name: 'Shao-En Lin', highlight: true },
+        { name: 'You-Chen Teng' },
+        { name: 'Chih-Yu Wang' },
+        { name: 'Che Lin' },
+      ],
+    },
     // {
     //   meta: ['Journal'],
     //   year: '2024',
@@ -161,15 +201,15 @@ export const homeContent: HomeContent = {
   ],
 
   others: [
-    {
-      title: 'Scholarship / Honor / Certificate',
-      description: 'Short description of the recognition or achievement.',
-      year: '2024',
-    },
-    {
-      title: 'Scholarship / Honor / Certificate',
-      description: 'Short description of the recognition or achievement.',
-      year: '2023',
-    },
+    //   // {
+    //   //   title: 'Scholarship / Honor / Certificate',
+    //   //   description: 'Short description of the recognition or achievement.',
+    //   //   year: '2024',
+    //   // },
+    //   // {
+    //   //   title: 'Scholarship / Honor / Certificate',
+    //   //   description: 'Short description of the recognition or achievement.',
+    //   //   year: '2023',
+    //   // },
   ],
 }

@@ -66,7 +66,7 @@ import PublicationRow from '@/components/rows/PublicationRow.vue'
       />
     </HomeSection>
 
-    <HomeSection id="others" title="Others">
+    <HomeSection id="others" title="Others" v-if="homeContent.others.length">
       <SimpleRow
         v-for="item in homeContent.others"
         :key="`${item.title}-${item.year}`"

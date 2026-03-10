@@ -25,15 +25,18 @@ const emit = defineEmits<{
 }>()
 
 function isDimmed(filterId: string) {
-  if (props.activeFilters.length > 0) {
-    return !props.activeFilters.includes(filterId)
-  }
+  return !!props.hoveredFilter && props.hoveredFilter !== filterId
+  // if (props.activeFilters.length > 0) {
+  //   if (isMetaFilter(props.activeFilters[0] as string)) return false
+  //   // return !props.activeFilters.includes(filterId)
+  //   return false
+  // }
 
-  if (props.hoveredFilter) {
-    return props.hoveredFilter !== filterId
-  }
+  // if (props.hoveredFilter) {
+  //   return props.hoveredFilter !== filterId
+  // }
 
-  return false
+  // return false
 }
 
 const renderedFilters = computed(() => {

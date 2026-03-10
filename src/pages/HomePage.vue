@@ -11,12 +11,19 @@ import SimpleRow from '@/components/rows/SimpleRow.vue'
 import FilterPill from '@/components/common/FilterPill.vue'
 import { homeContent } from '@/data/home'
 import { getFeaturedTagFilters, getAllFilters, isMetaFilter } from '@/utils/filter'
+import type { SimpleItem } from '@/types/content'
 
 const activeFilters = ref<string[]>([])
 const hoveredFilter = ref<string | null>(null)
 
 const allFilters = computed(() => getAllFilters())
 const featuredTagFilters = computed(() => getFeaturedTagFilters())
+
+const activeMetaId = computed(() => activeFilters.value.find((id) => isMetaFilter(id)) ?? null)
+const isMetaMode = computed(() => !!activeMetaId.value)
+const activeMetaFilter = computed(
+  () => allFilters.value.find((item) => item.id === activeMetaId.value) ?? null,
+)
 
 watch(activeFilters, (filters) => {
   if (filters.length === 0) {
@@ -65,38 +72,34 @@ function clearFilters() {
 }
 
 function matchesActiveFilters(filters?: { id: string }[]) {
-  if (!activeFilters.value.length) return true
+  if (!activeFilters.value.length) return false
   if (!filters?.length) return false
   return activeFilters.value.some((activeId) =>
     filters.some((rowFilter) => rowFilter.id === activeId),
   )
 }
 
-function getItemFilters(item: { tags?: { id: string }[]; meta?: { id: string }[] }) {
-  return [...(item.tags ?? []), ...(item.meta ?? [])]
+function shouldActive(item: { tags?: { id: string }[]; meta?: { id: string }[]; show?: boolean }) {
+  if (!activeFilters.value.length) return item?.show ?? true
+  if (matchesActiveFilters(item.meta)) return true
+  if (matchesActiveFilters(item.tags)) return item?.show ?? true
+  return false
 }
 
-const filteredEducation = computed(() =>
-  homeContent.education.filter((item) => matchesActiveFilters(getItemFilters(item))),
-)
+const filteredEducation = computed(() => homeContent.education.filter(shouldActive))
 
-const filteredProjects = computed(() =>
-  homeContent.projects.filter((item) => matchesActiveFilters(getItemFilters(item))),
-)
+const filteredProjects = computed(() => homeContent.projects.filter(shouldActive))
 
-const filteredPublications = computed(() =>
-  homeContent.publications.filter((item) => matchesActiveFilters(getItemFilters(item))),
-)
+const filteredPublications = computed(() => homeContent.publications.filter(shouldActive))
 
-const filteredOthers = computed(() =>
-  homeContent.others.filter((item) => matchesActiveFilters(getItemFilters(item))),
-)
+const filteredOthers = computed(() => homeContent.others.filter(shouldActive))
+console.log(shouldActive(homeContent.others[0] as SimpleItem))
 </script>
 
 <template>
   <AppHeader />
 
-  <main class="home">
+  <main class="home" :class="{ 'home--thread-mode': isMetaMode }">
     <HomeHero
       :eyebrow="homeContent.hero.eyebrow"
       :name="homeContent.hero.name"
@@ -106,7 +109,24 @@ const filteredOthers = computed(() =>
       :links="homeContent.hero.links"
     />
 
-    <section v-if="activeFilters.length" class="active-filters" aria-label="Active filters">
+    <section v-if="isMetaMode && activeMetaFilter" class="thread-bar" aria-label="Active thread">
+      <div class="thread-bar__left">
+        <span class="thread-bar__label">Thread</span>
+        <FilterPill
+          :id="activeMetaFilter.id"
+          :label="activeMetaFilter.defaultLabel"
+          variant="meta"
+          active
+          @click="clearFilters"
+          @enter="setHoveredFilter"
+          @leave="clearHoveredFilter"
+        />
+      </div>
+
+      <button class="thread-bar__exit" type="button" @click="clearFilters">Exit thread</button>
+    </section>
+
+    <section v-else-if="activeFilters.length" class="active-filters" aria-label="Active filters">
       <p class="active-filters__label">Active filters</p>
 
       <div class="active-filters__pills">
@@ -126,7 +146,12 @@ const filteredOthers = computed(() =>
       <button class="active-filters__clear" type="button" @click="clearFilters">Clear</button>
     </section>
 
-    <HomeSection v-if="filteredEducation.length" id="education" title="Education">
+    <HomeSection
+      v-if="filteredEducation.length"
+      id="education"
+      title="Education"
+      :hide-title="isMetaMode"
+    >
       <TimelineRow
         v-for="item in filteredEducation"
         :key="`${item.title}-${item.period}`"
@@ -145,7 +170,12 @@ const filteredOthers = computed(() =>
       />
     </HomeSection>
 
-    <HomeSection v-if="filteredProjects.length" id="projects" title="Projects">
+    <HomeSection
+      v-if="filteredProjects.length"
+      id="projects"
+      title="Projects"
+      :hide-title="isMetaMode"
+    >
       <ProjectRow
         v-for="item in filteredProjects"
         :key="`${item.title}-${item.year}`"
@@ -165,7 +195,12 @@ const filteredOthers = computed(() =>
       />
     </HomeSection>
 
-    <HomeSection v-if="filteredPublications.length" id="publications" title="Selected Publications">
+    <HomeSection
+      v-if="filteredPublications.length"
+      id="publications"
+      title="Selected Publications"
+      :hide-title="isMetaMode"
+    >
       <PublicationRow
         v-for="item in filteredPublications"
         :key="`${item.title}-${item.year}`"
@@ -186,7 +221,12 @@ const filteredOthers = computed(() =>
       />
     </HomeSection>
 
-    <HomeSection v-if="filteredOthers.length" id="others" title="Honors & Awards">
+    <HomeSection
+      v-if="filteredOthers.length"
+      id="others"
+      title="Honors & Awards"
+      :hide-title="isMetaMode"
+    >
       <SimpleRow
         v-for="item in filteredOthers"
         :key="`${item.title}-${item.year}`"
@@ -203,7 +243,7 @@ const filteredOthers = computed(() =>
       />
     </HomeSection>
 
-    <HomeSection id="skills" title="Skills">
+    <HomeSection v-if="!isMetaMode" id="skills" title="Skills">
       <div class="skills-grid">
         <FilterPill
           v-for="filter in featuredTagFilters"
@@ -229,6 +269,51 @@ const filteredOthers = computed(() =>
   width: min(var(--container-width), calc(100% - var(--container-padding)));
   margin: 0 auto;
   padding: var(--space-14) 0 var(--space-20);
+}
+
+.home--thread-mode {
+  padding-top: var(--space-12);
+}
+
+.thread-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-10);
+  padding: 0 0 var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.thread-bar__left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.thread-bar__label {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-text-soft);
+  white-space: nowrap;
+}
+
+.thread-bar__exit {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-soft);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.thread-bar__exit:hover {
+  color: var(--color-primary);
 }
 
 .active-filters {
@@ -280,10 +365,20 @@ const filteredOthers = computed(() =>
 }
 
 @media (max-width: 720px) {
+  .thread-bar,
   .active-filters {
     grid-template-columns: 1fr;
     align-items: start;
     gap: var(--space-3);
+  }
+
+  .thread-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .active-filters {
+    grid-template-columns: 1fr;
   }
 
   .active-filters__clear {

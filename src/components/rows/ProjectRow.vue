@@ -84,18 +84,19 @@ const { matchesActiveFilters, matchesHoveredFilter, isDimmed } = useRowFilterSta
     <div v-else class="feature-image-frame feature-image-placeholder" />
 
     <div class="feature-content">
-      <div v-if="meta.length || year" class="feature-topline">
-        <FilterContainer
-          v-if="meta.length"
-          class="meta-row"
-          :filters="meta"
-          :active-filters="activeFilters"
-          :hovered-filter="hoveredFilter"
-          variant="meta"
-          @filter-click="emit('filterClick', $event)"
-          @filter-enter="emit('filterEnter', $event)"
-          @filter-leave="emit('filterLeave')"
-        />
+      <div v-if="meta.filter((item) => item.show).length || year" class="feature-topline">
+        <div class="meta-row">
+          <FilterContainer
+            v-if="meta.filter((item) => item.show).length"
+            :filters="meta"
+            :active-filters="activeFilters"
+            :hovered-filter="hoveredFilter"
+            variant="meta"
+            @filter-click="emit('filterClick', $event)"
+            @filter-enter="emit('filterEnter', $event)"
+            @filter-leave="emit('filterLeave')"
+          />
+        </div>
 
         <span v-if="year" class="feature-year">{{ year }}</span>
       </div>
@@ -248,7 +249,7 @@ const { matchesActiveFilters, matchesHoveredFilter, isDimmed } = useRowFilterSta
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-5);
-  margin-top: var(--space-4);
+  margin-top: var(--space-0);
 }
 
 .link-row a {

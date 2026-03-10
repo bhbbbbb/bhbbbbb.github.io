@@ -37,6 +37,7 @@ export interface ProjectItem {
   image?: string
   tags?: RowFilter[]
   links?: NavLink[]
+  show?: boolean
 }
 
 export interface PublicationAuthor {
@@ -57,6 +58,7 @@ export interface PublicationItem {
     href: string
   }[]
   description?: string
+  show?: boolean
 }
 
 export interface SimpleItem {
@@ -65,6 +67,7 @@ export interface SimpleItem {
   year: string | number
   tags?: RowFilter[]
   meta?: RowFilter[]
+  show?: boolean
 }
 
 export interface HomeContent {

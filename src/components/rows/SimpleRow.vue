@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
-import FilterContainer from '@/components/common/FilterContainer.vue'
+import FilterPill from '@/components/common/FilterPill.vue'
 import { useRowFilterState } from '@/composables/useRowFilterState'
 import type { RowFilter } from '@/types/filter'
 
@@ -37,6 +37,8 @@ const { matchesActiveFilters, matchesHoveredFilter, isDimmed } = useRowFilterSta
   activeFilters,
   hoveredFilter,
 )
+
+const visibleMeta = computed(() => props.meta.filter((item) => item.show))
 </script>
 
 <template>
@@ -48,44 +50,42 @@ const { matchesActiveFilters, matchesHoveredFilter, isDimmed } = useRowFilterSta
       'other-item--highlighted': hoveredFilter && matchesHoveredFilter,
     }"
   >
-    <div class="other-main">
-      <FilterContainer
-        v-if="meta.length"
-        class="other-meta"
-        :filters="meta"
-        :active-filters="activeFilters"
-        :hovered-filter="hoveredFilter"
-        variant="meta"
-        @filter-click="emit('filterClick', $event)"
-        @filter-enter="emit('filterEnter', $event)"
-        @filter-leave="emit('filterLeave')"
-      />
-      <h3>{{ title }}</h3>
-      <p>{{ description }}</p>
+    <div class="other-head">
+      <div class="other-titleline">
+        <h3>{{ title }}</h3>
 
-      <FilterContainer
-        v-if="tags.length"
-        class="other-tags"
-        :filters="tags"
-        :active-filters="activeFilters"
-        :hovered-filter="hoveredFilter"
-        @filter-click="emit('filterClick', $event)"
-        @filter-enter="emit('filterEnter', $event)"
-        @filter-leave="emit('filterLeave')"
-      />
+        <div v-if="visibleMeta.length" class="other-meta-inline">
+          <FilterPill
+            v-for="item in visibleMeta"
+            :key="item.id"
+            :id="item.id"
+            :label="item.label"
+            :active="activeFilters.includes(item.id)"
+            :dimmed="
+              activeFilters.length > 0
+                ? !activeFilters.includes(item.id)
+                : !!hoveredFilter && hoveredFilter !== item.id
+            "
+            variant="meta"
+            @click="emit('filterClick', $event)"
+            @enter="emit('filterEnter', $event)"
+            @leave="emit('filterLeave')"
+          />
+        </div>
+      </div>
+
+      <div class="other-year">{{ year }}</div>
     </div>
 
-    <div class="other-year">{{ year }}</div>
+    <div class="other-main">
+      <p>{{ description }}</p>
+    </div>
   </article>
 </template>
 
 <style scoped>
 .other-item {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-8);
-  padding: var(--space-8) var(--space-10);
+  padding: var(--space-5) var(--space-8);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -106,47 +106,63 @@ const { matchesActiveFilters, matchesHoveredFilter, isDimmed } = useRowFilterSta
   box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
 }
 
-.other-main {
+.other-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.other-titleline {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
   min-width: 0;
 }
 
-.other-main h3 {
+.other-titleline h3 {
   margin: 0;
   line-height: var(--line-tight);
   color: var(--color-text-strong);
 }
 
-.other-main p {
-  margin: var(--space-2) 0 0;
-  line-height: var(--line-base);
-  color: var(--color-text-muted);
-}
-
-.other-meta,
-.other-tags {
-  margin-top: var(--space-4);
+.other-meta-inline {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
 }
 
 .other-year {
+  flex-shrink: 0;
   white-space: nowrap;
   font-size: var(--text-sm);
   font-weight: 600;
   color: var(--color-text-soft);
 }
 
-@media (max-width: 860px) {
-  .other-item {
-    flex-direction: column;
-  }
-
-  .other-year {
-    white-space: normal;
-  }
+.other-main p {
+  margin: var(--space-2) 0 0;
+  line-height: 1.65;
+  color: var(--color-text-muted);
 }
 
 @media (max-width: 640px) {
   .other-item {
+    padding: var(--space-5) var(--space-6);
     border-radius: var(--radius-md);
+  }
+
+  .other-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .other-year {
+    white-space: normal;
   }
 }
 </style>

@@ -1,13 +1,19 @@
 <script setup lang="ts">
-defineProps<{
-  id: string
-  title: string
-}>()
+withDefaults(
+  defineProps<{
+    id: string
+    title: string
+    hideTitle?: boolean
+  }>(),
+  {
+    hideTitle: false,
+  },
+)
 </script>
 
 <template>
-  <section :id="id" class="section">
-    <div class="section-head">
+  <section :id="id" class="section" :class="{ 'section--titleless': hideTitle }">
+    <div v-if="!hideTitle" class="section-head">
       <h2>{{ title }}</h2>
     </div>
 
@@ -21,6 +27,10 @@ defineProps<{
 .section {
   margin-bottom: var(--space-16);
   scroll-margin-top: var(--section-scroll-offset);
+}
+
+.section--titleless {
+  margin-bottom: var(--space-4);
 }
 
 .section-head {

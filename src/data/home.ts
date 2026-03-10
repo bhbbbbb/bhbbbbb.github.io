@@ -224,10 +224,12 @@ export const homeContent: HomeContent = {
   others: [
     {
       title: 'NTU FinTech Best Project Award (First Place)',
-      meta: resolveRowFilters(['[WWW 2025](betag)', '[Best Project Award](betag)', '[](ms)']),
+      meta: resolveRowFilters(['betag']),
+      tags: resolveRowFilters(['llm', 'lora', 'recsys', 'ir', '[](ml)', '[](python)']),
       description:
         'Awarded for BETag, an early version of the project later developed into the WWW 2025 paper.',
       year: '2024',
+      show: false,
     },
     // {
     //   title: 'Scholarship / Honor / Certificate',

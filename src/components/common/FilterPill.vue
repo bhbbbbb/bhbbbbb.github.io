@@ -120,14 +120,34 @@ function handleMouseLeave() {
 }
 
 .filter-pill--meta {
-  background: color-mix(in srgb, var(--color-primary-soft) 75%, white);
-  border-color: color-mix(in srgb, var(--color-primary-border) 72%, white);
-  color: var(--color-primary);
+  min-height: auto;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid transparent;
+  background: var(--color-pill-bg);
+  color: var(--color-pill-text);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  box-shadow: none;
 }
 
 .filter-pill--meta:hover {
-  border-color: var(--color-primary);
-  background: color-mix(in srgb, var(--color-primary-soft) 88%, white);
+  background: color-mix(in srgb, var(--color-pill-bg) 82%, white);
+  border-color: color-mix(in srgb, var(--color-pill-text) 18%, white);
+  color: var(--color-pill-text);
+  transform: translateY(-1px);
+}
+
+.filter-pill--meta.filter-pill--active {
+  background: var(--color-pill-text);
+  border-color: var(--color-pill-text);
+  color: white;
+  box-shadow: none;
+}
+
+.filter-pill--meta.filter-pill--active:hover {
+  background: color-mix(in srgb, var(--color-pill-text) 90%, black);
+  border-color: color-mix(in srgb, var(--color-pill-text) 90%, black);
+  color: white;
 }
 
 .filter-pill--active {

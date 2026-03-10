@@ -57,6 +57,11 @@ const { matchesActiveFilters, matchesHoveredFilter, isDimmed } = useRowFilterSta
   activeFilters,
   hoveredFilter,
 )
+
+const visibleMeta = computed(() => props.meta.filter((item) => item.show))
+const hasVisibleMeta = computed(() => visibleMeta.value.length > 0)
+const showTopline = computed(() => hasVisibleMeta.value)
+const showFloatingYear = computed(() => !hasVisibleMeta.value && !!props.year)
 </script>
 
 <template>
@@ -67,6 +72,7 @@ const { matchesActiveFilters, matchesHoveredFilter, isDimmed } = useRowFilterSta
     :class="{
       'feature-card--dimmed': isDimmed,
       'feature-card--highlighted': hoveredFilter && matchesHoveredFilter,
+      'feature-card--with-floating-year': showFloatingYear,
     }"
   >
     <button
@@ -84,11 +90,12 @@ const { matchesActiveFilters, matchesHoveredFilter, isDimmed } = useRowFilterSta
     <div v-else class="feature-image-frame feature-image-placeholder" />
 
     <div class="feature-content">
-      <div v-if="meta.filter((item) => item.show).length || year" class="feature-topline">
+      <span v-if="showFloatingYear" class="feature-year feature-year--floating">{{ year }}</span>
+
+      <div v-if="showTopline" class="feature-topline">
         <div class="meta-row">
           <FilterContainer
-            v-if="meta.filter((item) => item.show).length"
-            :filters="meta"
+            :filters="visibleMeta"
             :active-filters="activeFilters"
             :hovered-filter="hoveredFilter"
             variant="meta"
@@ -213,6 +220,11 @@ const { matchesActiveFilters, matchesHoveredFilter, isDimmed } = useRowFilterSta
   flex-direction: column;
   gap: var(--space-4);
   min-width: 0;
+  position: relative;
+}
+
+.feature-card--with-floating-year .feature-content {
+  padding-top: 2px;
 }
 
 .feature-topline {
@@ -224,6 +236,7 @@ const { matchesActiveFilters, matchesHoveredFilter, isDimmed } = useRowFilterSta
 
 .meta-row {
   flex: 1;
+  min-width: 0;
 }
 
 .feature-year {
@@ -233,10 +246,17 @@ const { matchesActiveFilters, matchesHoveredFilter, isDimmed } = useRowFilterSta
   color: var(--color-text-soft);
 }
 
+.feature-year--floating {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .feature-content h3 {
   margin: 0;
   line-height: var(--line-tight);
   color: var(--color-text-strong);
+  padding-right: 72px;
 }
 
 .feature-desc {

@@ -15,8 +15,6 @@ import { getAllTags } from '@/utils/tag'
 const activeTags = ref<string[]>([])
 const hoveredTag = ref<string | null>(null)
 const allTags = computed(() => getAllTags())
-const skillTags = computed(() => getAllTags().filter((tag) => tag.featured !== false))
-// const skillTags = computed(() => getAllTags())
 
 watch(activeTags, (tags) => {
   if (tags.length === 0) {
@@ -159,7 +157,7 @@ const filteredOthers = computed(() =>
       />
     </HomeSection>
 
-    <HomeSection v-if="filteredOthers.length" id="others" title="Others">
+    <HomeSection v-if="filteredOthers.length" id="others" title="Honors & Awards">
       <SimpleRow
         v-for="item in filteredOthers"
         :key="`${item.title}-${item.year}`"
@@ -177,7 +175,7 @@ const filteredOthers = computed(() =>
     <HomeSection id="skills" title="Skills">
       <div class="skills-grid">
         <TagPill
-          v-for="tag in skillTags"
+          v-for="tag in allTags.filter((tag) => tag.featured !== false)"
           :key="tag.id"
           :id="tag.id"
           :label="tag.defaultLabel"

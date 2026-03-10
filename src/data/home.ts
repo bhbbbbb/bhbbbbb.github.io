@@ -80,7 +80,7 @@ export const homeContent: HomeContent = {
     },
     {
       id: 'betag',
-      meta: ['WWW 2025'],
+      meta: ['WWW 2025', 'Best Project Award'],
       year: '2025',
       title: 'BETag',
       description:
@@ -103,7 +103,7 @@ export const homeContent: HomeContent = {
     },
     {
       id: 'synhing',
-      meta: ['Arxiv'],
+      meta: ['Arxiv 2024'],
       year: '2024',
       title: 'SynHING',
       description:
@@ -118,7 +118,7 @@ export const homeContent: HomeContent = {
         '[](synhing)',
         '[](ms)',
       ]),
-      links: [{ label: 'Arxiv', href: '#arxiv-synhing' }],
+      links: [{ label: "Arxiv'24", href: '#arxiv-synhing' }],
       image: '/synhing.png',
     },
     {
@@ -253,11 +253,12 @@ export const homeContent: HomeContent = {
   ],
 
   others: [
-    // {
-    //   title: 'Scholarship / Honor / Certificate',
-    //   description: 'Short description of the recognition or achievement.',
-    //   year: '2024',
-    // },
+    {
+      title: 'NTU FinTech Best Project Award (First Place)',
+      description:
+        'Awarded for BETag, an early version of the project later developed into the WWW 2025 paper.',
+      year: '2024',
+    },
     // {
     //   title: 'Scholarship / Honor / Certificate',
     //   description: 'Short description of the recognition or achievement.',

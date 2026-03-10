@@ -1,68 +1,95 @@
 <script setup lang="ts">
-import { computed, watch, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
+import AppFooter from '@/components/layout/AppFooter.vue'
 import HomeHero from '@/components/sections/HomeHero.vue'
 import HomeSection from '@/components/sections/HomeSection.vue'
 import TimelineRow from '@/components/rows/TimelineRow.vue'
 import ProjectRow from '@/components/rows/ProjectRow.vue'
-import SimpleRow from '@/components/rows/SimpleRow.vue'
 import PublicationRow from '@/components/rows/PublicationRow.vue'
-import AppFooter from '@/components/layout/AppFooter.vue'
-import TagPill from '@/components/common/TagPill.vue'
+import SimpleRow from '@/components/rows/SimpleRow.vue'
+import FilterPill from '@/components/common/FilterPill.vue'
 import { homeContent } from '@/data/home'
-import { getAllTags } from '@/utils/tag'
+import { getFeaturedTagFilters, getAllFilters, isMetaFilter } from '@/utils/filter'
 
-const activeTags = ref<string[]>([])
-const hoveredTag = ref<string | null>(null)
-const allTags = computed(() => getAllTags())
+const activeFilters = ref<string[]>([])
+const hoveredFilter = ref<string | null>(null)
 
-watch(activeTags, (tags) => {
-  if (tags.length === 0) {
-    clearHoveredTag()
+const allFilters = computed(() => getAllFilters())
+const featuredTagFilters = computed(() => getFeaturedTagFilters())
+
+watch(activeFilters, (filters) => {
+  if (filters.length === 0) {
+    clearHoveredFilter()
   }
 })
 
-function toggleTag(tag: string) {
-  if (activeTags.value.includes(tag)) {
-    activeTags.value = activeTags.value.filter((item) => item !== tag)
+function toggleFilter(filterId: string) {
+  const clickedIsMeta = isMetaFilter(filterId)
+  const activeMetaId = activeFilters.value.find((id) => isMetaFilter(id))
+  const activeMode = activeMetaId ? 'meta' : activeFilters.value.length ? 'tag' : 'none'
+
+  if (clickedIsMeta) {
+    if (activeMode === 'meta' && activeFilters.value[0] === filterId) {
+      activeFilters.value = []
+      return
+    }
+
+    activeFilters.value = [filterId]
     return
   }
 
-  activeTags.value = [...activeTags.value, tag]
+  if (activeMode === 'meta') {
+    activeFilters.value = [filterId]
+    return
+  }
+
+  if (activeFilters.value.includes(filterId)) {
+    activeFilters.value = activeFilters.value.filter((item) => item !== filterId)
+    return
+  }
+
+  activeFilters.value = [...activeFilters.value, filterId]
 }
 
-function setHoveredTag(tag: string) {
-  hoveredTag.value = tag
+function setHoveredFilter(filterId: string) {
+  hoveredFilter.value = filterId
 }
 
-function clearHoveredTag() {
-  hoveredTag.value = null
+function clearHoveredFilter() {
+  hoveredFilter.value = null
 }
 
-function clearTags() {
-  activeTags.value = []
+function clearFilters() {
+  activeFilters.value = []
 }
 
-function matchesActiveTags(tags?: { id: string }[]) {
-  if (!activeTags.value.length) return true
-  if (!tags?.length) return false
-  return activeTags.value.some((tag) => tags.some((rowTag) => rowTag.id === tag))
+function matchesActiveFilters(filters?: { id: string }[]) {
+  if (!activeFilters.value.length) return true
+  if (!filters?.length) return false
+  return activeFilters.value.some((activeId) =>
+    filters.some((rowFilter) => rowFilter.id === activeId),
+  )
+}
+
+function getItemFilters(item: { tags?: { id: string }[]; meta?: { id: string }[] }) {
+  return [...(item.tags ?? []), ...(item.meta ?? [])]
 }
 
 const filteredEducation = computed(() =>
-  homeContent.education.filter((item) => matchesActiveTags(item.tags)),
+  homeContent.education.filter((item) => matchesActiveFilters(getItemFilters(item))),
 )
 
 const filteredProjects = computed(() =>
-  homeContent.projects.filter((item) => matchesActiveTags(item.tags)),
+  homeContent.projects.filter((item) => matchesActiveFilters(getItemFilters(item))),
 )
 
 const filteredPublications = computed(() =>
-  homeContent.publications.filter((item) => matchesActiveTags(item.tags)),
+  homeContent.publications.filter((item) => matchesActiveFilters(getItemFilters(item))),
 )
 
 const filteredOthers = computed(() =>
-  homeContent.others.filter((item) => matchesActiveTags(item.tags)),
+  homeContent.others.filter((item) => matchesActiveFilters(getItemFilters(item))),
 )
 </script>
 
@@ -79,23 +106,24 @@ const filteredOthers = computed(() =>
       :links="homeContent.hero.links"
     />
 
-    <section v-if="activeTags.length" class="active-filters" aria-label="Active filters">
+    <section v-if="activeFilters.length" class="active-filters" aria-label="Active filters">
       <p class="active-filters__label">Active filters</p>
 
       <div class="active-filters__pills">
-        <TagPill
-          v-for="tag in allTags.filter((item) => activeTags.includes(item.id))"
-          :key="tag.id"
-          :id="tag.id"
-          :label="tag.defaultLabel"
+        <FilterPill
+          v-for="filter in allFilters.filter((item) => activeFilters.includes(item.id))"
+          :key="filter.id"
+          :id="filter.id"
+          :label="filter.defaultLabel"
+          :variant="filter.isMeta ? 'meta' : 'default'"
           active
-          @click="toggleTag"
-          @enter="setHoveredTag"
-          @leave="clearHoveredTag"
+          @click="toggleFilter"
+          @enter="setHoveredFilter"
+          @leave="clearHoveredFilter"
         />
       </div>
 
-      <button class="active-filters__clear" type="button" @click="clearTags">Clear</button>
+      <button class="active-filters__clear" type="button" @click="clearFilters">Clear</button>
     </section>
 
     <HomeSection v-if="filteredEducation.length" id="education" title="Education">
@@ -105,55 +133,56 @@ const filteredOthers = computed(() =>
         :title="item.title"
         :organization="item.organization"
         :description="item.description"
-        :tags="item.tags"
         :period="item.period"
+        :tags="item.tags"
+        :meta="item.meta"
         :badge="item.badge"
-        :active-tags="activeTags"
-        :hovered-tag="hoveredTag"
-        @tag-click="toggleTag"
-        @tag-enter="setHoveredTag"
-        @tag-leave="clearHoveredTag"
+        :active-filters="activeFilters"
+        :hovered-filter="hoveredFilter"
+        @filter-click="toggleFilter"
+        @filter-enter="setHoveredFilter"
+        @filter-leave="clearHoveredFilter"
       />
     </HomeSection>
 
     <HomeSection v-if="filteredProjects.length" id="projects" title="Projects">
       <ProjectRow
         v-for="item in filteredProjects"
-        :id="item.id"
         :key="`${item.title}-${item.year}`"
-        :meta="item.meta"
-        :year="item.year"
+        :id="item.id"
         :title="item.title"
         :description="item.description"
+        :year="item.year"
         :tags="item.tags"
+        :meta="item.meta"
         :links="item.links"
         :image="item.image"
-        :active-tags="activeTags"
-        :hovered-tag="hoveredTag"
-        @tag-click="toggleTag"
-        @tag-enter="setHoveredTag"
-        @tag-leave="clearHoveredTag"
+        :active-filters="activeFilters"
+        :hovered-filter="hoveredFilter"
+        @filter-click="toggleFilter"
+        @filter-enter="setHoveredFilter"
+        @filter-leave="clearHoveredFilter"
       />
     </HomeSection>
 
     <HomeSection v-if="filteredPublications.length" id="publications" title="Selected Publications">
       <PublicationRow
         v-for="item in filteredPublications"
+        :key="`${item.title}-${item.year}`"
         :id="item.id"
+        :title="item.title"
         :authors="item.authors"
         :venue="item.venue"
-        :key="`${item.title}-${item.year}`"
-        :meta="item.meta"
         :year="item.year"
-        :title="item.title"
         :description="item.description"
         :tags="item.tags"
+        :meta="item.meta"
         :links="item.links"
-        :active-tags="activeTags"
-        :hovered-tag="hoveredTag"
-        @tag-click="toggleTag"
-        @tag-enter="setHoveredTag"
-        @tag-leave="clearHoveredTag"
+        :active-filters="activeFilters"
+        :hovered-filter="hoveredFilter"
+        @filter-click="toggleFilter"
+        @filter-enter="setHoveredFilter"
+        @filter-leave="clearHoveredFilter"
       />
     </HomeSection>
 
@@ -165,26 +194,28 @@ const filteredOthers = computed(() =>
         :description="item.description"
         :year="item.year"
         :tags="item.tags"
-        :active-tags="activeTags"
-        :hovered-tag="hoveredTag"
-        @tag-click="toggleTag"
-        @tag-enter="setHoveredTag"
-        @tag-leave="clearHoveredTag"
+        :meta="item.meta"
+        :active-filters="activeFilters"
+        :hovered-filter="hoveredFilter"
+        @filter-click="toggleFilter"
+        @filter-enter="setHoveredFilter"
+        @filter-leave="clearHoveredFilter"
       />
     </HomeSection>
+
     <HomeSection id="skills" title="Skills">
       <div class="skills-grid">
-        <TagPill
-          v-for="tag in allTags.filter((tag) => tag.featured !== false)"
-          :key="tag.id"
-          :id="tag.id"
-          :label="tag.defaultLabel"
-          :active="activeTags.includes(tag.id)"
-          :dimmed="!!hoveredTag && hoveredTag !== tag.id"
-          :variant="'skill'"
-          @click="toggleTag"
-          @enter="setHoveredTag"
-          @leave="clearHoveredTag"
+        <FilterPill
+          v-for="filter in featuredTagFilters"
+          :key="filter.id"
+          :id="filter.id"
+          :label="filter.defaultLabel"
+          :active="activeFilters.includes(filter.id)"
+          :dimmed="!!hoveredFilter && hoveredFilter !== filter.id"
+          variant="skill"
+          @click="toggleFilter"
+          @enter="setHoveredFilter"
+          @leave="clearHoveredFilter"
         />
       </div>
     </HomeSection>
@@ -240,6 +271,12 @@ const filteredOthers = computed(() =>
 
 .active-filters__clear:hover {
   color: var(--color-primary);
+}
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
 }
 
 @media (max-width: 720px) {

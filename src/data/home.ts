@@ -1,6 +1,6 @@
 import type { HomeContent } from '@/types/content'
 import type { SiteContent } from '@/types/header'
-import { resolveRowTags } from '@/utils/tag'
+import { resolveRowFilters } from '@/utils/filter'
 
 export const siteContent: SiteContent = {
   brand: 'Shao-En Lin',
@@ -38,7 +38,8 @@ export const homeContent: HomeContent = {
       title: 'M.S. in Data Science',
       organization: 'National Taiwan University',
       // description: 'Focus on machine learning, representation learning, retrieval systems, and practical AI applications.',
-      tags: resolveRowTags(['gnn', 'llm', 'recsys', 'ml', '[](python)', '[](ms)']),
+      tags: resolveRowFilters(['gnn', 'llm', 'recsys', 'ml', '[](python)', '[](ms)']),
+      meta: resolveRowFilters(['[](atomhin)', '[](betag)', '[](synhing)']),
       period: '2023 — 2026',
       // badge: '/ntu.svg',
     },
@@ -47,7 +48,8 @@ export const homeContent: HomeContent = {
       organization: 'National Cheng Kung University',
       // description: 'Coursework in algorithms, distributed systems, software engineering, and machine learning.',
       period: '2019 — 2023',
-      tags: resolveRowTags(['[](ml)', '[](python)', '[](bs)']),
+      tags: resolveRowFilters(['[](ml)', '[](python)', '[](bs)']),
+      meta: resolveRowFilters(['[](ahkdoc)']),
       // badge: '/ncku.png',
     },
   ],
@@ -55,12 +57,12 @@ export const homeContent: HomeContent = {
   projects: [
     {
       id: 'atomhin',
-      meta: ['ICLR 2026', 'M.S. Thesis'],
+      meta: resolveRowFilters(['[ICLR 2026](atomhin)', '[M.S. Thesis](atomhin)']),
       year: '2026',
       title: 'AtomHIN',
       description:
         'Introduces a schema optimization framework for heterogeneous information networks (HINs), enabling systematic design of task-specific graph schemas. The project also releases optimized schemas as reusable datasets via a Python package and simple API.',
-      tags: resolveRowTags([
+      tags: resolveRowFilters([
         'graph',
         'gnn',
         'rdb',
@@ -68,8 +70,6 @@ export const homeContent: HomeContent = {
         '[](python)',
         '[](pydantic)',
         '[](dgl)',
-        '[](atomhin)',
-        '[](ms)',
       ]),
       links: [
         // { label: 'Paper', href: '#' },
@@ -80,21 +80,12 @@ export const homeContent: HomeContent = {
     },
     {
       id: 'betag',
-      meta: ['WWW 2025', 'Best Project Award'],
+      meta: resolveRowFilters(['[WWW 2025](betag)', '[Best Project Award](betag)', '[](ms)']),
       year: '2025',
       title: 'BETag',
       description:
         'Behavior-enhanced automatic tagging system that finetunes LLMs using user interaction histories for retrieval and recommendation tasks. BETags are generated offline with zero runtime latency, improving tagging quality by 18% over manual annotations.',
-      tags: resolveRowTags([
-        'llm',
-        'lora',
-        'recsys',
-        'ir',
-        '[](ml)',
-        '[](python)',
-        '[](betag)',
-        '[](ms)',
-      ]),
+      tags: resolveRowFilters(['llm', 'lora', 'recsys', 'ir', '[](ml)', '[](python)']),
       links: [
         { label: 'Code', href: 'https://github.com/idssplab/BETag' },
         { label: "WWW'25", href: '#www25-betag' },
@@ -103,32 +94,23 @@ export const homeContent: HomeContent = {
     },
     {
       id: 'synhing',
-      meta: ['Arxiv 2024'],
+      meta: resolveRowFilters(['[Arxiv 2024](synhing)', '[](ms)']),
       year: '2024',
       title: 'SynHING',
       description:
         'Framework for generating explainable synthetic heterogeneous information networks (HINs). I optimized the core merge algorithm from O(n²) to O(n), enabling million-scale graph generation in under 10 minutes.',
-      tags: resolveRowTags([
-        'graph',
-        'xai',
-        'gnn',
-        '[](dgl)',
-        '[](ml)',
-        '[](python)',
-        '[](synhing)',
-        '[](ms)',
-      ]),
+      tags: resolveRowFilters(['graph', 'xai', 'gnn', '[](dgl)', '[](ml)', '[](python)']),
       links: [{ label: "Arxiv'24", href: '#arxiv-synhing' }],
       image: '/synhing.png',
     },
     {
       id: 'ahk-doc',
-      meta: ['Project'],
+      meta: resolveRowFilters(['[](ahkdoc)', '[](bs)']),
       year: '2024',
       title: 'AHKDoc',
       description:
         'VSCode extension that adds JSDoc-style documentation utilities to the AutoHotkey language service. The extension has been downloaded over 1.8k times from the VSCode Marketplace.',
-      tags: resolveRowTags(['ts', 'vscode-ext', 'ahk', '[](bs)']),
+      tags: resolveRowFilters(['ts', 'vscode-ext', 'ahk']),
       links: [
         { label: 'Code', href: 'https://github.com/bhbbbbb/vscode-autohotkey-ahkdoc' },
         {
@@ -143,11 +125,11 @@ export const homeContent: HomeContent = {
   publications: [
     {
       id: 'iclr2026-atomic-hins',
-      meta: ['ICLR 2026', 'M.S. Thesis'],
+      meta: resolveRowFilters(['[ICLR 2026](atomhin)', '[M.S. Thesis](atomhin)']),
       year: '2026',
       title: 'Atomic HINs: Entity-Attribute Duality for Heterogeneous Graph Modeling',
       venue: 'International Conference on Learning Representations (ICLR)',
-      tags: resolveRowTags([
+      tags: resolveRowFilters([
         'graph',
         'gnn',
         'rdb',
@@ -173,13 +155,13 @@ export const homeContent: HomeContent = {
     },
     {
       id: 'www2025-betag',
-      meta: ['WWW 2025'],
+      meta: resolveRowFilters(['[WWW 2025](betag)', '[Best Project Award](betag)', '[](ms)']),
       year: '2025',
       title: 'BETag: Behavior-enhanced Item Tagging with Finetuned Large Language Models',
       // description: 'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',
       // description: 'In Proceedings of the ACM on Web Conference (WWW), 2025',
       venue: 'In Proceedings of the ACM on Web Conference (WWW)',
-      tags: resolveRowTags([
+      tags: resolveRowFilters([
         'llm',
         'lora',
         'recsys',
@@ -206,14 +188,14 @@ export const homeContent: HomeContent = {
     },
     {
       id: 'arxiv-synhing',
-      meta: ['Arxiv'],
+      meta: resolveRowFilters(['[Arxiv 2024](synhing)', '[](ms)']),
       year: '2024',
       title:
         'SynHING: Synthetic Heterogeneous Information Network Generation for Graph Learning and Explanation',
       // description: 'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',
       // description: 'In Proceedings of the ACM on Web Conference (WWW), 2025',
       venue: 'Arxiv',
-      tags: resolveRowTags([
+      tags: resolveRowFilters([
         'graph',
         'xai',
         'gnn',
@@ -237,24 +219,12 @@ export const homeContent: HomeContent = {
         { name: 'Che Lin' },
       ],
     },
-    // {
-    //   meta: ['Journal'],
-    //   year: '2024',
-    //   title: 'Paper Title Example for a Research Publication',
-    //   description:
-    //     'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',
-    //   tags: ['Representation Learning', 'Graph ML', 'Evaluation'],
-    //   links: [
-    //     { label: 'Paper', href: '#' },
-    //     { label: 'Code', href: '#' },
-    //     { label: 'Project', href: '#' },
-    //   ],
-    // },
   ],
 
   others: [
     {
       title: 'NTU FinTech Best Project Award (First Place)',
+      meta: resolveRowFilters(['[WWW 2025](betag)', '[Best Project Award](betag)', '[](ms)']),
       description:
         'Awarded for BETag, an early version of the project later developed into the WWW 2025 paper.',
       year: '2024',

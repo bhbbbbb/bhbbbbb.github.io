@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref, toRef } from 'vue'
-import { useRowTagState } from '@/composables/useRowTagState'
-
-import TagContainer from '@/components/common/TagContainer.vue'
-import type { RowTag } from '@/types/tag'
+import { ref, toRef, computed } from 'vue'
+import FilterContainer from '@/components/common/FilterContainer.vue'
+import { useRowFilterState } from '@/composables/useRowFilterState'
+import type { RowFilter } from '@/types/filter'
 
 interface FeatureLink {
   label: string
@@ -16,26 +15,26 @@ const props = withDefaults(
     title: string
     description: string
     year?: string | number
-    meta?: string[]
-    tags?: RowTag[]
+    meta?: RowFilter[]
+    tags?: RowFilter[]
     links?: FeatureLink[]
     image?: string
-    activeTags?: string[]
-    hoveredTag?: string | null
+    activeFilters?: string[]
+    hoveredFilter?: string | null
   }>(),
   {
     tags: () => [],
-    links: () => [],
     meta: () => [],
-    activeTags: () => [],
-    hoveredTag: null,
+    links: () => [],
+    activeFilters: () => [],
+    hoveredFilter: null,
   },
 )
 
 const emit = defineEmits<{
-  tagClick: [tag: string]
-  tagEnter: [tag: string]
-  tagLeave: []
+  filterClick: [filterId: string]
+  filterEnter: [filterId: string]
+  filterLeave: []
 }>()
 
 const isPreviewOpen = ref(false)
@@ -49,14 +48,14 @@ function closePreview() {
   isPreviewOpen.value = false
 }
 
-const rowTags = toRef(props, 'tags')
-const activeTags = toRef(props, 'activeTags')
-const hoveredTag = toRef(props, 'hoveredTag')
-const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
-  // rowTagIds,
-  rowTags,
-  activeTags,
-  hoveredTag,
+const rowFilters = computed(() => [...props.tags, ...props.meta])
+const activeFilters = toRef(props, 'activeFilters')
+const hoveredFilter = toRef(props, 'hoveredFilter')
+
+const { matchesActiveFilters, matchesHoveredFilter, isDimmed } = useRowFilterState(
+  rowFilters,
+  activeFilters,
+  hoveredFilter,
 )
 </script>
 
@@ -67,15 +66,15 @@ const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
     class="feature-card"
     :class="{
       'feature-card--dimmed': isDimmed,
-      'feature-card--highlighted': hoveredTag && matchesHoveredTag,
+      'feature-card--highlighted': hoveredFilter && matchesHoveredFilter,
     }"
   >
     <button
       v-if="image"
       class="feature-image-button"
       type="button"
-      @click="openPreview"
       aria-label="Open image preview"
+      @click="openPreview"
     >
       <div class="feature-image-frame">
         <img class="feature-image" :src="image" :alt="title" />
@@ -85,12 +84,18 @@ const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
     <div v-else class="feature-image-frame feature-image-placeholder" />
 
     <div class="feature-content">
-      <div v-if="(meta && meta.length) || year" class="feature-topline">
-        <div v-if="meta?.length" class="meta-row">
-          <span v-for="item in meta" :key="item" class="meta-pill">
-            {{ item }}
-          </span>
-        </div>
+      <div v-if="meta.length || year" class="feature-topline">
+        <FilterContainer
+          v-if="meta.length"
+          class="meta-row"
+          :filters="meta"
+          :active-filters="activeFilters"
+          :hovered-filter="hoveredFilter"
+          variant="meta"
+          @filter-click="emit('filterClick', $event)"
+          @filter-enter="emit('filterEnter', $event)"
+          @filter-leave="emit('filterLeave')"
+        />
 
         <span v-if="year" class="feature-year">{{ year }}</span>
       </div>
@@ -101,13 +106,14 @@ const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
         {{ description }}
       </p>
 
-      <TagContainer
-        :tags="tags"
-        :active-tags="activeTags"
-        :hovered-tag="hoveredTag"
-        @tag-click="emit('tagClick', $event)"
-        @tag-enter="emit('tagEnter', $event)"
-        @tag-leave="emit('tagLeave')"
+      <FilterContainer
+        v-if="tags.length"
+        :filters="tags"
+        :active-filters="activeFilters"
+        :hovered-filter="hoveredFilter"
+        @filter-click="emit('filterClick', $event)"
+        @filter-enter="emit('filterEnter', $event)"
+        @filter-leave="emit('filterLeave')"
       />
 
       <div v-if="links?.length" class="link-row">
@@ -216,20 +222,7 @@ const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
 }
 
 .meta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.meta-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-pill);
-  background: var(--color-pill-bg);
-  color: var(--color-pill-text);
-  font-size: var(--text-xs);
-  font-weight: 700;
+  flex: 1;
 }
 
 .feature-year {
@@ -255,7 +248,7 @@ const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-5);
-  padding-top: 2px;
+  margin-top: var(--space-4);
 }
 
 .link-row a {

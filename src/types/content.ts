@@ -1,4 +1,4 @@
-import type { RowTag } from './tag'
+import type { RowFilter } from './filter'
 export interface NavLink {
   label: string
   href: string
@@ -23,18 +23,19 @@ export interface TimelineItem {
   organization: string
   description?: string
   period: string
-  tags?: RowTag[]
+  tags?: RowFilter[]
+  meta?: RowFilter[]
   badge?: string
 }
 
 export interface ProjectItem {
   id: string
-  meta: string[]
+  meta?: RowFilter[]
   year: string | number
   title: string
   description: string
   image?: string
-  tags?: RowTag[]
+  tags?: RowFilter[]
   links?: NavLink[]
 }
 
@@ -49,8 +50,8 @@ export interface PublicationItem {
   authors: PublicationAuthor[]
   venue: string
   year?: string | number
-  meta?: string[]
-  tags?: RowTag[]
+  meta?: RowFilter[]
+  tags?: RowFilter[]
   links?: {
     label: string
     href: string
@@ -62,7 +63,8 @@ export interface SimpleItem {
   title: string
   description: string
   year: string | number
-  tags?: RowTag[]
+  tags?: RowFilter[]
+  meta?: RowFilter[]
 }
 
 export interface HomeContent {

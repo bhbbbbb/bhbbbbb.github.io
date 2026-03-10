@@ -5,7 +5,7 @@ const props = withDefaults(
     label: string
     active?: boolean
     dimmed?: boolean
-    variant?: 'default' | 'skill'
+    variant?: 'default' | 'skill' | 'meta'
   }>(),
   {
     active: false,
@@ -35,12 +35,12 @@ function handleMouseLeave() {
 
 <template>
   <button
-    class="tag-pill"
+    class="filter-pill"
     :class="[
-      `tag-pill--${variant}`,
+      `filter-pill--${variant}`,
       {
-        'tag-pill--active': active,
-        'tag-pill--dimmed': dimmed,
+        'filter-pill--active': active,
+        'filter-pill--dimmed': dimmed,
       },
     ]"
     type="button"
@@ -48,12 +48,12 @@ function handleMouseLeave() {
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
   >
-    <span class="tag-pill__label">{{ label }}</span>
+    <span class="filter-pill__label">{{ label }}</span>
   </button>
 </template>
 
 <style scoped>
-.tag-pill {
+.filter-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -79,64 +79,75 @@ function handleMouseLeave() {
     transform var(--transition-fast);
 }
 
-.tag-pill__label {
+.filter-pill__label {
   display: block;
 }
 
-.tag-pill:hover {
+.filter-pill:hover {
   transform: translateY(-1px);
 }
 
-.tag-pill:focus-visible {
+.filter-pill:focus-visible {
   outline: none;
   border-color: var(--color-primary-border);
   box-shadow: 0 0 0 3px var(--color-primary-soft);
 }
 
-.tag-pill--default {
+.filter-pill--default {
   background: var(--color-tag-bg);
   border-color: transparent;
   color: var(--color-tag-text);
 }
 
-.tag-pill--default:hover {
+.filter-pill--default:hover {
   background: color-mix(in srgb, var(--color-tag-bg) 72%, white);
   border-color: var(--color-primary-border);
   color: var(--color-primary);
 }
 
-.tag-pill--skill {
+.filter-pill--skill {
   background: var(--color-surface-strong);
   border-color: var(--color-border);
   color: var(--color-text);
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 }
 
-.tag-pill--skill:hover {
+.filter-pill--skill:hover {
   background: var(--color-primary-soft);
   border-color: var(--color-primary-border);
   color: var(--color-primary);
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
 }
 
-.tag-pill--active {
+.filter-pill--meta {
+  background: color-mix(in srgb, var(--color-primary-soft) 75%, white);
+  border-color: color-mix(in srgb, var(--color-primary-border) 72%, white);
+  color: var(--color-primary);
+}
+
+.filter-pill--meta:hover {
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary-soft) 88%, white);
+}
+
+.filter-pill--active {
   background: var(--color-primary);
   border-color: var(--color-primary);
   color: white;
   box-shadow: 0 6px 16px rgba(104, 25, 0, 0.16);
 }
 
-.tag-pill--active:hover {
+.filter-pill--active:hover {
   background: var(--color-primary-strong);
   border-color: var(--color-primary-strong);
   color: white;
 }
 
-.tag-pill--dimmed {
+.filter-pill--dimmed {
   opacity: 0.42;
 }
 
-.tag-pill--active.tag-pill--dimmed {
+.filter-pill--active.filter-pill--dimmed {
   opacity: 1;
 }
 </style>

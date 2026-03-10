@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { toRef } from 'vue'
-// import TagContainer from '@/components/common/TagContainer.vue'
-import { useRowTagState } from '@/composables/useRowTagState'
-import type { RowTag } from '@/types/tag'
-
-interface PublicationAuthor {
-  name: string
-  highlight?: boolean
-}
+import { computed, toRef } from 'vue'
+// import FilterContainer from '@/components/common/FilterContainer.vue'
+import { useRowFilterState } from '@/composables/useRowFilterState'
+import type { PublicationAuthor } from '@/types/content'
+import type { RowFilter } from '@/types/filter'
 
 interface PublicationLink {
   label: string
@@ -19,37 +15,40 @@ const props = withDefaults(
     id: string
     title: string
     authors: PublicationAuthor[]
-    venue?: string
+    venue: string
     year?: string | number
-    meta?: string[]
-    tags?: RowTag[]
+    meta?: RowFilter[]
+    tags?: RowFilter[]
     links?: PublicationLink[]
-    activeTags?: string[]
-    hoveredTag?: string | null
+    description?: string
+    activeFilters?: string[]
+    hoveredFilter?: string | null
   }>(),
   {
+    year: undefined,
     meta: () => [],
     tags: () => [],
     links: () => [],
-    activeTags: () => [],
-    hoveredTag: null,
+    description: undefined,
+    activeFilters: () => [],
+    hoveredFilter: null,
   },
 )
 
 // const emit = defineEmits<{
-//   tagClick: [tag: string]
-//   tagEnter: [tag: string]
-//   tagLeave: []
+//   filterClick: [filterId: string]
+//   filterEnter: [filterId: string]
+//   filterLeave: []
 // }>()
 
-const rowTags = toRef(props, 'tags')
-const activeTags = toRef(props, 'activeTags')
-const hoveredTag = toRef(props, 'hoveredTag')
+const rowFilters = computed(() => [...props.tags, ...props.meta])
+const activeFilters = toRef(props, 'activeFilters')
+const hoveredFilter = toRef(props, 'hoveredFilter')
 
-const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
-  rowTags,
-  activeTags,
-  hoveredTag,
+const { matchesActiveFilters, matchesHoveredFilter, isDimmed } = useRowFilterState(
+  rowFilters,
+  activeFilters,
+  hoveredFilter,
 )
 </script>
 
@@ -60,10 +59,22 @@ const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
     class="publication-row"
     :class="{
       'publication-row--dimmed': isDimmed,
-      'publication-row--highlighted': hoveredTag && matchesHoveredTag,
+      'publication-row--highlighted': hoveredFilter && matchesHoveredFilter,
     }"
   >
     <div class="publication-main">
+      <!-- <div v-if="meta.length" class="publication-topline">
+        <FilterContainer
+          :filters="meta"
+          :active-filters="activeFilters"
+          :hovered-filter="hoveredFilter"
+          variant="meta"
+          @filter-click="emit('filterClick', $event)"
+          @filter-enter="emit('filterEnter', $event)"
+          @filter-leave="emit('filterLeave')"
+        />
+      </div> -->
+
       <h3 class="publication-title">
         {{ title }}
       </h3>
@@ -87,15 +98,15 @@ const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
         </template>
       </p>
 
-      <!-- <TagContainer
+      <!-- <FilterContainer
         v-if="tags.length"
         class="publication-tags"
-        :tags="tags"
-        :active-tags="activeTags"
-        :hovered-tag="hoveredTag"
-        @tag-click="emit('tagClick', $event)"
-        @tag-enter="emit('tagEnter', $event)"
-        @tag-leave="emit('tagLeave')"
+        :filters="tags"
+        :active-filters="activeFilters"
+        :hovered-filter="hoveredFilter"
+        @filter-click="emit('filterClick', $event)"
+        @filter-enter="emit('filterEnter', $event)"
+        @filter-leave="emit('filterLeave')"
       /> -->
 
       <div v-if="links.length" class="link-row">
@@ -139,6 +150,10 @@ const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
 
 .publication-main {
   min-width: 0;
+}
+
+.publication-topline {
+  margin-bottom: var(--space-3);
 }
 
 .publication-title {

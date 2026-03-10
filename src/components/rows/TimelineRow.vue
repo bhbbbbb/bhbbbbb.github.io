@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { toRef } from 'vue'
-import TagContainer from '@/components/common/TagContainer.vue'
-import { useRowTagState } from '@/composables/useRowTagState'
-import type { RowTag } from '@/types/tag'
+import { computed, toRef } from 'vue'
+import FilterContainer from '@/components/common/FilterContainer.vue'
+import { useRowFilterState } from '@/composables/useRowFilterState'
+import type { RowFilter } from '@/types/filter'
 
 const props = withDefaults(
   defineProps<{
@@ -10,34 +10,36 @@ const props = withDefaults(
     organization: string
     period: string
     description?: string
-    tags?: RowTag[]
+    tags?: RowFilter[]
+    meta?: RowFilter[]
     badge?: string
-    activeTags?: string[]
-    hoveredTag?: string | null
+    activeFilters?: string[]
+    hoveredFilter?: string | null
   }>(),
   {
     description: undefined,
     tags: () => [],
+    meta: () => [],
     badge: undefined,
-    activeTags: () => [],
-    hoveredTag: null,
+    activeFilters: () => [],
+    hoveredFilter: null,
   },
 )
 
 const emit = defineEmits<{
-  tagClick: [tag: string]
-  tagEnter: [tag: string]
-  tagLeave: []
+  filterClick: [filterId: string]
+  filterEnter: [filterId: string]
+  filterLeave: []
 }>()
 
-const rowTags = toRef(props, 'tags')
-const activeTags = toRef(props, 'activeTags')
-const hoveredTag = toRef(props, 'hoveredTag')
+const rowFilters = computed(() => [...props.tags, ...props.meta])
+const activeFilters = toRef(props, 'activeFilters')
+const hoveredFilter = toRef(props, 'hoveredFilter')
 
-const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
-  rowTags,
-  activeTags,
-  hoveredTag,
+const { matchesActiveFilters, matchesHoveredFilter, isDimmed } = useRowFilterState(
+  rowFilters,
+  activeFilters,
+  hoveredFilter,
 )
 </script>
 
@@ -48,7 +50,7 @@ const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
     :class="{
       'no-badge': !badge,
       'timeline-item--dimmed': isDimmed,
-      'timeline-item--highlighted': hoveredTag && matchesHoveredTag,
+      'timeline-item--highlighted': hoveredFilter && matchesHoveredFilter,
     }"
   >
     <div v-if="badge" class="timeline-left">
@@ -71,15 +73,27 @@ const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
         {{ description }}
       </p>
 
-      <TagContainer
+      <!-- <FilterContainer
+        v-if="meta.length"
+        class="timeline-meta-filters"
+        :filters="meta"
+        :active-filters="activeFilters"
+        :hovered-filter="hoveredFilter"
+        variant="meta"
+        @filter-click="emit('filterClick', $event)"
+        @filter-enter="emit('filterEnter', $event)"
+        @filter-leave="emit('filterLeave')"
+      /> -->
+
+      <FilterContainer
         v-if="tags.length"
         class="timeline-tags"
-        :tags="tags"
-        :active-tags="activeTags"
-        :hovered-tag="hoveredTag"
-        @tag-click="emit('tagClick', $event)"
-        @tag-enter="emit('tagEnter', $event)"
-        @tag-leave="emit('tagLeave')"
+        :filters="tags"
+        :active-filters="activeFilters"
+        :hovered-filter="hoveredFilter"
+        @filter-click="emit('filterClick', $event)"
+        @filter-enter="emit('filterEnter', $event)"
+        @filter-leave="emit('filterLeave')"
       />
     </div>
   </article>
@@ -176,6 +190,7 @@ const { matchesActiveFilters, matchesHoveredTag, isDimmed } = useRowTagState(
   color: var(--color-text-muted);
 }
 
+.timeline-meta-filters,
 .timeline-tags {
   margin-top: var(--space-4);
 }

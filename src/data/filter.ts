@@ -1,6 +1,6 @@
-import type { TagDef } from '@/types/tag'
+import type { FilterDef } from '@/types/filter'
 
-export const tagDefs = [
+export const filterDefs = [
   { id: 'python', defaultLabel: 'Python', order: 9, featured: true },
   { id: 'ml', defaultLabel: 'Machine Learning', order: 10, featured: true },
   { id: 'llm', defaultLabel: 'LLMs', order: 20, featured: true },
@@ -16,9 +16,12 @@ export const tagDefs = [
   { id: 'vscode-ext', defaultLabel: 'VSCode Extension', order: 110, featured: false },
   { id: 'ahk', defaultLabel: 'AutoHotkey', order: 120, featured: false },
   { id: 'rdb', defaultLabel: 'Relational Database', order: 130, featured: false },
-  { id: 'atomhin', defaultLabel: 'Atomic HINs', order: 1000, featured: false },
-  { id: 'betag', defaultLabel: 'BETag', order: 1000, featured: false },
-  { id: 'synhing', defaultLabel: 'SynHING', order: 1000, featured: false },
-  { id: 'ms', defaultLabel: 'M.S.', order: 1000, featured: false },
-  { id: 'bs', defaultLabel: 'B.S', order: 1000, featured: false },
-] as const satisfies readonly TagDef[]
+
+  // Metas
+  { id: 'atomhin', defaultLabel: 'AtomHIN', order: 1000, isMeta: true },
+  { id: 'betag', defaultLabel: 'BETag', order: 1001, isMeta: true },
+  { id: 'synhing', defaultLabel: 'SynHING', order: 1002, isMeta: true },
+  { id: 'ahkdoc', defaultLabel: 'AHKDoc', order: 1002, isMeta: true },
+  { id: 'ms', defaultLabel: 'M.S.', order: 1003, isMeta: true },
+  { id: 'bs', defaultLabel: 'B.S.', order: 1004, isMeta: true },
+] as const satisfies readonly FilterDef[]

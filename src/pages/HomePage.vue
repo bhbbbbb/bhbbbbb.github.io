@@ -11,7 +11,6 @@ import SimpleRow from '@/components/rows/SimpleRow.vue'
 import FilterPill from '@/components/common/FilterPill.vue'
 import { homeContent } from '@/data/home'
 import { getFeaturedTagFilters, getAllFilters, isMetaFilter } from '@/utils/filter'
-import type { SimpleItem } from '@/types/content'
 
 const activeFilters = ref<string[]>([])
 const hoveredFilter = ref<string | null>(null)

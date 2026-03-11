@@ -72,7 +72,7 @@ export interface SimpleItem {
 
 export interface HomeContent {
   hero: HeroContent
-  education: TimelineItem[]
+  timeline: TimelineItem[]
   publications: PublicationItem[]
   projects: ProjectItem[]
   others: SimpleItem[]

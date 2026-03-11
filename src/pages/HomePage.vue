@@ -86,7 +86,7 @@ function shouldActive(item: { tags?: { id: string }[]; meta?: { id: string }[]; 
   return false
 }
 
-const filteredEducation = computed(() => homeContent.education.filter(shouldActive))
+const filteredTimeline = computed(() => homeContent.timeline.filter(shouldActive))
 
 const filteredProjects = computed(() => homeContent.projects.filter(shouldActive))
 
@@ -147,13 +147,13 @@ console.log(shouldActive(homeContent.others[0] as SimpleItem))
     </section>
 
     <HomeSection
-      v-if="filteredEducation.length"
+      v-if="filteredTimeline.length"
       id="education"
       title="Education"
       :hide-title="isMetaMode"
     >
       <TimelineRow
-        v-for="item in filteredEducation"
+        v-for="item in filteredTimeline"
         :key="`${item.title}-${item.period}`"
         :title="item.title"
         :organization="item.organization"

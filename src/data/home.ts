@@ -33,7 +33,7 @@ export const homeContent: HomeContent = {
     ],
   },
 
-  education: [
+  timeline: [
     {
       title: 'M.S. in Data Science',
       organization: 'National Taiwan University',
@@ -72,9 +72,8 @@ export const homeContent: HomeContent = {
         '[](dgl)',
       ]),
       links: [
-        // { label: 'Paper', href: '#' },
+        { label: 'Paper', href: 'https://openreview.net/pdf?id=AG7fjg5azU' },
         { label: 'Code', href: 'https://github.com/ntuidssplab/AtomHIN' },
-        { label: "ICLR'26", href: '#iclr2026-atomic-hins' },
       ],
       image: '/atomhin-2.png',
     },
@@ -87,8 +86,8 @@ export const homeContent: HomeContent = {
         'Behavior-enhanced automatic tagging system that finetunes LLMs using user interaction histories for retrieval and recommendation tasks. BETags are generated offline with zero runtime latency, improving tagging quality by 18% over manual annotations.',
       tags: resolveRowFilters(['llm', 'lora', 'recsys', 'ir', '[](ml)', '[](python)']),
       links: [
-        { label: 'Code', href: 'https://github.com/idssplab/BETag' },
-        { label: "WWW'25", href: '#www25-betag' },
+        { label: 'Paper', href: 'https://openreview.net/pdf?id=AG7fjg5azU' },
+        { label: 'Code', href: 'https://github.com/ntuidssplab/AtomHIN' },
       ],
       image: '/betag.png',
     },
@@ -100,7 +99,7 @@ export const homeContent: HomeContent = {
       description:
         'Framework for generating explainable synthetic heterogeneous information networks (HINs). I optimized the core merge algorithm from O(n²) to O(n), enabling million-scale graph generation in under 10 minutes.',
       tags: resolveRowFilters(['graph', 'xai', 'gnn', '[](dgl)', '[](ml)', '[](python)']),
-      links: [{ label: "Arxiv'24", href: '#arxiv-synhing' }],
+      links: [{ label: 'Paper', href: 'https://arxiv.org/abs/2401.04133' }],
       image: '/synhing.png',
     },
     {
@@ -137,13 +136,10 @@ export const homeContent: HomeContent = {
         '[](python)',
         '[](pydantic)',
         '[](dgl)',
-        '[](atomhin)',
-        '[](ms)',
       ]),
       links: [
         { label: 'Paper', href: 'https://openreview.net/pdf?id=AG7fjg5azU' },
         { label: 'Code', href: 'https://github.com/ntuidssplab/AtomHIN' },
-        { label: 'Project', href: '#atomhin' },
       ],
       authors: [
         { name: 'Shao-En Lin', highlight: true },
@@ -161,20 +157,10 @@ export const homeContent: HomeContent = {
       // description: 'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',
       // description: 'In Proceedings of the ACM on Web Conference (WWW), 2025',
       venue: 'In Proceedings of the ACM on Web Conference (WWW)',
-      tags: resolveRowFilters([
-        'llm',
-        'lora',
-        'recsys',
-        'ir',
-        '[](ml)',
-        '[](python)',
-        '[](betag)',
-        '[](ms)',
-      ]),
+      tags: resolveRowFilters(['llm', 'lora', 'recsys', 'ir', '[](ml)', '[](python)']),
       links: [
         { label: 'Paper', href: 'https://dl.acm.org/doi/10.1145/3696410.3714769' },
         { label: 'Code', href: 'https://github.com/idssplab/BETag?tab=readme-ov-file' },
-        { label: 'Project', href: '#betag' },
       ],
       authors: [
         { name: 'Shao-En Lin', highlight: true },
@@ -205,11 +191,7 @@ export const homeContent: HomeContent = {
         '[](synhing)',
         '[](ms)',
       ]),
-      links: [
-        { label: 'Paper', href: 'https://arxiv.org/abs/2401.04133' },
-        // { label: 'Code', href: 'https://github.com/idssplab/BETag?tab=readme-ov-file' },
-        { label: 'Project', href: '#synhing' },
-      ],
+      links: [{ label: 'Paper', href: 'https://arxiv.org/abs/2401.04133' }],
       authors: [
         { name: 'Ming-Yi Hong' },
         { name: 'Yi-Hsiang Huang' },

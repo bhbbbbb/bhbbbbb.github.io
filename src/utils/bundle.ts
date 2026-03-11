@@ -65,7 +65,8 @@ function enrichTimelines(
         description: t.description,
         badge: t.badge,
         tags: resolveRowFilters([...(t.tags ?? [])]),
-        meta: [] as RowFilter[],
+        // Self-reference so the timeline item appears in its own thread
+        meta: resolveRowFilters([`[](${t.id})`]),
       } satisfies TimelineItem,
     ]),
   )

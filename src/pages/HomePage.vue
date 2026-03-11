@@ -93,7 +93,6 @@ const filteredProjects = computed(() => homeContent.projects.filter(shouldActive
 const filteredPublications = computed(() => homeContent.publications.filter(shouldActive))
 
 const filteredOthers = computed(() => homeContent.others.filter(shouldActive))
-console.log(shouldActive(homeContent.others[0] as SimpleItem))
 </script>
 
 <template>

@@ -1,6 +1,11 @@
 import type { FilterId, TimelineId, RawRowFilter } from './filter'
 import type { PublicationAuthor, NavLink } from './content'
 
+// Plain string: 'Name' → not highlighted
+// Bold string:  '**Name**' → highlighted
+// Object: { name, highlight? } → passed through as-is
+export type RawAuthor = string | PublicationAuthor
+
 export interface EntityBundle {
   id: FilterId
   timeline: TimelineId
@@ -24,7 +29,7 @@ export interface EntityBundle {
   publication?: {
     id?: string           // defaults to `${bundleId}-pub`
     title: string
-    authors: PublicationAuthor[]
+    authors: RawAuthor[]
     venue: string
     year: string | number
     description?: string

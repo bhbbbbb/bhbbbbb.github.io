@@ -1,8 +1,24 @@
-import type { EntityBundle } from '@/types/bundle'
+import type { EntityBundle, RawAuthor } from '@/types/bundle'
 import type { TimelineId, RowFilter, RawRowFilter } from '@/types/filter'
-import type { ProjectItem, PublicationItem, SimpleItem, TimelineItem } from '@/types/content'
+import type {
+  ProjectItem,
+  PublicationItem,
+  PublicationAuthor,
+  SimpleItem,
+  TimelineItem,
+} from '@/types/content'
 import type { RawTimelineDef } from '@/types/timeline'
 import { resolveRowFilters } from '@/utils/filter'
+
+const HIGHLIGHT_RE = /^\*\*(.+)\*\*$/
+
+function resolveAuthors(raws: RawAuthor[]): PublicationAuthor[] {
+  return raws.map((raw) => {
+    if (typeof raw !== 'string') return raw
+    const match = raw.match(HIGHLIGHT_RE)
+    return match ? { name: match[1] as string, highlight: true } : { name: raw }
+  })
+}
 
 function resolve(filters: RawRowFilter[] | undefined): RowFilter[] {
   if (!filters?.length) return []
@@ -10,7 +26,10 @@ function resolve(filters: RawRowFilter[] | undefined): RowFilter[] {
 }
 
 // Row-first merge: row tags appear first, bundle tags appended (deduped by id, row wins)
-function mergeTags(rowTags: RawRowFilter[] | undefined, bundleTags: RawRowFilter[] | undefined): RowFilter[] {
+function mergeTags(
+  rowTags: RawRowFilter[] | undefined,
+  bundleTags: RawRowFilter[] | undefined,
+): RowFilter[] {
   const resolvedRow = resolve(rowTags)
   const resolvedBundle = resolve(bundleTags)
   const rowIds = new Set(resolvedRow.map((f) => f.id))
@@ -18,7 +37,11 @@ function mergeTags(rowTags: RawRowFilter[] | undefined, bundleTags: RawRowFilter
 }
 
 // Builds final meta for a section: explicit meta + auto-append [](bundleId) and [](timelineId)
-function buildSectionMeta(sectionMeta: RawRowFilter[], bundleId: string, timelineId: TimelineId): RowFilter[] {
+function buildSectionMeta(
+  sectionMeta: RawRowFilter[],
+  bundleId: string,
+  timelineId: TimelineId,
+): RowFilter[] {
   const resolved = resolve(sectionMeta)
   const ids = new Set(resolved.map((f) => f.id))
   if (!ids.has(bundleId)) resolved.push(...resolveRowFilters([`[](${bundleId})`]))
@@ -64,7 +87,7 @@ function enrichTimelines(
     const existingMetaIds = new Set(tl.meta.map((f) => f.id))
     for (const id of bundleMetaIds) {
       if (!existingMetaIds.has(id)) {
-        tl.meta.push(resolveRowFilters([`[](${id})`])[0])
+        tl.meta.push(resolveRowFilters([`[](${id})`])[0] as RowFilter)
         existingMetaIds.add(id)
       }
     }
@@ -81,7 +104,7 @@ function enrichTimelines(
     const existingTagIds = new Set(tl.tags.map((f) => f.id))
     for (const f of resolve(allBundleTagRaws)) {
       if (!existingTagIds.has(f.id)) {
-        tl.tags.push(resolveRowFilters([`[](${f.id})`])[0])
+        tl.tags.push(resolveRowFilters([`[](${f.id})`])[0] as RowFilter)
         existingTagIds.add(f.id)
       }
     }
@@ -125,7 +148,7 @@ export function expandBundles(
       publications.push({
         id: pub.id ?? `${id}-pub`,
         title: pub.title,
-        authors: pub.authors,
+        authors: resolveAuthors(pub.authors),
         venue: pub.venue,
         year: pub.year,
         description: pub.description,

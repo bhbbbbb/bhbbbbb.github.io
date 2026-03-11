@@ -1,10 +1,12 @@
 import type { HomeContent } from '@/types/content'
 import type { SiteContent } from '@/types/header'
-import { resolveRowFilters } from '@/utils/filter'
+import type { EntityBundle } from '@/types/bundle'
+import { timelineDefs } from '@/data/timeline'
+import { expandBundles } from '@/utils/bundle'
 
 export const siteContent: SiteContent = {
   brand: 'Shao-En Lin',
-  description: 'Portfolio of Your Shao-En Lin',
+  description: 'Portfolio of Shao-En Lin',
 
   nav: [
     { label: 'Home', href: '#' },
@@ -14,6 +16,148 @@ export const siteContent: SiteContent = {
     // { label: 'Others', href: '#others' },
   ],
 }
+
+const bundles: EntityBundle[] = [
+  {
+    id: 'atomhin',
+    timeline: 'ms',
+    tags: ['graph', 'gnn', 'rdb', '[](ml)', '[](python)', '[](pydantic)', '[](dgl)'],
+    links: [
+      { label: 'Paper', href: 'https://openreview.net/pdf?id=AG7fjg5azU' },
+      { label: 'Code', href: 'https://github.com/ntuidssplab/AtomHIN' },
+    ],
+    image: '/atomhin-2.png',
+
+    project: {
+      title: 'AtomHIN',
+      year: '2026',
+      description:
+        'Introduces a schema optimization framework for heterogeneous information networks (HINs), enabling systematic design of task-specific graph schemas. The project also releases optimized schemas as reusable datasets via a Python package and simple API.',
+      meta: ['[ICLR 2026](atomhin)', '[M.S. Thesis](atomhin)'],
+    },
+
+    publication: {
+      title: 'Atomic HINs: Entity-Attribute Duality for Heterogeneous Graph Modeling',
+      venue: 'International Conference on Learning Representations (ICLR)',
+      year: '2026',
+      authors: [
+        { name: 'Shao-En Lin', highlight: true },
+        { name: 'Ming-Yi Hong' },
+        { name: 'Miao-Chen Chiang' },
+        { name: 'Chih-Yu Wang' },
+        { name: 'Che Lin' },
+      ],
+      meta: ['[ICLR 2026](atomhin)', '[M.S. Thesis](atomhin)'],
+    },
+  },
+
+  {
+    id: 'betag',
+    timeline: 'ms',
+    tags: ['llm', 'lora', 'recsys', 'ir', '[](ml)', '[](python)'],
+    links: [
+      { label: 'Paper', href: 'https://dl.acm.org/doi/10.1145/3696410.3714769' },
+      { label: 'Code', href: 'https://github.com/idssplab/BETag?tab=readme-ov-file' },
+    ],
+    image: '/betag.png',
+
+    project: {
+      title: 'BETag',
+      year: '2025',
+      description:
+        'Behavior-enhanced automatic tagging system that finetunes LLMs using user interaction histories for retrieval and recommendation tasks. BETags are generated offline with zero runtime latency, improving tagging quality by 18% over manual annotations.',
+      meta: ['[WWW 2025](betag)', '[Best Project Award](betag)'],
+    },
+
+    publication: {
+      title: 'BETag: Behavior-enhanced Item Tagging with Finetuned Large Language Models',
+      venue: 'In Proceedings of the ACM on Web Conference (WWW)',
+      year: '2025',
+      authors: [
+        { name: 'Shao-En Lin', highlight: true },
+        { name: 'Brian Liu' },
+        { name: 'Miao-Chen Chiang' },
+        { name: 'Ming-Yi Hong' },
+        { name: 'Yu-Shiang Huang' },
+        { name: 'Chuan-Ju Wang' },
+        { name: 'Che Lin' },
+      ],
+      meta: ['[WWW 2025](betag)', '[Best Project Award](betag)'],
+    },
+
+    awards: [
+      {
+        title: 'NTU FinTech Best Project Award (First Place)',
+        description:
+          'Awarded for BETag, an early version of the project later developed into the WWW 2025 paper.',
+        year: '2024',
+        show: false,
+        meta: ['betag'],
+      },
+    ],
+  },
+
+  {
+    id: 'synhing',
+    timeline: 'ms',
+    tags: ['graph', 'xai', 'gnn', '[](dgl)', '[](ml)', '[](python)'],
+    links: [{ label: 'Paper', href: 'https://arxiv.org/abs/2401.04133' }],
+    image: '/synhing.png',
+
+    project: {
+      title: 'SynHING',
+      year: '2024',
+      description:
+        'Framework for generating explainable synthetic heterogeneous information networks (HINs). I optimized the core merge algorithm from O(n²) to O(n), enabling million-scale graph generation in under 10 minutes.',
+      meta: ['[Arxiv 2024](synhing)'],
+    },
+
+    publication: {
+      title:
+        'SynHING: Synthetic Heterogeneous Information Network Generation for Graph Learning and Explanation',
+      venue: 'Arxiv',
+      year: '2024',
+      authors: [
+        { name: 'Ming-Yi Hong' },
+        { name: 'Yi-Hsiang Huang' },
+        { name: 'Shao-En Lin', highlight: true },
+        { name: 'You-Chen Teng' },
+        { name: 'Chih-Yu Wang' },
+        { name: 'Che Lin' },
+      ],
+      meta: ['[Arxiv 2024](synhing)'],
+    },
+  },
+
+  {
+    id: 'ahkdoc',
+    timeline: 'bs',
+    tags: ['ts', 'vscode-ext', 'ahk'],
+    links: [
+      { label: 'Code', href: 'https://github.com/bhbbbbb/vscode-autohotkey-ahkdoc' },
+      {
+        label: 'Marketplace',
+        href: 'https://marketplace.visualstudio.com/items?itemName=bhbbbbb.vscode-autohotkey-ahkdoc',
+      },
+    ],
+    image: '/ahkdoc.jpg',
+
+    project: {
+      title: 'AHKDoc',
+      year: '2024',
+      description:
+        'VSCode extension that adds JSDoc-style documentation utilities to the AutoHotkey language service. The extension has been downloaded over 1.8k times from the VSCode Marketplace.',
+      meta: [],
+    },
+  },
+]
+
+const {
+  projects,
+  publications,
+  others,
+  timelines: enrichedTimelines,
+} = expandBundles(bundles, timelineDefs)
 
 export const homeContent: HomeContent = {
   hero: {
@@ -33,190 +177,8 @@ export const homeContent: HomeContent = {
     ],
   },
 
-  timeline: [
-    {
-      title: 'M.S. in Data Science',
-      organization: 'National Taiwan University',
-      // description: 'Focus on machine learning, representation learning, retrieval systems, and practical AI applications.',
-      tags: resolveRowFilters(['gnn', 'llm', 'recsys', 'ml', '[](python)', '[](ms)']),
-      meta: resolveRowFilters(['[](atomhin)', '[](betag)', '[](synhing)']),
-      period: '2023 — 2026',
-      // badge: '/ntu.svg',
-    },
-    {
-      title: 'B.S. in Electrical Engineering',
-      organization: 'National Cheng Kung University',
-      // description: 'Coursework in algorithms, distributed systems, software engineering, and machine learning.',
-      period: '2019 — 2023',
-      tags: resolveRowFilters(['[](ml)', '[](python)', '[](bs)']),
-      meta: resolveRowFilters(['[](ahkdoc)']),
-      // badge: '/ncku.png',
-    },
-  ],
-
-  projects: [
-    {
-      id: 'atomhin',
-      meta: resolveRowFilters(['[ICLR 2026](atomhin)', '[M.S. Thesis](atomhin)']),
-      year: '2026',
-      title: 'AtomHIN',
-      description:
-        'Introduces a schema optimization framework for heterogeneous information networks (HINs), enabling systematic design of task-specific graph schemas. The project also releases optimized schemas as reusable datasets via a Python package and simple API.',
-      tags: resolveRowFilters([
-        'graph',
-        'gnn',
-        'rdb',
-        '[](ml)',
-        '[](python)',
-        '[](pydantic)',
-        '[](dgl)',
-      ]),
-      links: [
-        { label: 'Paper', href: 'https://openreview.net/pdf?id=AG7fjg5azU' },
-        { label: 'Code', href: 'https://github.com/ntuidssplab/AtomHIN' },
-      ],
-      image: '/atomhin-2.png',
-    },
-    {
-      id: 'betag',
-      meta: resolveRowFilters(['[WWW 2025](betag)', '[Best Project Award](betag)', '[](ms)']),
-      year: '2025',
-      title: 'BETag',
-      description:
-        'Behavior-enhanced automatic tagging system that finetunes LLMs using user interaction histories for retrieval and recommendation tasks. BETags are generated offline with zero runtime latency, improving tagging quality by 18% over manual annotations.',
-      tags: resolveRowFilters(['llm', 'lora', 'recsys', 'ir', '[](ml)', '[](python)']),
-      links: [
-        { label: 'Paper', href: 'https://openreview.net/pdf?id=AG7fjg5azU' },
-        { label: 'Code', href: 'https://github.com/ntuidssplab/AtomHIN' },
-      ],
-      image: '/betag.png',
-    },
-    {
-      id: 'synhing',
-      meta: resolveRowFilters(['[Arxiv 2024](synhing)', '[](ms)']),
-      year: '2024',
-      title: 'SynHING',
-      description:
-        'Framework for generating explainable synthetic heterogeneous information networks (HINs). I optimized the core merge algorithm from O(n²) to O(n), enabling million-scale graph generation in under 10 minutes.',
-      tags: resolveRowFilters(['graph', 'xai', 'gnn', '[](dgl)', '[](ml)', '[](python)']),
-      links: [{ label: 'Paper', href: 'https://arxiv.org/abs/2401.04133' }],
-      image: '/synhing.png',
-    },
-    {
-      id: 'ahk-doc',
-      meta: resolveRowFilters(['[](ahkdoc)', '[](bs)']),
-      year: '2024',
-      title: 'AHKDoc',
-      description:
-        'VSCode extension that adds JSDoc-style documentation utilities to the AutoHotkey language service. The extension has been downloaded over 1.8k times from the VSCode Marketplace.',
-      tags: resolveRowFilters(['ts', 'vscode-ext', 'ahk']),
-      links: [
-        { label: 'Code', href: 'https://github.com/bhbbbbb/vscode-autohotkey-ahkdoc' },
-        {
-          label: 'Marketplace',
-          href: 'https://marketplace.visualstudio.com/items?itemName=bhbbbbb.vscode-autohotkey-ahkdoc',
-        },
-      ],
-      image: '/ahkdoc.jpg',
-    },
-  ],
-
-  publications: [
-    {
-      id: 'iclr2026-atomic-hins',
-      meta: resolveRowFilters(['[ICLR 2026](atomhin)', '[M.S. Thesis](atomhin)']),
-      year: '2026',
-      title: 'Atomic HINs: Entity-Attribute Duality for Heterogeneous Graph Modeling',
-      venue: 'International Conference on Learning Representations (ICLR)',
-      tags: resolveRowFilters([
-        'graph',
-        'gnn',
-        'rdb',
-        '[](ml)',
-        '[](python)',
-        '[](pydantic)',
-        '[](dgl)',
-      ]),
-      links: [
-        { label: 'Paper', href: 'https://openreview.net/pdf?id=AG7fjg5azU' },
-        { label: 'Code', href: 'https://github.com/ntuidssplab/AtomHIN' },
-      ],
-      authors: [
-        { name: 'Shao-En Lin', highlight: true },
-        { name: 'Ming-Yi Hong' },
-        { name: 'Miao-Chen Chiang' },
-        { name: 'Chih-Yu Wang' },
-        { name: 'Che Lin' },
-      ],
-    },
-    {
-      id: 'www2025-betag',
-      meta: resolveRowFilters(['[WWW 2025](betag)', '[Best Project Award](betag)', '[](ms)']),
-      year: '2025',
-      title: 'BETag: Behavior-enhanced Item Tagging with Finetuned Large Language Models',
-      // description: 'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',
-      // description: 'In Proceedings of the ACM on Web Conference (WWW), 2025',
-      venue: 'In Proceedings of the ACM on Web Conference (WWW)',
-      tags: resolveRowFilters(['llm', 'lora', 'recsys', 'ir', '[](ml)', '[](python)']),
-      links: [
-        { label: 'Paper', href: 'https://dl.acm.org/doi/10.1145/3696410.3714769' },
-        { label: 'Code', href: 'https://github.com/idssplab/BETag?tab=readme-ov-file' },
-      ],
-      authors: [
-        { name: 'Shao-En Lin', highlight: true },
-        { name: 'Brian Liu' },
-        { name: 'Miao-Chen Chiang' },
-        { name: 'Ming-Yi Hong' },
-        { name: 'Yu-Shiang Huang' },
-        { name: 'Chuan-Ju Wang' },
-        { name: 'Che Lin' },
-      ],
-    },
-    {
-      id: 'arxiv-synhing',
-      meta: resolveRowFilters(['[Arxiv 2024](synhing)', '[](ms)']),
-      year: '2024',
-      title:
-        'SynHING: Synthetic Heterogeneous Information Network Generation for Graph Learning and Explanation',
-      // description: 'A short summary of the work, the technical contribution, and why it matters. Keep this compact but informative enough for a recruiter or hiring manager to scan quickly.',
-      // description: 'In Proceedings of the ACM on Web Conference (WWW), 2025',
-      venue: 'Arxiv',
-      tags: resolveRowFilters([
-        'graph',
-        'xai',
-        'gnn',
-        '[](dgl)',
-        '[](ml)',
-        '[](python)',
-        '[](synhing)',
-        '[](ms)',
-      ]),
-      links: [{ label: 'Paper', href: 'https://arxiv.org/abs/2401.04133' }],
-      authors: [
-        { name: 'Ming-Yi Hong' },
-        { name: 'Yi-Hsiang Huang' },
-        { name: 'Shao-En Lin', highlight: true },
-        { name: 'You-Chen Teng' },
-        { name: 'Chih-Yu Wang' },
-        { name: 'Che Lin' },
-      ],
-    },
-  ],
-
-  others: [
-    {
-      title: 'NTU FinTech Best Project Award (First Place)',
-      meta: resolveRowFilters(['betag']),
-      tags: resolveRowFilters(['llm', 'lora', 'recsys', 'ir', '[](ml)', '[](python)']),
-      description:
-        'Awarded for BETag, an early version of the project later developed into the WWW 2025 paper.',
-      year: '2024',
-      show: false,
-    },
-    // {
-    //   title: 'Scholarship / Honor / Certificate',
-    //   description: 'Short description of the recognition or achievement.',
-    //   year: '2023',
-    // },
-  ],
+  timeline: enrichedTimelines,
+  projects,
+  publications,
+  others,
 }

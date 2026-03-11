@@ -1,4 +1,4 @@
-import type { RowFilter } from './filter'
+import type { RowFilter, TimelineId } from './filter'
 export interface NavLink {
   label: string
   href: string
@@ -19,6 +19,7 @@ export interface HeroContent {
 }
 
 export interface TimelineItem {
+  id: TimelineId
   title: string
   organization: string
   description?: string

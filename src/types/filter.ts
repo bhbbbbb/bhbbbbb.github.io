@@ -1,6 +1,8 @@
 import type { filterDefs } from '@/data/filter'
+import type { timelineDefs } from '@/data/timeline'
 
 export type FilterId = (typeof filterDefs)[number]['id']
+export type TimelineId = (typeof timelineDefs)[number]['id']
 
 export interface FilterDef {
   id: string

@@ -9,6 +9,11 @@ const router = createRouter({
       name: 'home',
       component: HomePage,
     },
+    {
+      path: '/notes/:pathMatch(.*)*',
+      name: 'note',
+      component: () => import('../pages/NotePage.vue'),
+    },
     // {
     //   path: '/:albumName/:rotation(\\d)?/:offset(\\d+)?',
     //   name: 'about',

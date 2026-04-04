@@ -1,0 +1,78 @@
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { loadManifest } from '@/utils/notes'
+import type { NoteManifestItem, NoteTreeNode } from '@/types/note'
+import NoteTreeNodeVue from './NoteTreeNode.vue'
+
+defineProps<{ currentSlug: string }>()
+
+function prettify(segment: string): string {
+  return segment.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
+function buildTree(notes: NoteManifestItem[]): NoteTreeNode[] {
+  const root: NoteTreeNode[] = []
+
+  for (const note of notes) {
+    const parts = note.slug.replace(/^\/notes\//, '').split('/')
+    let level = root
+    let path = '/notes'
+
+    for (let i = 0; i < parts.length - 1; i++) {
+      path += '/' + parts[i]
+      let node = level.find((n) => n.path === path)
+      if (!node) {
+        node = { label: prettify(parts[i]!), path, children: [] }
+        level.push(node)
+      }
+      level = node.children
+    }
+
+    level.push({ label: note.title, path: note.slug, note, children: [] })
+  }
+
+  return root
+}
+
+const tree = ref<NoteTreeNode[]>([])
+const loading = ref(true)
+
+onMounted(async () => {
+  const manifest = await loadManifest()
+  tree.value = buildTree(manifest.notes)
+  loading.value = false
+})
+</script>
+
+<template>
+  <nav class="note-sidebar">
+    <div v-if="loading" class="sidebar-loading">Loading...</div>
+    <template v-else>
+      <NoteTreeNodeVue
+        v-for="node in tree"
+        :key="node.path"
+        :node="node"
+        :current-slug="currentSlug"
+      />
+    </template>
+  </nav>
+</template>
+
+<style scoped>
+.note-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 24px 12px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.sidebar-loading {
+  font-size: 13px;
+  color: #888;
+}
+</style>

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted, watch, nextTick } from 'vue'
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { getNoteBySlug } from '@/utils/notes'
 import { parseMarkdown } from '@/utils/markdown'
 import { renderMermaid } from '@/utils/mermaid'
+import NoteSidebar from '@/components/notes/NoteSidebar.vue'
 
 const route = useRoute()
 
@@ -12,13 +13,14 @@ const error = ref<string | null>(null)
 const html = ref('')
 const meta = ref<Record<string, unknown> | null>(null)
 
+const currentSlug = computed(() => route.path.replace(/\/+$/, ''))
+
 async function load() {
   loading.value = true
   error.value = null
 
   try {
-    const slug = route.path.replace(/\/+$/, '')
-    const note = await getNoteBySlug(slug)
+    const note = await getNoteBySlug(currentSlug.value)
 
     if (!note) {
       error.value = 'Note not found'
@@ -27,6 +29,7 @@ async function load() {
 
     const res = await fetch(`${note.slug}.md`)
     const raw = await res.text()
+    console.log(res)
 
     const parsed = parseMarkdown(raw)
 
@@ -48,26 +51,36 @@ watch(() => route.fullPath, load)
 </script>
 
 <template>
-  <main class="note-page">
-    <div v-if="loading">Loading...</div>
-    <div v-else-if="error">{{ error }}</div>
+  <div class="note-layout">
+    <NoteSidebar :current-slug="currentSlug" />
 
-    <article v-else>
-      <div class="note-meta" v-if="meta">
-        <p v-if="meta['creation date']">📅 {{ meta['creation date'] }}</p>
-        <p v-if="meta.author">✍️ {{ meta.author }}</p>
-      </div>
+    <main class="note-main">
+      <div v-if="loading">Loading...</div>
+      <div v-else-if="error">{{ error }}</div>
 
-      <div class="note-content" v-html="html"></div>
-    </article>
-  </main>
+      <article v-else>
+        <div class="note-meta" v-if="meta">
+          <p v-if="meta['creation date']">📅 {{ meta['creation date'] }}</p>
+          <p v-if="meta.author">✍️ {{ meta.author }}</p>
+        </div>
+
+        <div class="note-content" v-html="html"></div>
+      </article>
+    </main>
+  </div>
 </template>
 
 <style scoped>
-.note-page {
+.note-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.note-main {
+  flex: 1;
+  min-width: 0;
   max-width: 800px;
-  margin: 0 auto;
-  padding: 40px 20px;
+  padding: 40px 32px;
 }
 
 .note-meta {

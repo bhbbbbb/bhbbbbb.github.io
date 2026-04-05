@@ -42,7 +42,6 @@ function jumpToHeading(event: MouseEvent, headingId: string) {
   position: sticky;
   top: 28px;
   padding-left: 18px;
-  border-left: 1px solid var(--color-border);
 }
 
 .note-toc-label {
@@ -93,8 +92,6 @@ function jumpToHeading(event: MouseEvent, headingId: string) {
     order: -1;
     padding-left: 0;
     padding-bottom: 14px;
-    border-left: none;
-    border-bottom: 1px solid var(--color-border);
   }
 
   .note-toc-nav {

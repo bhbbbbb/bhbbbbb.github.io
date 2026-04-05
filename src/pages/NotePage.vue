@@ -160,30 +160,38 @@ watch(() => route.fullPath, load)
 .note-main {
   flex: 1;
   min-width: 0;
-  padding: 28px 32px 64px;
+  padding: 32px 24px 64px;
 }
 
 .note-shell {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 260px;
-  gap: 44px;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 28px;
   align-items: start;
-  max-width: 1220px;
+  max-width: 1320px;
   min-width: 0;
 }
 
 .note-article {
   min-width: 0;
+  padding: 36px clamp(24px, 3vw, 44px) 44px;
+  background: var(--color-surface-strong);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.06);
 }
 
 .note-state {
   display: grid;
   place-items: center;
   min-height: 45vh;
-  padding: 24px;
-  border-left: 2px solid var(--color-primary-border);
-  background: transparent;
+  padding: 32px;
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-primary-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-strong);
   color: var(--color-text-muted);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.04);
 }
 
 .note-state-error {
@@ -193,7 +201,7 @@ watch(() => route.fullPath, load)
 .note-hero {
   padding: 0 0 26px;
   margin-bottom: 28px;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
 }
 
 .note-hero-copy {
@@ -228,7 +236,7 @@ watch(() => route.fullPath, load)
 .note-meta-card {
   margin-top: 20px;
   padding-top: 16px;
-  border-top: 1px solid rgba(104, 25, 0, 0.12);
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
 }
 
 .note-meta-grid {
@@ -263,7 +271,10 @@ watch(() => route.fullPath, load)
 }
 
 .note-tag {
-  padding: 0;
+  padding: 0.28rem 0.7rem;
+  border: 1px solid rgba(104, 25, 0, 0.12);
+  border-radius: 999px;
+  background: rgba(104, 25, 0, 0.05);
   color: var(--color-primary);
   font-size: 0.84rem;
   font-weight: 600;
@@ -271,7 +282,7 @@ watch(() => route.fullPath, load)
 
 .note-tag::before {
   content: '#';
-  margin-right: 1px;
+  margin-right: 3px;
   color: var(--color-text-soft);
 }
 
@@ -302,7 +313,7 @@ watch(() => route.fullPath, load)
   margin-bottom: 0.9rem;
   font-size: clamp(1.45rem, 1.8vw, 1.75rem);
   padding-top: 0.4rem;
-  border-top: 1px solid rgba(15, 23, 42, 0.06);
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
 }
 
 .note-content :deep(h3) {
@@ -333,8 +344,10 @@ watch(() => route.fullPath, load)
 }
 
 .note-content :deep(blockquote) {
-  padding: 4px 0 4px 18px;
+  padding: 10px 16px 10px 18px;
   border-left: 3px solid rgba(104, 25, 0, 0.24);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: rgba(104, 25, 0, 0.04);
   color: var(--color-text-muted);
 }
 
@@ -342,6 +355,7 @@ watch(() => route.fullPath, load)
   width: 100%;
   border-collapse: collapse;
   overflow: hidden;
+  border-radius: var(--radius-sm);
 }
 
 .note-content :deep(th),
@@ -358,12 +372,14 @@ watch(() => route.fullPath, load)
 .note-content :deep(img) {
   margin: 24px auto;
   border-radius: 8px;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
 }
 
 .note-content :deep(pre) {
   background: #0f172a;
   color: #e2e8f0;
   padding: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.18);
   overflow-x: auto;
   border-radius: 8px;
 }
@@ -396,7 +412,7 @@ watch(() => route.fullPath, load)
   }
 
   .note-main {
-    padding: 24px 16px 48px;
+    padding: 24px 0 48px;
   }
 }
 
@@ -405,8 +421,13 @@ watch(() => route.fullPath, load)
     font-size: 1.9rem;
   }
 
+  .note-article {
+    padding: 24px 18px 30px;
+    border-radius: var(--radius-md);
+  }
+
   .note-main {
-    padding: 20px 16px 40px;
+    padding: 20px 0 40px;
   }
 }
 </style>

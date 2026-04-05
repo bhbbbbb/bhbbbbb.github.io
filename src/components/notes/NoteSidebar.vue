@@ -82,7 +82,7 @@ watch(() => props.showAppendix, loadTree)
 
 <style scoped>
 .note-sidebar {
-  width: 300px;
+  width: 280px;
   flex-shrink: 0;
   position: sticky;
   top: 0;
@@ -90,7 +90,6 @@ watch(() => props.showAppendix, loadTree)
   overflow-y: auto;
   overflow-x: hidden;
   padding: 24px 16px;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 }
 

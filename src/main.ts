@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import { siteContent } from '@/data/home'
 import '@/styles/theme.css'
+import '@/styles/callouts.css'
 // import '@/styles/theme.navy.css'
 ;(() => {
   document.title = siteContent.brand

@@ -2514,6 +2514,11 @@ magic-string@^0.30.19, magic-string@^0.30.21, magic-string@^0.30.4:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.5.5"
 
+markdown-it-obsidian-callouts@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/markdown-it-obsidian-callouts/-/markdown-it-obsidian-callouts-0.3.3.tgz#abf060ba4ac724ea68a8e1b8843791b90c5d38ef"
+  integrity sha512-XviZR/5aFmcGVvjUv2I0TidPIkc4RzAJg3cd5N1zJe/3eh2FLLiqt0ugyBlkOyKc2ydcp/q2iUGAZomxn7al+g==
+
 markdown-it@^14.1.1:
   version "14.1.1"
   resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-14.1.1.tgz#856f90b66fc39ae70affd25c1b18b581d7deee1f"

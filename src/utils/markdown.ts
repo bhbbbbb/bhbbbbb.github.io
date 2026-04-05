@@ -1,5 +1,7 @@
 import MarkdownIt from 'markdown-it'
 import { katex } from '@mdit/plugin-katex'
+// @ts-expect-error no-ts
+import callouts from 'markdown-it-obsidian-callouts'
 import 'katex/dist/katex.min.css'
 import type { NoteFrontmatter, NoteHeading } from '@/types/note'
 
@@ -92,6 +94,7 @@ function createMarkdownRenderer(headings: NoteHeading[]) {
   })
 
   md.use(katex)
+  md.use(callouts)
 
   const defaultHeadingOpen =
     md.renderer.rules.heading_open ??

@@ -10,6 +10,7 @@ const props = defineProps<{
 
 const isLeaf = computed(() => !!props.node.note)
 const isActive = computed(() => props.node.path === props.currentSlug)
+const isAppendix = computed(() => props.node.note?.navVisibility === 'appendix')
 
 function containsCurrent(node: NoteTreeNodeType): boolean {
   if (node.note && node.path === props.currentSlug) return true
@@ -20,7 +21,7 @@ const isOpen = ref(containsCurrent(props.node))
 </script>
 
 <template>
-  <div v-if="isLeaf" class="tree-leaf" :class="{ active: isActive }">
+  <div v-if="isLeaf" class="tree-leaf" :class="{ active: isActive, appendix: isAppendix }">
     <RouterLink :to="node.path">{{ node.label }}</RouterLink>
   </div>
 
@@ -52,9 +53,7 @@ const isOpen = ref(containsCurrent(props.node))
   color: inherit;
   text-decoration: none;
   font-size: 13px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
 }
 
 .tree-leaf a:hover {
@@ -64,6 +63,19 @@ const isOpen = ref(containsCurrent(props.node))
 .tree-leaf.active a {
   background: rgba(0, 0, 0, 0.1);
   font-weight: 600;
+}
+
+.tree-leaf.appendix:not(.active) a {
+  opacity: 0.52;
+}
+
+.tree-leaf.appendix a::after {
+  content: ' appendix';
+  margin-left: 6px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
 }
 
 .folder-toggle {
@@ -80,6 +92,7 @@ const isOpen = ref(containsCurrent(props.node))
   color: inherit;
   text-align: left;
   border-radius: 4px;
+  overflow: hidden;
 }
 
 .folder-toggle:hover {
@@ -96,5 +109,6 @@ const isOpen = ref(containsCurrent(props.node))
   padding-left: 14px;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
   margin-left: 5px;
+  min-width: 0;
 }
 </style>

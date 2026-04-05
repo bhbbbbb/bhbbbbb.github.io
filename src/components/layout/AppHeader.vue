@@ -1,16 +1,22 @@
 <script setup lang="ts">
 import { siteContent } from '@/data/home'
+
+function resolveHref(href: string) {
+  if (href === '#') return '/'
+  if (href.startsWith('#')) return `/${href}`
+  return href
+}
 </script>
 
 <template>
   <header class="header">
     <div class="inner">
-      <a class="brand" href="#about">
+      <a class="brand" href="/">
         {{ siteContent.brand }}
       </a>
 
       <nav class="nav">
-        <a v-for="item in siteContent.nav" :key="item.href" :href="item.href">
+        <a v-for="item in siteContent.nav" :key="item.href" :href="resolveHref(item.href)">
           {{ item.label }}
         </a>
       </nav>

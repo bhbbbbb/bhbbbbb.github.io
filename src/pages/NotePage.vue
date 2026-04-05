@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
+import AppFooter from '@/components/layout/AppFooter.vue'
+import AppHeader from '@/components/layout/AppHeader.vue'
 import { getNoteBySlug } from '@/utils/notes'
 import { parseMarkdown } from '@/utils/markdown'
 import { renderMermaid } from '@/utils/mermaid'
@@ -95,51 +97,63 @@ watch(() => route.fullPath, load)
 </script>
 
 <template>
-  <div class="note-layout">
-    <NoteSidebar :current-slug="currentSlug" :show-appendix="showAppendix" />
+  <AppHeader />
 
-    <main class="note-main">
-      <div v-if="loading" class="note-state">Loading note...</div>
-      <div v-else-if="error" class="note-state note-state-error">{{ error }}</div>
+  <div class="note-page">
+    <div class="note-layout">
+      <NoteSidebar :current-slug="currentSlug" :show-appendix="showAppendix" />
 
-      <div v-else class="note-shell">
-        <article class="note-article">
-          <header class="note-hero">
-            <div class="note-hero-copy">
-              <p v-if="meta?.section" class="note-eyebrow">{{ meta.section }}</p>
-              <h1 class="note-title">{{ pageTitle }}</h1>
-              <p v-if="meta?.description || meta?.summary" class="note-summary">
-                {{ meta.description ?? meta.summary }}
-              </p>
-            </div>
+      <main class="note-main">
+        <div v-if="loading" class="note-state">Loading note...</div>
+        <div v-else-if="error" class="note-state note-state-error">{{ error }}</div>
 
-            <div v-if="metaEntries.length > 0 || tagList.length > 0" class="note-meta-card">
-              <div v-if="metaEntries.length > 0" class="note-meta-grid">
-                <div v-for="entry in metaEntries" :key="entry.label" class="note-meta-item">
-                  <span class="note-meta-label">{{ entry.label }}</span>
-                  <span class="note-meta-value">{{ entry.value }}</span>
+        <div v-else class="note-shell">
+          <article class="note-article">
+            <header class="note-hero">
+              <div class="note-hero-copy">
+                <p v-if="meta?.section" class="note-eyebrow">{{ meta.section }}</p>
+                <h1 class="note-title">{{ pageTitle }}</h1>
+                <p v-if="meta?.description || meta?.summary" class="note-summary">
+                  {{ meta.description ?? meta.summary }}
+                </p>
+              </div>
+
+              <div v-if="metaEntries.length > 0 || tagList.length > 0" class="note-meta-card">
+                <div v-if="metaEntries.length > 0" class="note-meta-grid">
+                  <div v-for="entry in metaEntries" :key="entry.label" class="note-meta-item">
+                    <span class="note-meta-label">{{ entry.label }}</span>
+                    <span class="note-meta-value">{{ entry.value }}</span>
+                  </div>
+                </div>
+
+                <div v-if="tagList.length > 0" class="note-tags">
+                  <span v-for="tag in tagList" :key="tag" class="note-tag">{{ tag }}</span>
                 </div>
               </div>
+            </header>
 
-              <div v-if="tagList.length > 0" class="note-tags">
-                <span v-for="tag in tagList" :key="tag" class="note-tag">{{ tag }}</span>
-              </div>
-            </div>
-          </header>
+            <div ref="noteContent" class="note-content" v-html="html"></div>
+          </article>
 
-          <div ref="noteContent" class="note-content" v-html="html"></div>
-        </article>
-
-        <NoteToc v-if="showToc" :headings="visibleHeadings" />
-      </div>
-    </main>
+          <NoteToc v-if="showToc" :headings="visibleHeadings" />
+        </div>
+      </main>
+    </div>
   </div>
+
+  <AppFooter />
 </template>
 
 <style scoped>
+.note-page {
+  min-height: calc(100vh - var(--header-height));
+  width: min(1480px, calc(100% - var(--container-padding)));
+  margin: 0 auto;
+}
+
 .note-layout {
   display: flex;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--header-height));
   overflow-x: clip;
 }
 
@@ -373,6 +387,10 @@ watch(() => route.fullPath, load)
 }
 
 @media (max-width: 900px) {
+  .note-page {
+    width: min(100% - var(--container-padding-mobile), 1480px);
+  }
+
   .note-layout {
     display: block;
   }

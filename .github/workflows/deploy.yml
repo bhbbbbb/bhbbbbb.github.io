@@ -47,7 +47,7 @@ jobs:
           mkdir -p tmp
 
           gh release download export-latest \
-            --repo OWNER/frontend \
+            --repo bhbbbbb/bhbbbbb.github.io \
             --pattern site-content.zip \
             --dir tmp
 

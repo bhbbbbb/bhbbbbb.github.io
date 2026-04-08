@@ -1,5 +1,6 @@
 import MarkdownIt from 'markdown-it'
 import { katex } from '@mdit/plugin-katex'
+import { footnote } from '@mdit/plugin-footnote'
 // @ts-expect-error no-ts
 import callouts from 'markdown-it-obsidian-callouts'
 import 'katex/dist/katex.min.css'
@@ -94,6 +95,7 @@ function createMarkdownRenderer(headings: NoteHeading[]) {
   })
 
   md.use(katex)
+  md.use(footnote)
   md.use(callouts)
 
   const defaultHeadingOpen =

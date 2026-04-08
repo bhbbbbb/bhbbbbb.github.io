@@ -3,6 +3,7 @@ export interface NoteManifestItem {
   title: string
   group: string
   navVisibility?: string
+  category?: string
   // sourcePath: string
 }
 
@@ -12,9 +13,13 @@ export interface NoteManifest {
   notes: NoteManifestItem[]
 }
 
+export type NoteCategoryKind = 'knowledge' | 'solution' | 'other'
+
 export interface NoteTreeNode {
   label: string
   path: string
+  category: NoteCategoryKind
+  categoryLabel?: string
   note?: NoteManifestItem
   children: NoteTreeNode[]
 }
@@ -40,5 +45,6 @@ export interface NoteFrontmatter {
   summary?: string
   source_path?: string
   nav_visibility?: string
+  category?: string
   [key: string]: unknown
 }

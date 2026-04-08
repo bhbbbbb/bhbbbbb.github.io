@@ -11,6 +11,7 @@ const props = defineProps<{
 const isLeaf = computed(() => !!props.node.note)
 const isActive = computed(() => props.node.path === props.currentSlug)
 const isAppendix = computed(() => props.node.note?.navVisibility === 'appendix')
+const categoryClass = computed(() => `category-${props.node.category}`)
 
 function containsCurrent(node: NoteTreeNodeType): boolean {
   if (node.note && node.path === props.currentSlug) return true
@@ -21,11 +22,15 @@ const isOpen = ref(containsCurrent(props.node))
 </script>
 
 <template>
-  <div v-if="isLeaf" class="tree-leaf" :class="{ active: isActive, appendix: isAppendix }">
+  <div
+    v-if="isLeaf"
+    class="tree-leaf"
+    :class="[categoryClass, { active: isActive, appendix: isAppendix }]"
+  >
     <RouterLink :to="node.path">{{ node.label }}</RouterLink>
   </div>
 
-  <div v-else class="tree-folder">
+  <div v-else class="tree-folder" :class="categoryClass">
     <button class="folder-toggle" @click="isOpen = !isOpen">
       <span class="toggle-icon">{{ isOpen ? '▾' : '▸' }}</span>
       {{ node.label }}
@@ -48,11 +53,14 @@ const isOpen = ref(containsCurrent(props.node))
 
 .tree-leaf a {
   display: block;
-  padding: 3px 8px;
-  border-radius: 4px;
+  padding: 4px 8px;
+  border-radius: 6px;
   color: inherit;
   text-decoration: none;
   font-size: 13px;
+  transition:
+    background-color 140ms ease,
+    color 140ms ease;
   overflow-wrap: anywhere;
 }
 
@@ -63,6 +71,23 @@ const isOpen = ref(containsCurrent(props.node))
 .tree-leaf.active a {
   background: rgba(0, 0, 0, 0.1);
   font-weight: 600;
+}
+
+.tree-leaf.category-knowledge a {
+  color: var(--color-text-strong);
+  font-weight: 500;
+}
+
+.tree-leaf.category-knowledge.active a {
+  color: var(--color-primary-strong);
+}
+
+.tree-leaf.category-solution a {
+  color: var(--color-text-strong);
+}
+
+.tree-leaf.category-other a {
+  color: var(--color-text-muted);
 }
 
 .tree-leaf.appendix:not(.active) a {
@@ -83,7 +108,7 @@ const isOpen = ref(containsCurrent(props.node))
   align-items: center;
   gap: 4px;
   width: 100%;
-  padding: 3px 4px;
+  padding: 4px 6px;
   background: none;
   border: none;
   cursor: pointer;
@@ -97,6 +122,18 @@ const isOpen = ref(containsCurrent(props.node))
 
 .folder-toggle:hover {
   background: rgba(0, 0, 0, 0.06);
+}
+
+.tree-folder.category-knowledge > .folder-toggle {
+  color: var(--color-text-strong);
+}
+
+.tree-folder.category-solution > .folder-toggle {
+  color: var(--color-text);
+}
+
+.tree-folder.category-other > .folder-toggle {
+  color: var(--color-text-muted);
 }
 
 .toggle-icon {

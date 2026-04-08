@@ -44,14 +44,14 @@ jobs:
       - name: Download latest export bundle
         run: |
           rm -rf tmp notes
-          mkdir -p tmp
+          mkdir -p tmp public/notes
 
           gh release download export-latest \
             --repo bhbbbbb/bhbbbbb.github.io \
             --pattern site-content.zip \
             --dir tmp
 
-          unzip -q tmp/site-content.zip -d .
+          unzip -q tmp/site-content.zip -d public/notes
       - name: Build
         run: yarn build
       - name: Setup Pages

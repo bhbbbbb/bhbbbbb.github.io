@@ -39,6 +39,9 @@ importers:
       '@tsconfig/node24':
         specifier: ^24.0.4
         version: 24.0.4
+      '@types/markdown-it':
+        specifier: ^14.1.2
+        version: 14.1.2
       '@types/node':
         specifier: ^24.11.0
         version: 24.12.2
@@ -84,6 +87,9 @@ importers:
       remark-preset-lint-markdown-style-guide:
         specifier: ^6.0.1
         version: 6.0.1
+      shark-about-me:
+        specifier: 'link:'
+        version: 'link:'
       typescript:
         specifier: ~5.9.3
         version: 5.9.3

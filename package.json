@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@tsconfig/node24": "^24.0.4",
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^24.11.0",
     "@vitejs/plugin-vue": "^6.0.4",
     "@vue/eslint-config-typescript": "^14.7.0",
@@ -45,6 +46,7 @@
     "prettier": "^3.8.1",
     "remark-cli": "^12.0.1",
     "remark-preset-lint-markdown-style-guide": "^6.0.1",
+    "shark-about-me": "link:",
     "typescript": "~5.9.3",
     "vite": "^7.3.1",
     "vite-plugin-vue-devtools": "^8.0.6",

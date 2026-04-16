@@ -1,0 +1,86 @@
+name: Refresh external data
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every Sunday at 03:00 UTC
+    - cron: '0 3 * * 0'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-external-data
+  cancel-in-progress: false
+
+jobs:
+  refresh-marketplace:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Enable pnpm
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Load previous marketplace data from site-data
+        shell: bash
+        run: |
+          mkdir -p data
+          git fetch origin site-data:site-data || true
+
+          if git show-ref --verify --quiet refs/heads/site-data; then
+            git show site-data:data/marketplace.json > data/marketplace.json || true
+          fi
+
+      - name: Run external sync
+        run: pnpm --filter ./scripts/external-sync sync
+
+      - name: Prepare site-data branch worktree
+        shell: bash
+        run: |
+          if git show-ref --verify --quiet refs/heads/site-data; then
+            git worktree add /tmp/site-data site-data
+          else
+            git switch --orphan site-data
+            git reset --hard
+            mkdir -p /tmp/site-data
+            git worktree add /tmp/site-data
+            git switch -
+          fi
+
+      - name: Copy updated data into site-data branch
+        shell: bash
+        run: |
+          mkdir -p /tmp/site-data/data
+          cp data/marketplace.json /tmp/site-data/data/marketplace.json
+
+      - name: Commit and push if changed
+        shell: bash
+        run: |
+          cd /tmp/site-data
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/marketplace.json
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "chore(data): refresh marketplace snapshot"
+          git push origin HEAD:site-data

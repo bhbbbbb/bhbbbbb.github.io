@@ -2,6 +2,9 @@
   "name": "shark-about-me",
   "version": "0.0.0",
   "private": true,
+  "workspaces": [
+    "scripts/stats"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",

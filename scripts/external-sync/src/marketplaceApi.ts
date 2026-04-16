@@ -1,8 +1,19 @@
-export type StatsSnapshot = {
+export type MarketplaceStatistics = {
+  onpremDownloads: number | null
+  averagerating: number | null
+  weightedRating: number | null
+  install: number | null
+  trendingdaily: number | null
+  ratingcount: number | null
+  trendingmonthly: number | null
+  updateCount: number | null
+  downloadCount: number | null
+  trendingweekly: number | null
+}
+
+export type MarketplaceSnapshot = {
   snapshotAt: string
-  downloads: number | null
-  avgRating: number | null
-  ratingCount: number | null
+  statistics: MarketplaceStatistics
 }
 
 type ExtensionStatistic = {
@@ -25,13 +36,17 @@ export class NotImplementedDomainError extends Error {
   }
 }
 
-function extractItemName(inputUrl: string): string {
+export function getMarketplaceItemName(inputUrl: string): string {
   let parsed: URL
 
   try {
     parsed = new URL(inputUrl)
   } catch {
     throw new Error(`Invalid URL: ${inputUrl}`)
+  }
+
+  if (parsed.hostname !== 'marketplace.visualstudio.com') {
+    throw new NotImplementedDomainError(parsed.hostname)
   }
 
   const itemName = parsed.searchParams.get('itemName')?.trim()
@@ -43,37 +58,34 @@ function extractItemName(inputUrl: string): string {
   return itemName
 }
 
-function toStatsSnapshot(statistics: ExtensionStatistic[] | undefined): StatsSnapshot {
-  const stats = new Map<string, number>()
+function toMarketplaceStatistics(
+  statistics: ExtensionStatistic[] | undefined,
+): MarketplaceStatistics {
+  const marketplaceStatistics = new Map<string, number>()
 
   for (const stat of statistics ?? []) {
     if (typeof stat.statisticName === 'string' && typeof stat.value === 'number') {
-      stats.set(stat.statisticName, stat.value)
+      marketplaceStatistics.set(stat.statisticName, stat.value)
     }
   }
 
   return {
-    snapshotAt: new Date().toISOString(),
-    downloads: stats.get('install') ?? null,
-    avgRating: stats.get('averagerating') ?? null,
-    ratingCount: stats.get('ratingcount') ?? null,
+    onpremDownloads: marketplaceStatistics.get('onpremDownloads') ?? null,
+    averagerating: marketplaceStatistics.get('averagerating') ?? null,
+    weightedRating: marketplaceStatistics.get('weightedRating') ?? null,
+    install: marketplaceStatistics.get('install') ?? null,
+    trendingdaily: marketplaceStatistics.get('trendingdaily') ?? null,
+    ratingcount: marketplaceStatistics.get('ratingcount') ?? null,
+    trendingmonthly: marketplaceStatistics.get('trendingmonthly') ?? null,
+    updateCount: marketplaceStatistics.get('updateCount') ?? null,
+    downloadCount: marketplaceStatistics.get('downloadCount') ?? null,
+    trendingweekly: marketplaceStatistics.get('trendingweekly') ?? null,
   }
 }
 
-export async function fetchSnapshot(url: string): Promise<StatsSnapshot> {
-  const parsed = new URL(url)
-
-  switch (parsed.hostname) {
-    case 'marketplace.visualstudio.com':
-      return fetchVsMarketplace(url)
-    default:
-      throw new NotImplementedDomainError(parsed.hostname)
-  }
-}
-
-async function fetchVsMarketplace(url: string): Promise<StatsSnapshot> {
-  const itemName = extractItemName(url)
-
+export async function fetchMarketplaceStatistics(
+  itemName: string,
+): Promise<MarketplaceStatistics> {
   const body = {
     filters: [
       {
@@ -139,7 +151,7 @@ async function fetchVsMarketplace(url: string): Promise<StatsSnapshot> {
       throw new Error(`Extension not found for itemName: ${itemName}`)
     }
 
-    return toStatsSnapshot(extension.statistics)
+    return toMarketplaceStatistics(extension.statistics)
   } catch (error) {
     if (error instanceof Error && error.name === 'AbortError') {
       throw new Error(`Marketplace API request timed out after ${timeoutMs}ms`)

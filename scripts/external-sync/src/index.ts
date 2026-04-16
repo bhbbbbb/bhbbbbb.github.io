@@ -1,20 +1,23 @@
 import { promises as fs } from 'node:fs'
 import * as path from 'node:path'
-// import { fetchSnapshot, StatsSnapshot } from './scrapers'
-import { fetchSnapshot, StatsSnapshot } from './marketplaceApi'
+import {
+  fetchMarketplaceStatistics,
+  getMarketplaceItemName,
+  MarketplaceSnapshot,
+} from './marketplaceApi'
 
-type StatsFile = Record<string, StatsSnapshot | null>
+type MarketplaceFile = Record<string, MarketplaceSnapshot | null>
 
 const ROOT_DIR = path.resolve(__dirname, '../../..')
-const DATA_FILE = path.join(ROOT_DIR, 'data', 'stats.json')
+const DATA_FILE = path.join(ROOT_DIR, 'data', 'marketplace.json')
 
 function sortObjectKeys<T>(obj: Record<string, T>): Record<string, T> {
   return Object.fromEntries(Object.entries(obj).sort(([a], [b]) => a.localeCompare(b)))
 }
 
-async function readStatsFile(filePath: string): Promise<StatsFile> {
+async function readMarketplaceFile(filePath: string): Promise<MarketplaceFile> {
   const raw = await fs.readFile(filePath, 'utf-8')
-  return JSON.parse(raw) as StatsFile
+  return JSON.parse(raw) as MarketplaceFile
 }
 
 async function writeJsonAtomic(filePath: string, data: unknown): Promise<void> {
@@ -26,17 +29,22 @@ async function writeJsonAtomic(filePath: string, data: unknown): Promise<void> {
   await fs.rename(tempPath, filePath)
 }
 
-async function updateStats(): Promise<void> {
-  const stats = await readStatsFile(DATA_FILE)
-  const nextStats: StatsFile = { ...stats }
+async function updateMarketplace(): Promise<void> {
+  const marketplace = await readMarketplaceFile(DATA_FILE)
+  const nextMarketplace: MarketplaceFile = { ...marketplace }
 
-  for (const [url, previousSnapshot] of Object.entries(stats)) {
+  for (const [url, previousSnapshot] of Object.entries(marketplace)) {
     try {
-      const snapshot = await fetchSnapshot(url)
-      nextStats[url] = snapshot
-      console.log(`[ok] ${url}`, snapshot)
+      const itemName = getMarketplaceItemName(url)
+      const statistics = await fetchMarketplaceStatistics(itemName)
+      const marketplaceSnapshot: MarketplaceSnapshot = {
+        snapshotAt: new Date().toISOString(),
+        statistics,
+      }
+      nextMarketplace[url] = marketplaceSnapshot
+      console.log(`[ok] ${url}`, marketplaceSnapshot)
     } catch (error) {
-      nextStats[url] = previousSnapshot ?? null
+      nextMarketplace[url] = previousSnapshot ?? null
       console.error(`[failed] ${url}`)
 
       if (error instanceof Error) {
@@ -47,10 +55,10 @@ async function updateStats(): Promise<void> {
     }
   }
 
-  await writeJsonAtomic(DATA_FILE, sortObjectKeys(nextStats))
+  await writeJsonAtomic(DATA_FILE, sortObjectKeys(nextMarketplace))
 }
 
-updateStats().catch((error) => {
+updateMarketplace().catch((error) => {
   console.error(error)
   process.exit(1)
 })

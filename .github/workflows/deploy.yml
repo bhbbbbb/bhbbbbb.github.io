@@ -34,13 +34,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
-          node-version: lts/*
-          cache: 'yarn'
+          node-version: 20
+          cache: 'pnpm'
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Download latest export bundle
         run: |
           rm -rf tmp notes
@@ -53,7 +57,7 @@ jobs:
 
           unzip -q tmp/site-content.zip -d public/notes
       - name: Build
-        run: yarn build
+        run: pnpm build
       - name: Add SPA fallback
         run: cp dist/index.html dist/404.html
       - name: Setup Pages

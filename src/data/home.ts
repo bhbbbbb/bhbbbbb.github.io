@@ -3,6 +3,7 @@ import type { SiteContent } from '@/types/header'
 import type { EntityBundle } from '@/types/bundle'
 import { timelineDefs } from '@/data/timeline'
 import { expandBundles } from '@/utils/bundle'
+import marketplace from '../../data/marketplace.json'
 
 export const siteContent: SiteContent = {
   brand: 'Shao-En Lin',
@@ -111,7 +112,14 @@ const bundles: EntityBundle[] = [
         'SynHING: Synthetic Heterogeneous Information Network Generation for Graph Learning and Explanation',
       venue: 'Arxiv',
       year: '2024',
-      authors: ['Ming-Yi Hong', 'Yi-Hsiang Huang', '**Shao-En Lin**', 'You-Chen Teng', 'Chih-Yu Wang', 'Che Lin'],
+      authors: [
+        'Ming-Yi Hong',
+        'Yi-Hsiang Huang',
+        '**Shao-En Lin**',
+        'You-Chen Teng',
+        'Chih-Yu Wang',
+        'Che Lin',
+      ],
       meta: ['[Arxiv 2024](synhing)'],
     },
   },
@@ -132,8 +140,7 @@ const bundles: EntityBundle[] = [
     project: {
       title: 'AHKDoc',
       year: '2024',
-      description:
-        'VSCode extension that adds JSDoc-style documentation utilities to the AutoHotkey language service. The extension has been downloaded over 1.8k times from the VSCode Marketplace.',
+      description: `VSCode extension that adds JSDoc-style documentation utilities to the AutoHotkey language service. The extension has been downloaded over ${Math.floor(marketplace['https://marketplace.visualstudio.com/items?itemName=bhbbbbb.vscode-autohotkey-ahkdoc'].statistics.install / 100) / 10}k times from the VSCode Marketplace.`,
       meta: [],
     },
   },

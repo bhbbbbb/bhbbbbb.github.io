@@ -144,6 +144,22 @@ const bundles: EntityBundle[] = [
       meta: [],
     },
   },
+  {
+    id: 'vault2publish',
+    timeline: 'ms',
+    tags: ['[Local LLMs](llm)', 'agentic', 'cicd', 'langchain', 'ts'],
+    links: [],
+    image: '/vault2publish.png',
+
+    project: {
+      title: 'Vault2Publish',
+      year: 'Present',
+      description:
+        'Agent-based pipeline that transforms private Obsidian notes into structured, publish-ready content. Handles hierarchy mapping and content sanitization through an incremental workflow with local LLMs (<10B).',
+      // 'Pipeline that transforms private Obsidian notes into structured, publish-ready content. Automates hierarchy mapping from mixed personal structures to topic-oriented organization, along with privacy filtering, metadata completion, and tagging. Designed as an incremental, agent-based workflow leveraging local LLMs (<10B).',
+      meta: [],
+    },
+  },
 ]
 
 const {

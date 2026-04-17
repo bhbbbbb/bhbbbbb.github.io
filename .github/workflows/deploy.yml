@@ -56,6 +56,15 @@ jobs:
             --dir tmp
 
           unzip -q tmp/site-content.zip -d public/notes
+      - name: Load previous marketplace data from site-data
+        shell: bash
+        run: |
+          mkdir -p data
+          git fetch origin site-data:site-data || true
+
+          if git show-ref --verify --quiet refs/heads/site-data; then
+            git show site-data:data/marketplace.json > data/marketplace.json || true
+          fi
       - name: Build
         run: pnpm build
       - name: Add SPA fallback

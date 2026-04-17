@@ -90,50 +90,54 @@ const showFloatingYear = computed(() => !hasVisibleMeta.value && !!props.year)
     <div v-else class="feature-image-frame feature-image-placeholder" />
 
     <div class="feature-content">
-      <span v-if="showFloatingYear" class="feature-year feature-year--floating">{{ year }}</span>
+      <div class="feature-content-top">
+        <span v-if="showFloatingYear" class="feature-year feature-year--floating">{{ year }}</span>
 
-      <div v-if="showTopline" class="feature-topline">
-        <div class="meta-row">
-          <FilterContainer
-            :filters="visibleMeta"
-            :active-filters="activeFilters"
-            :hovered-filter="hoveredFilter"
-            variant="meta"
-            @filter-click="emit('filterClick', $event)"
-            @filter-enter="emit('filterEnter', $event)"
-            @filter-leave="emit('filterLeave')"
-          />
+        <div v-if="showTopline" class="feature-topline">
+          <div class="meta-row">
+            <FilterContainer
+              :filters="visibleMeta"
+              :active-filters="activeFilters"
+              :hovered-filter="hoveredFilter"
+              variant="meta"
+              @filter-click="emit('filterClick', $event)"
+              @filter-enter="emit('filterEnter', $event)"
+              @filter-leave="emit('filterLeave')"
+            />
+          </div>
+
+          <span v-if="year" class="feature-year">{{ year }}</span>
         </div>
 
-        <span v-if="year" class="feature-year">{{ year }}</span>
+        <h3>{{ title }}</h3>
       </div>
 
-      <h3>{{ title }}</h3>
-
-      <p class="feature-desc">
+      <p class="feature-desc feature-content-middle">
         {{ description }}
       </p>
 
-      <FilterContainer
-        v-if="tags.length"
-        :filters="tags"
-        :active-filters="activeFilters"
-        :hovered-filter="hoveredFilter"
-        @filter-click="emit('filterClick', $event)"
-        @filter-enter="emit('filterEnter', $event)"
-        @filter-leave="emit('filterLeave')"
-      />
+      <div v-if="tags.length || links?.length" class="feature-content-bottom">
+        <FilterContainer
+          v-if="tags.length"
+          :filters="tags"
+          :active-filters="activeFilters"
+          :hovered-filter="hoveredFilter"
+          @filter-click="emit('filterClick', $event)"
+          @filter-enter="emit('filterEnter', $event)"
+          @filter-leave="emit('filterLeave')"
+        />
 
-      <div v-if="links?.length" class="link-row">
-        <a
-          v-for="link in links"
-          :key="`${title}-${link.label}`"
-          :href="link.href"
-          :target="link.href.startsWith('#') ? undefined : '_blank'"
-          :rel="link.href.startsWith('#') ? undefined : 'noopener noreferrer'"
-        >
-          {{ link.label }}
-        </a>
+        <div v-if="links?.length" class="link-row">
+          <a
+            v-for="link in links"
+            :key="`${title}-${link.label}`"
+            :href="link.href"
+            :target="link.href.startsWith('#') ? undefined : '_blank'"
+            :rel="link.href.startsWith('#') ? undefined : 'noopener noreferrer'"
+          >
+            {{ link.label }}
+          </a>
+        </div>
       </div>
     </div>
   </article>
@@ -158,6 +162,7 @@ const showFloatingYear = computed(() => !hasVisibleMeta.value && !!props.year)
 .feature-card {
   display: grid;
   grid-template-columns: 280px 1fr;
+  align-items: center;
   gap: var(--space-9);
   padding: var(--space-8);
   background: var(--color-surface);
@@ -218,9 +223,15 @@ const showFloatingYear = computed(() => !hasVisibleMeta.value && !!props.year)
 .feature-content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
   min-width: 0;
+  min-height: 100%;
   position: relative;
+}
+
+.feature-content-top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
 }
 
 .feature-card--with-floating-year .feature-content {
@@ -265,11 +276,24 @@ const showFloatingYear = computed(() => !hasVisibleMeta.value && !!props.year)
   color: var(--color-text-muted);
 }
 
+.feature-content-middle {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding-block: var(--space-4);
+}
+
+.feature-content-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: auto;
+}
+
 .link-row {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-5);
-  margin-top: var(--space-0);
 }
 
 .link-row a {

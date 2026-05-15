@@ -1,0 +1,236 @@
+{
+  "version": 1,
+  "exportedAt": "2026-04-08T09:05:33.966196+00:00",
+  "total": {
+    "discovered": 78,
+    "exported": 45,
+    "skipped": 33
+  },
+  "notes": [
+    {
+      "slug": "/notes/convex-optimization/midterm-2-solutions",
+      "title": "Midterm 2 Solutions",
+      "group": "Convex Optimization"
+    },
+    {
+      "slug": "/notes/convex-optimization/midterm-2",
+      "title": "Midterm 2",
+      "group": "Convex Optimization"
+    },
+    {
+      "slug": "/notes/convex-optimization/midterm-2-109",
+      "title": "Midterm 2 (109)",
+      "group": "Convex Optimization"
+    },
+    {
+      "slug": "/notes/convex-optimization/convex-functions-ii",
+      "title": "Convex Functions II",
+      "group": "Convex Optimization"
+    },
+    {
+      "slug": "/notes/convex-optimization/convex-functions",
+      "title": "Convex Functions",
+      "group": "Convex Optimization"
+    },
+    {
+      "slug": "/notes/convex-optimization/optimization-problems",
+      "title": "Optimization Problems",
+      "group": "Convex Optimization"
+    },
+    {
+      "slug": "/notes/convex-optimization/convex-sets-iii",
+      "title": "Convex Sets III",
+      "group": "Convex Optimization"
+    },
+    {
+      "slug": "/notes/convex-optimization/convex-sets",
+      "title": "Convex Sets",
+      "group": "Convex Optimization"
+    },
+    {
+      "slug": "/notes/convex-optimization/derivatives",
+      "title": "Derivatives",
+      "group": "Convex Optimization"
+    },
+    {
+      "slug": "/notes/convex-optimization/duality",
+      "title": "Duality",
+      "group": "Convex Optimization"
+    },
+    {
+      "slug": "/notes/convex-optimization/unconstrained-minimization",
+      "title": "Unconstrained Minimization",
+      "group": "Convex Optimization"
+    },
+    {
+      "slug": "/notes/convex-optimization/homework-1-solutions",
+      "title": "Homework 1 Solutions",
+      "group": "Convex Optimization"
+    },
+    {
+      "slug": "/notes/convex-optimization/homework-2-solutions",
+      "title": "Homework 2 Solutions",
+      "group": "Convex Optimization"
+    },
+    {
+      "slug": "/notes/fintech/user-behavior-analysis",
+      "title": "User Behavior Analysis: From Individuals to Networks",
+      "group": "FinTech"
+    },
+    {
+      "slug": "/notes/fintech/homework-1",
+      "title": "Homework 1",
+      "group": "FinTech"
+    },
+    {
+      "slug": "/notes/fintech/homework-2",
+      "title": "Homework 2",
+      "group": "FinTech"
+    },
+    {
+      "slug": "/notes/fintech/homework-3",
+      "title": "Homework 3",
+      "group": "FinTech"
+    },
+    {
+      "slug": "/notes/fintech/purchase-prediction-via-automatic-tagging",
+      "title": "Purchase Prediction via Automatic Tagging",
+      "group": "FinTech"
+    },
+    {
+      "slug": "/notes/generative-ai/homework-2",
+      "title": "Homework 2",
+      "group": "Generative AI"
+    },
+    {
+      "slug": "/notes/fintech/uniswap-overview",
+      "title": "Uniswap Overview",
+      "group": "FinTech"
+    },
+    {
+      "slug": "/notes/fintech/uniswap-comprehensive-analysis",
+      "title": "Uniswap Comprehensive Analysis",
+      "group": "FinTech"
+    },
+    {
+      "slug": "/notes/generative-ai/homework-3",
+      "title": "Homework 3",
+      "group": "Generative AI"
+    },
+    {
+      "slug": "/notes/machine-learning/strategies-pretraining-gnn-review",
+      "title": "Strategies for Pre-training GNNs Review",
+      "group": "Machine Learning"
+    },
+    {
+      "slug": "/notes/linear-algebra/lecture-notes",
+      "title": "Lecture Notes",
+      "group": "Linear Algebra"
+    },
+    {
+      "slug": "/notes/electronics/bjt-cascode",
+      "title": "BJT Cascode",
+      "group": "Electronics"
+    },
+    {
+      "slug": "/notes/electronics/differential-amplifier",
+      "title": "Differential Amplifier",
+      "group": "Electronics"
+    },
+    {
+      "slug": "/notes/electronics/feedback",
+      "title": "Feedback",
+      "group": "Electronics"
+    },
+    {
+      "slug": "/notes/electronics/frequency-response",
+      "title": "Frequency Response",
+      "group": "Electronics"
+    },
+    {
+      "slug": "/notes/engineering-mathematic/first-order-ode",
+      "title": "First Order ODE",
+      "group": "Engineering Mathematic"
+    },
+    {
+      "slug": "/notes/engineering-mathematic/fourier-integral",
+      "title": "Fourier Integral",
+      "group": "Engineering Mathematic"
+    },
+    {
+      "slug": "/notes/engineering-mathematic/fourier-series",
+      "title": "Fourier Series",
+      "group": "Engineering Mathematic"
+    },
+    {
+      "slug": "/notes/engineering-mathematic/fourier-transform",
+      "title": "Fourier Transform",
+      "group": "Engineering Mathematic"
+    },
+    {
+      "slug": "/notes/engineering-mathematic/heat-equation",
+      "title": "Heat Equation",
+      "group": "Engineering Mathematic"
+    },
+    {
+      "slug": "/notes/engineering-mathematic/higher-order-de",
+      "title": "Higher Order DE",
+      "group": "Engineering Mathematic"
+    },
+    {
+      "slug": "/notes/engineering-mathematic/laplace-transform",
+      "title": "Laplace Transform",
+      "group": "Engineering Mathematic"
+    },
+    {
+      "slug": "/notes/engineering-mathematic/potential-equation",
+      "title": "Potential Equation",
+      "group": "Engineering Mathematic"
+    },
+    {
+      "slug": "/notes/engineering-mathematic/power-series-solutions",
+      "title": "Power Series Solutions",
+      "group": "Engineering Mathematic"
+    },
+    {
+      "slug": "/notes/special-functions/legendre-and-bessel-functions",
+      "title": "Legendre and Bessel Functions",
+      "group": "Special Functions"
+    },
+    {
+      "slug": "/notes/engineering-mathematic/sturm-liouville-problem",
+      "title": "Sturm-Liouville Problem",
+      "group": "Engineering Mathematic"
+    },
+    {
+      "slug": "/notes/engineering-mathematic/wave-equation",
+      "title": "Wave Equation",
+      "group": "Engineering Mathematic"
+    },
+    {
+      "slug": "/notes/engineering-mathematic/hw-4",
+      "title": "Homework 4",
+      "group": "Engineering Mathematic"
+    },
+    {
+      "slug": "/notes/engineering-mathematic/hw-5",
+      "title": "Homework 5",
+      "group": "Engineering Mathematic"
+    },
+    {
+      "slug": "/notes/engineering-mathematic/hw-6",
+      "title": "Homework 6",
+      "group": "Engineering Mathematic"
+    },
+    {
+      "slug": "/notes/engineering-mathematic/modified-exact-equation-method",
+      "title": "Modified Exact Equation Method",
+      "group": "Engineering Mathematic"
+    },
+    {
+      "slug": "/notes/algorithm/hw1",
+      "title": "Hw1",
+      "group": "Algorithm"
+    }
+  ]
+}

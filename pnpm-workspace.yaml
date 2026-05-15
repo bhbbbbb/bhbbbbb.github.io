@@ -1,3 +1,5 @@
 packages:
   - '.'
   - 'scripts/external-sync'
+allowBuilds:
+  esbuild: true

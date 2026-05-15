@@ -45,17 +45,20 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Download latest export bundle
+      - name: Load previous notes data from site-data
+        shell: bash
         run: |
-          rm -rf tmp notes
-          mkdir -p tmp public/notes
+          rm -rf notes
+          mkdir -p public/notes
+          git fetch origin site-data:site-data || true
 
-          gh release download export-latest \
-            --repo bhbbbbb/bhbbbbb.github.io \
-            --pattern site-content.zip \
-            --dir tmp
+          if git show-ref --verify --quiet refs/heads/site-data; then
+            git checkout site-data -- notes || true
 
-          unzip -q tmp/site-content.zip -d public/notes
+            if [ -d notes ]; then
+              cp -R notes/. public/notes/
+            fi
+          fi
       - name: Load previous marketplace data from site-data
         shell: bash
         run: |

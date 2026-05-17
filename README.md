@@ -1,48 +1,34 @@
 # shark-about-me
 
-This template should help get you started developing with Vue 3 in Vite.
+Personal portfolio site, built with Vue 3 and Vite. The site presents projects, publications, and notes in a lightweight single-page app.
 
-## Recommended IDE Setup
+## Tech Stack
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Vue 3
+- Vite
+- TypeScript
+- Markdown-it, KaTeX, Mermaid
 
-## Recommended Browser Setup
+## Local Development
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+Use Node `^20.19.0 || >=22.12.0` and `pnpm`.
 
 ```sh
-yarn
+pnpm install
+pnpm dev
 ```
 
-### Compile and Hot-Reload for Development
+Useful commands:
 
-```sh
-yarn dev
-```
+- `pnpm dev` starts the local development server
+- `pnpm build` runs type-checking and creates a production build
+- `pnpm preview` serves the production build locally
+- `pnpm lint` runs Oxlint and ESLint with fixes
+- `pnpm format` formats files under `src/`
 
-### Type-Check, Compile and Minify for Production
+## Project Structure
 
-```sh
-yarn build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-yarn lint
-```
+- `src/` application code, routes, components, and typed content definitions
+- `src/data/` portfolio and site content used by the UI
+- `public/` static assets such as images, PDFs, and published notes
+- `data/` generated or external content inputs used by the app

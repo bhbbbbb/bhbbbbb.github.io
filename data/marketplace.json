@@ -1,17 +1,17 @@
 {
   "https://marketplace.visualstudio.com/items?itemName=bhbbbbb.vscode-autohotkey-ahkdoc": {
-    "snapshotAt": "2026-08-02T05:51:37.143Z",
+    "snapshotAt": "2026-08-09T04:14:29.646Z",
     "statistics": {
       "onpremDownloads": null,
       "averagerating": 5,
-      "weightedRating": 4.5012024314493235,
-      "install": 1851,
+      "weightedRating": 4.501394849197345,
+      "install": 1852,
       "trendingdaily": 0,
       "ratingcount": 1,
-      "trendingmonthly": 0.3241491085899514,
+      "trendingmonthly": 0.3779697624190065,
       "updateCount": 18,
       "downloadCount": 316,
-      "trendingweekly": 0.05402485143165856
+      "trendingweekly": 0.05399568034557236
     }
   }
 }

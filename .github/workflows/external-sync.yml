@@ -32,13 +32,13 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          cache: pnpm
+          package-manager-cache: false
 
       - name: Enable pnpm
         run: corepack enable
 
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Load previous marketplace data from site-data
         shell: bash
